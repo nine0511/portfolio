@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import contentData from "../data/content.json";
+import AdminPanel from "./components/AdminPanel";
 
 const demoImage = (title: string, subtitle: string, variant = 1) =>
   `data:image/svg+xml;utf8,${encodeURIComponent(`
@@ -54,83 +56,8 @@ const galleryImage = (title: string, label: string, variant: number) =>
     </svg>
   `)}`;
 
-const works = [
-  {
-    number: "01",
-    title: "スマート配達",
-    type: "WEB / AI",
-    status: "AWARD",
-    year: "2026",
-    subtitle: "再配達を減らす、ドライバー目線の配送支援システム。",
-    description: "配達員と受取人の双方が柔軟に予定を調整できる仕組みにより、再配達を減らすことを目指したチーム開発です。実装、自治体ヒアリング、LP制作を担当しました。",
-    tags: ["AWS", "Team Development", "UI/UX"],
-    image: demoImage("SMART DELIVERY", "Delivery Support System", 1),
-    role: "実装 / ヒアリング / LP制作",
-    team: "3人チーム",
-    tools: ["AWS", "TypeScript", "HTML/CSS", "GitHub"],
-    challenge: "限られた開発期間の中で、プロダクトのコア機能を早い段階で完成させ、プレゼンや検証に時間を回せる進め方を意識しました。",
-    highlights: ["実装スピードを上げる開発フローを整備", "コア機能を早期に完成させ、発表準備の時間を確保", "ヒアリングを通して課題との接続を強化"],
-    gallery: [galleryImage("SMART DELIVERY", "DRIVER DASHBOARD", 1), galleryImage("SMART DELIVERY", "DELIVERY FLOW", 2), galleryImage("SMART DELIVERY", "LANDING PAGE", 3)],
-  },
-  {
-    number: "02",
-    title: "FlipilF",
-    type: "GAME",
-    status: "UNITY",
-    year: "2025",
-    subtitle: "『何でも入れ替える』を軸にしたゲーム作品。",
-    description: "オブジェクト同士を入れ替えるルールを中心に、プレイヤーが状況を読み替えながら進むゲームとして企画・制作しました。",
-    tags: ["Unity", "C#", "Game Design"],
-    image: demoImage("FLIPILF", "Unity Game Project", 2),
-    role: "企画 / ゲームデザイン / 実装",
-    team: "個人制作",
-    tools: ["Unity", "C#"],
-    challenge: "『入れ替える』という一つのルールから、プレイヤーが試行錯誤したくなる状況をどこまで作れるかを重視して設計しました。",
-    highlights: ["ルールを短時間で理解できる導入", "同じ操作から異なる攻略方法が生まれる構成", "視覚的なフィードバックを重視"],
-    gallery: [galleryImage("FLIPILF", "GAME PLAY", 1), galleryImage("FLIPILF", "LEVEL DESIGN", 2), galleryImage("FLIPILF", "SYSTEM UI", 3)],
-  },
-  {
-    number: "03",
-    title: "中華統一 ～英雄札譚～",
-    type: "PLANNING",
-    status: "GAME",
-    year: "2026",
-    subtitle: "デッキ構築ローグライク × 中国史のゲーム企画。",
-    description: "英雄や戦術をカードとして組み合わせながら中国統一を目指す企画です。リスクとリターンの選択や周回性を重視して設計しました。",
-    tags: ["Planning", "Level Design", "Scenario"],
-    image: demoImage("HEROIC CARDS", "Deck-building Roguelike", 3),
-    role: "企画 / システム設計 / レベルデザイン / シナリオ",
-    team: "企画作品",
-    tools: ["Game Planning", "Level Design", "Scenario"],
-    challenge: "歴史題材を単なる世界観として使うのではなく、武将の個性や勢力関係がゲームの選択そのものに影響する構造を目指しました。",
-    highlights: ["デッキ構築と勢力争いを結び付けたシステム", "安全策と高リターンの選択を常に提示", "周回ごとに異なるイベントが生まれる構成"],
-    gallery: [galleryImage("HEROIC CARDS", "BATTLE SCREEN", 1), galleryImage("HEROIC CARDS", "CARD SYSTEM", 2), galleryImage("HEROIC CARDS", "WORLD MAP", 3)],
-  },
-];
-
-const articles = [
-  {
-    number: "01",
-    date: "2026.08",
-    category: "DEVELOPMENT",
-    title: "開発で考えたことをまとめる記事",
-    description: "制作の中で判断したこと、試したこと、うまくいかなかったことなどを記録するための記事スペースです。",
-  },
-  {
-    number: "02",
-    date: "2026.08",
-    category: "GAME DESIGN",
-    title: "ゲームデザイン・レベルデザインのメモ",
-    description: "遊びやすさ、導線、リスクとリターンなど、ゲーム制作で意識していることを整理して紹介します。",
-  },
-  {
-    number: "03",
-    date: "2026.08",
-    category: "TECH",
-    title: "Web・UI/UXについての制作記録",
-    description: "Web制作やUI設計で工夫した点を、画面や図を交えながら紹介するための枠です。",
-  },
-];
+type Work = (typeof contentData.works)[number] & { image: string; gallery: string[] };
+type Product = (typeof contentData.products)[number] & { image: string };
 
 const skillGroups = [
   {
@@ -163,12 +90,35 @@ const skillGroups = [
 ];
 
 export default function Home() {
+  const works = useMemo<Work[]>(
+    () => contentData.works.map((work, index) => ({
+      ...work,
+      image: work.image || demoImage(work.title.toUpperCase(), work.type, (index % 3) + 1),
+      gallery: work.gallery.length > 0 ? work.gallery : [
+        galleryImage(work.title, "SCREEN / PHOTO 01", 1),
+        galleryImage(work.title, "SCREEN / PHOTO 02", 2),
+        galleryImage(work.title, "SCREEN / PHOTO 03", 3),
+      ],
+    })),
+    [],
+  );
+
+  const products = useMemo<Product[]>(
+    () => contentData.products.map((product, index) => ({
+      ...product,
+      image: product.image || demoImage(product.title.toUpperCase(), product.type, (index % 3) + 1),
+    })),
+    [],
+  );
+
+  const articles = contentData.articles;
   const [activeWork, setActiveWork] = useState(0);
   const [selectedWork, setSelectedWork] = useState<number | null>(null);
 
   const previousWork = () => setActiveWork((current) => (current - 1 + works.length) % works.length);
   const nextWork = () => setActiveWork((current) => (current + 1) % works.length);
   const closeModal = () => setSelectedWork(null);
+  const modalWork = selectedWork === null ? null : works[selectedWork];
 
   useEffect(() => {
     if (selectedWork === null) return;
@@ -183,8 +133,6 @@ export default function Home() {
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [selectedWork]);
-
-  const modalWork = selectedWork === null ? null : works[selectedWork];
 
   return (
     <main>
@@ -212,13 +160,12 @@ export default function Home() {
         .work-slide-description { margin: 18px 0 14px; color: #242424; font-size: 17px; line-height: 1.8; font-weight: 600; }
         .work-slide-footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; padding-top: 14px; border-top: 1px dashed #cfcfcf; }
         .work-hashtags { margin: 0; font-size: 13px; line-height: 1.7; font-weight: 800; }
-        .view-more { appearance: none; padding: 0; border: 0; background: transparent; color: inherit; white-space: nowrap; font-size: 15px; font-weight: 900; letter-spacing: .04em; cursor: pointer; }
-        .view-more:hover { opacity: .55; }
+        .view-more { appearance: none; border: 0; padding: 0; background: transparent; color: inherit; white-space: nowrap; font: inherit; font-size: 15px; font-weight: 900; letter-spacing: .04em; cursor: pointer; }
+        .work-external { display: inline-flex; margin-top: 14px; padding: 9px 13px; border: 1.5px solid #0a0a0a; border-radius: 999px; font-size: 11px; font-weight: 800; }
         .carousel-arrow { position: absolute; z-index: 5; top: 50%; width: 58px; height: 58px; display: grid; place-items: center; border: 3px solid #0a0a0a; border-radius: 50%; background: #fff; color: #0a0a0a; font-size: 28px; cursor: pointer; transform: translateY(-50%); }
-        .carousel-arrow:hover { background: #0a0a0a; color: #fff; }
         .carousel-arrow.left { left: max(0px, calc(50% - 570px)); }
         .carousel-arrow.right { right: max(0px, calc(50% - 570px)); }
-        .carousel-dots { display: flex; justify-content: center; gap: 10px; margin-top: 2px; }
+        .carousel-dots { display: flex; justify-content: center; gap: 10px; }
         .carousel-dot { width: 10px; height: 10px; padding: 0; border: 2px solid #0a0a0a; border-radius: 999px; background: #fff; cursor: pointer; }
         .carousel-dot.active { width: 34px; background: #0a0a0a; }
 
@@ -229,15 +176,14 @@ export default function Home() {
         .products-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
         .product-card { overflow: hidden; display: flex; flex-direction: column; background: #fff; border: 1px solid #d6d6d6; border-radius: 22px; box-shadow: 0 12px 28px rgba(0,0,0,.06); }
         .product-image-wrap { position: relative; overflow: hidden; aspect-ratio: 16 / 9; border-bottom: 1px solid #dedede; background: #eee; }
-        .product-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
-        .product-card:hover .product-image-wrap img { transform: scale(1.025); }
+        .product-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .product-tech { position: absolute; top: 14px; right: 14px; padding: 7px 10px; border: 1px solid #bbb; border-radius: 999px; background: rgba(255,255,255,.92); font-size: 10px; font-weight: 800; letter-spacing: .07em; }
         .product-body { display: flex; flex: 1; flex-direction: column; padding: 26px 28px 22px; }
         .product-body h3 { margin: 0; font-size: clamp(24px, 2.5vw, 34px); line-height: 1.2; letter-spacing: -.04em; }
         .product-body > p { margin: 14px 0 22px; color: #4b4b4b; font-size: 14px; line-height: 1.8; }
         .product-bottom { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-top: auto; padding-top: 16px; border-top: 1px solid #ececec; }
         .product-meta { color: #777; font-size: 11px; line-height: 1.6; }
-        .product-button { appearance: none; padding: 9px 13px; border: 1.5px solid #0a0a0a; border-radius: 999px; background: #fff; color: #0a0a0a; font-size: 11px; font-weight: 800; cursor: pointer; }
+        .product-button { padding: 9px 13px; border: 1.5px solid #0a0a0a; border-radius: 999px; background: #fff; color: #0a0a0a; font-size: 11px; font-weight: 800; cursor: pointer; }
         .product-button:hover { background: #0a0a0a; color: #fff; }
 
         .articles-section { padding: 128px 0; background: #fff; }
@@ -249,11 +195,11 @@ export default function Home() {
         .article-main h3 { margin: 0; font-size: clamp(24px, 3vw, 38px); letter-spacing: -.04em; }
         .article-main p { max-width: 720px; margin: 10px 0 0; color: #4b4b4b; font-size: 14px; line-height: 1.8; }
         .article-arrow { font-size: 24px; text-align: right; }
+        .article-card-link { display: contents; }
 
         .modal-backdrop { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 32px; background: rgba(0,0,0,.72); backdrop-filter: blur(5px); }
         .modal-window { position: relative; width: min(1040px, 100%); max-height: calc(100vh - 64px); overflow-y: auto; padding: 40px; background: #fff; border: 3px solid #0a0a0a; border-radius: 26px; box-shadow: 18px 18px 0 #0a0a0a; }
         .modal-close { position: sticky; top: 0; z-index: 3; float: right; width: 48px; height: 48px; border: 2px solid #0a0a0a; border-radius: 50%; background: #fff; font-size: 26px; cursor: pointer; }
-        .modal-close:hover { background: #0a0a0a; color: #fff; }
         .modal-meta { display: flex; flex-wrap: wrap; gap: 9px; padding-right: 64px; font-size: 11px; font-weight: 800; }
         .modal-title { margin: 14px 70px 8px 0; font-size: clamp(42px, 7vw, 82px); line-height: .95; letter-spacing: -.065em; }
         .modal-lead { max-width: 760px; margin: 0 0 24px; color: #555; font-size: 16px; line-height: 1.8; }
@@ -263,13 +209,12 @@ export default function Home() {
         .modal-copy { color: #333; font-size: 14px; line-height: 1.9; }
         .modal-facts { margin-top: 30px; border-top: 1px solid #ccc; }
         .modal-facts div { display: grid; grid-template-columns: 105px 1fr; gap: 18px; padding: 14px 0; border-bottom: 1px solid #ddd; }
-        .modal-facts dt { color: #777; font-size: 10px; font-weight: 800; letter-spacing: .08em; }
+        .modal-facts dt { color: #777; font-size: 10px; font-weight: 800; }
         .modal-facts dd { margin: 0; font-size: 13px; font-weight: 700; }
         .modal-tools { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; list-style: none; }
         .modal-tools li { padding: 4px 8px; border: 1px solid #aaa; border-radius: 999px; font-size: 10px; }
         .modal-highlights { margin: 22px 0 0; padding: 0; list-style: none; border-top: 1px solid #ccc; }
         .modal-highlights li { padding: 13px 0; border-bottom: 1px solid #ddd; font-size: 13px; font-weight: 700; }
-        .modal-highlights li::before { content: "↗"; margin-right: 9px; }
         .modal-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
         .modal-gallery img { width: 100%; display: block; border: 2px solid #0a0a0a; border-radius: 14px; }
         .modal-gallery img:first-child { grid-column: 1 / -1; }
@@ -279,29 +224,20 @@ export default function Home() {
           .site-header nav { width: 100%; gap: 16px; }
           .work-carousel-stage { min-height: 650px; }
           .work-slide { width: min(760px, 82vw); min-height: 570px; padding: 24px; }
-          .work-slide.prev { transform: translateX(-72%) scale(.78); }
-          .work-slide.next { transform: translateX(72%) scale(.78); }
-          .carousel-arrow.left { left: 4px; }
-          .carousel-arrow.right { right: 4px; }
           .products-heading, .articles-heading { align-items: flex-start; flex-direction: column; }
           .article-card { grid-template-columns: 54px 120px 1fr 28px; gap: 16px; }
         }
-
         @media (max-width: 700px) {
-          .work-carousel-wrap { padding-bottom: 54px; }
           .work-carousel-stage { min-height: 620px; }
           .work-slide { width: calc(100% - 18px); min-height: 550px; border-width: 3px; border-radius: 22px; box-shadow: 10px 10px 0 #0a0a0a; padding: 20px; }
           .work-slide.prev, .work-slide.next { opacity: 0; transform: scale(.92); }
-          .work-slide-description { font-size: 14px; }
-          .work-slide-footer { align-items: flex-start; flex-direction: column; gap: 8px; }
           .carousel-arrow { top: auto; bottom: -3px; width: 46px; height: 46px; font-size: 22px; transform: none; }
           .carousel-arrow.left { left: 18px; }
           .carousel-arrow.right { right: 18px; }
           .products-section, .articles-section { padding: 88px 0; }
           .products-grid { grid-template-columns: 1fr; gap: 22px; }
           .article-card { grid-template-columns: 40px 1fr 26px; }
-          .article-meta { grid-column: 2; }
-          .article-main { grid-column: 2; }
+          .article-meta, .article-main { grid-column: 2; }
           .article-arrow { grid-column: 3; grid-row: 1 / span 2; }
           .modal-backdrop { padding: 14px; }
           .modal-window { max-height: calc(100vh - 28px); padding: 24px 20px; border-radius: 18px; box-shadow: 8px 8px 0 #0a0a0a; }
@@ -333,36 +269,35 @@ export default function Home() {
 
       <section id="works" className="section-shell section-block">
         <div className="section-heading"><p className="eyebrow">SELECTED WORKS</p><h2>WORK</h2></div>
-        <div className="work-carousel-wrap">
-          <div className="work-carousel-stage">
-            {works.map((work, index) => {
-              const previous = (activeWork - 1 + works.length) % works.length;
-              const next = (activeWork + 1) % works.length;
-              const state = index === activeWork ? "active" : index === previous ? "prev" : index === next ? "next" : "hidden";
-              return (
-                <article className={`work-slide ${state}`} key={work.number} aria-hidden={index !== activeWork}>
-                  <div className="work-slide-top">
-                    <div className="work-meta"><span className="work-index">{work.number} //</span><span className="work-pill">{work.type}</span><span className="work-status">● {work.status}</span></div>
-                    <span className="work-year">{work.year}</span>
-                  </div>
-                  <h3>{work.title}</h3>
-                  <p className="work-slide-subtitle">{work.subtitle}</p>
-                  <img className="work-thumb" src={work.image} alt={`${work.title} のデモサムネイル`} />
-                  <p className="work-slide-description">{work.description}</p>
-                  <div className="work-slide-footer">
-                    <p className="work-hashtags">{work.tags.map((tag) => `#${tag.replaceAll(" ", "")}`).join("  ")}</p>
-                    <button className="view-more" type="button" onClick={() => setSelectedWork(index)}>VIEW MORE →</button>
-                  </div>
-                </article>
-              );
-            })}
-            <button className="carousel-arrow left" type="button" onClick={previousWork} aria-label="前の作品">←</button>
-            <button className="carousel-arrow right" type="button" onClick={nextWork} aria-label="次の作品">→</button>
+        {works.length > 0 && (
+          <div className="work-carousel-wrap">
+            <div className="work-carousel-stage">
+              {works.map((work, index) => {
+                const previous = (activeWork - 1 + works.length) % works.length;
+                const next = (activeWork + 1) % works.length;
+                const state = index === activeWork ? "active" : index === previous ? "prev" : index === next ? "next" : "hidden";
+                return (
+                  <article className={`work-slide ${state}`} key={work.id} aria-hidden={index !== activeWork}>
+                    <div className="work-slide-top">
+                      <div className="work-meta"><span className="work-index">{work.number} //</span><span className="work-pill">{work.type}</span><span className="work-status">● {work.status}</span></div>
+                      <span className="work-year">{work.year}</span>
+                    </div>
+                    <h3>{work.title}</h3>
+                    <p className="work-slide-subtitle">{work.subtitle}</p>
+                    <img className="work-thumb" src={work.image} alt={`${work.title} のサムネイル`} />
+                    <p className="work-slide-description">{work.description}</p>
+                    <div className="work-slide-footer">
+                      <p className="work-hashtags">{work.tags.map((tag) => `#${tag.replaceAll(" ", "")}`).join("  ")}</p>
+                      <button className="view-more" type="button" onClick={() => setSelectedWork(index)}>VIEW MORE →</button>
+                    </div>
+                  </article>
+                );
+              })}
+              {works.length > 1 && <><button className="carousel-arrow left" type="button" onClick={previousWork} aria-label="前の作品">←</button><button className="carousel-arrow right" type="button" onClick={nextWork} aria-label="次の作品">→</button></>}
+            </div>
+            <div className="carousel-dots">{works.map((work, index) => <button key={work.id} type="button" className={`carousel-dot ${index === activeWork ? "active" : ""}`} onClick={() => setActiveWork(index)} aria-label={`${work.title}を表示`} />)}</div>
           </div>
-          <div className="carousel-dots" aria-label="作品を選択">
-            {works.map((work, index) => <button key={work.number} type="button" className={`carousel-dot ${index === activeWork ? "active" : ""}`} onClick={() => setActiveWork(index)} aria-label={`${work.title}を表示`} />)}
-          </div>
-        </div>
+        )}
       </section>
 
       <section id="profile" className="section-shell section-block profile-grid">
@@ -376,24 +311,14 @@ export default function Home() {
 
       <section id="products" className="products-section">
         <div className="section-shell">
-          <div className="products-heading">
-            <div><p className="eyebrow">ALL PROJECTS</p><h2>PRODUCTS</h2></div>
-            <p className="section-description">これまでの制作物を一覧で見られるセクションです。WORKでは代表作を、PRODUCTSでは全体像を素早く確認できます。</p>
-          </div>
+          <div className="products-heading"><div><p className="eyebrow">ALL PROJECTS</p><h2>PRODUCTS</h2></div><p className="section-description">これまでの制作物を一覧で見られるセクションです。</p></div>
           <div className="products-grid">
-            {works.map((work, index) => (
-              <article className="product-card" key={work.number}>
-                <div className="product-image-wrap">
-                  <img src={work.image} alt={`${work.title} のサムネイル`} />
-                  <span className="product-tech">{work.type}</span>
-                </div>
+            {products.map((product) => (
+              <article className="product-card" key={product.id}>
+                <div className="product-image-wrap"><img src={product.image} alt={`${product.title} のサムネイル`} /><span className="product-tech">{product.type}</span></div>
                 <div className="product-body">
-                  <h3>{work.title}</h3>
-                  <p>{work.subtitle}</p>
-                  <div className="product-bottom">
-                    <div className="product-meta">制作：{work.year}<br />{work.team}</div>
-                    <button className="product-button" type="button" onClick={() => setSelectedWork(index)}>VIEW MORE →</button>
-                  </div>
+                  <h3>{product.title}</h3><p>{product.description}</p>
+                  <div className="product-bottom"><div className="product-meta">制作：{product.year}<br />{product.meta}</div>{product.url ? <a className="product-button" href={product.url} target="_blank" rel="noreferrer">OPEN →</a> : <span className="product-meta">URL未設定</span>}</div>
                 </div>
               </article>
             ))}
@@ -403,66 +328,40 @@ export default function Home() {
 
       <section id="article" className="articles-section">
         <div className="section-shell">
-          <div className="articles-heading">
-            <div><p className="eyebrow">WRITING / NOTES</p><h2>ARTICLE</h2></div>
-            <p className="section-description">制作過程や考えたこと、技術・ゲームデザインについての記事を掲載するためのセクションです。</p>
-          </div>
+          <div className="articles-heading"><div><p className="eyebrow">WRITING / NOTES</p><h2>ARTICLE</h2></div><p className="section-description">制作過程やゲームデザイン、技術についての記事を紹介します。</p></div>
           <div className="article-list">
-            {articles.map((article) => (
-              <article className="article-card" key={article.number}>
-                <div className="article-number">{article.number}</div>
-                <div className="article-meta">{article.date}<br />{article.category}</div>
-                <div className="article-main"><h3>{article.title}</h3><p>{article.description}</p></div>
-                <div className="article-arrow">↗</div>
-              </article>
-            ))}
+            {articles.map((article) => {
+              const inner = <><div className="article-number">{article.number}</div><div className="article-meta">{article.date}<br />{article.category}</div><div className="article-main"><h3>{article.title}</h3><p>{article.description}</p></div><div className="article-arrow">↗</div></>;
+              return article.url ? <a className="article-card" key={article.id} href={article.url} target="_blank" rel="noreferrer">{inner}</a> : <article className="article-card" key={article.id}>{inner}</article>;
+            })}
           </div>
         </div>
       </section>
 
       <section id="skills" className="skills-showcase">
-        <div className="section-shell skills-inner">
-          <h2 className="skills-title">スキルセット</h2>
-          <div className="skill-groups">
-            {skillGroups.map((group) => (
-              <section className="skill-group" key={group.title}>
-                <h3>{group.title}</h3>
-                <div className="skill-logo-row">
-                  {group.skills.map((skill) => <div className="skill-logo-item" key={skill.name} title={skill.name} aria-label={skill.name}><img src={skill.icon} alt="" loading="lazy" /><span>{skill.name}</span></div>)}
-                </div>
-              </section>
-            ))}
-          </div>
-        </div>
+        <div className="section-shell skills-inner"><h2 className="skills-title">スキルセット</h2><div className="skill-groups">{skillGroups.map((group) => <section className="skill-group" key={group.title}><h3>{group.title}</h3><div className="skill-logo-row">{group.skills.map((skill) => <div className="skill-logo-item" key={skill.name} title={skill.name}><img src={skill.icon} alt="" /><span>{skill.name}</span></div>)}</div></section>)}</div></div>
       </section>
 
       <section id="contact" className="contact-section"><div className="section-shell contact-inner"><p className="eyebrow">GET IN TOUCH</p><h2>LET&apos;S MAKE<br />SOMETHING GOOD.</h2><div className="contact-links"><a href="https://github.com/nine0511" target="_blank" rel="noreferrer">GitHub ↗</a></div><footer><span>© 2026 nine0511</span><a href="#top">BACK TO TOP ↑</a></footer></div></section>
 
       {modalWork && (
-        <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) closeModal(); }}>
+        <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) closeModal(); }}>
           <section className="modal-window" role="dialog" aria-modal="true" aria-label={`${modalWork.title} の詳細`}>
-            <button className="modal-close" type="button" onClick={closeModal} aria-label="詳細を閉じる">×</button>
+            <button className="modal-close" type="button" onClick={closeModal}>×</button>
             <div className="modal-meta"><span>{modalWork.number} //</span><span className="work-pill">{modalWork.type}</span><span className="work-status">● {modalWork.status}</span><span>{modalWork.year}</span></div>
-            <h2 className="modal-title">{modalWork.title}</h2>
-            <p className="modal-lead">{modalWork.subtitle}</p>
+            <h2 className="modal-title">{modalWork.title}</h2><p className="modal-lead">{modalWork.subtitle}</p>
             <img className="modal-main-image" src={modalWork.image} alt={`${modalWork.title} メインビジュアル`} />
+            {modalWork.url && <a className="work-external" href={modalWork.url} target="_blank" rel="noreferrer">OPEN PROJECT ↗</a>}
             <div className="modal-info-grid">
               <div><p className="eyebrow">PROJECT DETAIL</p><h3>作品詳細</h3></div>
-              <div className="modal-copy">
-                <p>{modalWork.description}</p>
-                <dl className="modal-facts">
-                  <div><dt>ROLE</dt><dd>{modalWork.role}</dd></div>
-                  <div><dt>TEAM</dt><dd>{modalWork.team}</dd></div>
-                  <div><dt>TOOLS</dt><dd><ul className="modal-tools">{modalWork.tools.map((tool) => <li key={tool}>{tool}</li>)}</ul></dd></div>
-                </dl>
-                <p style={{marginTop: 30}}>{modalWork.challenge}</p>
-                <ul className="modal-highlights">{modalWork.highlights.map((item) => <li key={item}>{item}</li>)}</ul>
-              </div>
+              <div className="modal-copy"><p>{modalWork.description}</p><dl className="modal-facts"><div><dt>ROLE</dt><dd>{modalWork.role}</dd></div><div><dt>TEAM</dt><dd>{modalWork.team}</dd></div><div><dt>TOOLS</dt><dd><ul className="modal-tools">{modalWork.tools.map((tool) => <li key={tool}>{tool}</li>)}</ul></dd></div></dl><p style={{marginTop: 30}}>{modalWork.challenge}</p><ul className="modal-highlights">{modalWork.highlights.map((item) => <li key={item}>↗ {item}</li>)}</ul></div>
             </div>
-            <div className="modal-gallery">{modalWork.gallery.map((image, index) => <img key={image} src={image} alt={`${modalWork.title} ギャラリー ${index + 1}`} />)}</div>
+            <div className="modal-gallery">{modalWork.gallery.map((image, index) => <img key={`${image}-${index}`} src={image} alt={`${modalWork.title} ギャラリー ${index + 1}`} />)}</div>
           </section>
         </div>
       )}
+
+      <AdminPanel />
     </main>
   );
 }
