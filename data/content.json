@@ -17,7 +17,7 @@
       "tools": ["AWS", "TypeScript", "HTML/CSS", "GitHub"],
       "challenge": "限られた開発期間の中で、プロダクトのコア機能を早い段階で完成させ、プレゼンや検証に時間を回せる進め方を意識しました。",
       "highlights": ["実装スピードを上げる開発フローを整備", "コア機能を早期に完成させ、発表準備の時間を確保", "ヒアリングを通して課題との接続を強化"],
-      "gallery": []
+      "gallery": ["https://placehold.co/1200x760/ffffff/111111?text=SMART+DELIVERY+01", "https://placehold.co/1200x760/f3f3f3/111111?text=SMART+DELIVERY+02", "https://placehold.co/1200x760/eeeeee/111111?text=SMART+DELIVERY+03"]
     },
     {
       "id": "flipilf",
@@ -36,7 +36,7 @@
       "tools": ["Unity", "C#"],
       "challenge": "『入れ替える』という一つのルールから、プレイヤーが試行錯誤したくなる状況をどこまで作れるかを重視して設計しました。",
       "highlights": ["ルールを短時間で理解できる導入", "同じ操作から異なる攻略方法が生まれる構成", "視覚的なフィードバックを重視"],
-      "gallery": []
+      "gallery": ["https://placehold.co/1200x760/ffffff/111111?text=FLIPILF+01", "https://placehold.co/1200x760/f3f3f3/111111?text=FLIPILF+02", "https://placehold.co/1200x760/eeeeee/111111?text=FLIPILF+03"]
     },
     {
       "id": "heroic-cards",
@@ -55,7 +55,7 @@
       "tools": ["Game Planning", "Level Design", "Scenario"],
       "challenge": "歴史題材を単なる世界観として使うのではなく、武将の個性や勢力関係がゲームの選択そのものに影響する構造を目指しました。",
       "highlights": ["デッキ構築と勢力争いを結び付けたシステム", "安全策と高リターンの選択を常に提示", "周回ごとに異なるイベントが生まれる構成"],
-      "gallery": []
+      "gallery": ["https://placehold.co/1200x760/ffffff/111111?text=HEROIC+CARDS+01", "https://placehold.co/1200x760/f3f3f3/111111?text=HEROIC+CARDS+02", "https://placehold.co/1200x760/eeeeee/111111?text=HEROIC+CARDS+03"]
     }
   ],
   "products": [
