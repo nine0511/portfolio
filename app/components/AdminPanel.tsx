@@ -10,6 +10,8 @@ type SiteContent = {
 };
 
 const emptyContent: SiteContent = { works: [], products: [], articles: [] };
+const acceptedImageTypes = ["image/png", "image/jpeg", "image/webp", "image/gif"];
+const maxImageSize = 4 * 1024 * 1024;
 
 const sectionLabels: Record<SectionKey, string> = {
   works: "WORK",
@@ -71,6 +73,7 @@ export default function AdminPanel() {
   const [content, setContent] = useState<SiteContent>(emptyContent);
   const [activeSection, setActiveSection] = useState<SectionKey>("works");
   const [busy, setBusy] = useState(false);
+  const [uploading, setUploading] = useState<string | null>(null);
   const [message, setMessage] = useState("");
   const [canSave, setCanSave] = useState(false);
 
@@ -168,10 +171,73 @@ export default function AdminPanel() {
     }
   };
 
+  const uploadImages = async (
+    section: SectionKey,
+    index: number,
+    key: string,
+    fileList: FileList | File[],
+    multiple = false,
+  ) => {
+    const files = Array.from(fileList);
+    if (!files.length) return;
+
+    const invalid = files.find((file) => !acceptedImageTypes.includes(file.type));
+    if (invalid) {
+      setMessage(`${invalid.name}: PNG / JPEG / WebP / GIF のみ対応しています。`);
+      return;
+    }
+    const oversized = files.find((file) => file.size > maxImageSize);
+    if (oversized) {
+      setMessage(`${oversized.name}: 1ファイル4MB以下にしてください。`);
+      return;
+    }
+
+    const uploadKey = `${section}-${index}-${key}`;
+    setUploading(uploadKey);
+    setMessage("");
+
+    try {
+      const uploadedPaths: string[] = [];
+      const filesToUpload = multiple ? files.slice(0, 12) : files.slice(0, 1);
+
+      for (const file of filesToUpload) {
+        const formData = new FormData();
+        formData.append("file", file);
+        const response = await fetch("/api/admin/upload", {
+          method: "POST",
+          body: formData,
+        });
+        const body = await response.json();
+        if (!response.ok) throw new Error(body.error || `${file.name} のアップロードに失敗しました。`);
+        uploadedPaths.push(body.path);
+      }
+
+      if (multiple) {
+        const currentValue = content[section][index]?.[key];
+        const currentPaths = Array.isArray(currentValue) ? currentValue : [];
+        updateItem(section, index, key, [...currentPaths, ...uploadedPaths].slice(0, 12));
+      } else {
+        updateItem(section, index, key, uploadedPaths[0] || "");
+      }
+
+      setMessage(`${uploadedPaths.length}枚の画像をアップロードしました。最後に「SAVE & DEPLOY」を押してください。`);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "画像アップロードに失敗しました。");
+    } finally {
+      setUploading(null);
+    }
+  };
+
   const listValue = (value: unknown) => (Array.isArray(value) ? value.join("\n") : "");
   const parseList = (value: string) => value.split(/\n|,/).map((item) => item.trim()).filter(Boolean);
 
-  const renderInput = (label: string, section: SectionKey, index: number, key: string, options?: { multiline?: boolean; list?: boolean; placeholder?: string }) => {
+  const renderInput = (
+    label: string,
+    section: SectionKey,
+    index: number,
+    key: string,
+    options?: { multiline?: boolean; list?: boolean; placeholder?: string },
+  ) => {
     const item = content[section][index];
     const value = options?.list ? listValue(item[key]) : item[key] ?? "";
     return (
@@ -195,6 +261,100 @@ export default function AdminPanel() {
     );
   };
 
+  const renderImageUploader = (
+    label: string,
+    section: SectionKey,
+    index: number,
+    key: string,
+    multiple = false,
+  ) => {
+    const uploadKey = `${section}-${index}-${key}`;
+    const item = content[section][index];
+    const value = item?.[key];
+    const paths: string[] = multiple ? (Array.isArray(value) ? value : []) : value ? [value] : [];
+    const isUploading = uploading === uploadKey;
+    const inputId = `upload-${uploadKey}`;
+
+    return (
+      <div className="admin-upload-field">
+        <div className="admin-upload-label">
+          <span>{label}</span>
+          <small>{multiple ? "複数選択可・最大12枚" : "1枚"} / PNG・JPEG・WebP・GIF / 4MB以下</small>
+        </div>
+
+        <div
+          className={`admin-dropzone ${isUploading ? "uploading" : ""}`}
+          onDragOver={(event) => {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "copy";
+          }}
+          onDrop={(event) => {
+            event.preventDefault();
+            if (!canSave || isUploading) return;
+            uploadImages(section, index, key, event.dataTransfer.files, multiple);
+          }}
+        >
+          <input
+            id={inputId}
+            type="file"
+            accept="image/png,image/jpeg,image/webp,image/gif"
+            multiple={multiple}
+            disabled={!canSave || isUploading}
+            onChange={(event) => {
+              if (event.target.files) uploadImages(section, index, key, event.target.files, multiple);
+              event.currentTarget.value = "";
+            }}
+          />
+          <label htmlFor={inputId}>
+            <strong>{isUploading ? "UPLOADING..." : "画像をここにドロップ"}</strong>
+            <span>{canSave ? "またはクリックしてファイルを選択" : "GitHub保存用トークンを設定してください"}</span>
+          </label>
+        </div>
+
+        {paths.length > 0 && (
+          <div className={`admin-image-previews ${multiple ? "multiple" : ""}`}>
+            {paths.map((path, pathIndex) => (
+              <figure key={`${path}-${pathIndex}`}>
+                <img src={path} alt={`${label} ${pathIndex + 1}`} />
+                <figcaption title={path}>{path}</figcaption>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (multiple) {
+                      updateItem(section, index, key, paths.filter((_, currentIndex) => currentIndex !== pathIndex));
+                    } else {
+                      updateItem(section, index, key, "");
+                    }
+                  }}
+                >
+                  ×
+                </button>
+              </figure>
+            ))}
+          </div>
+        )}
+
+        <label className="admin-field admin-url-fallback">
+          <span>{multiple ? "画像パス / URL（1行1枚・手入力も可）" : "画像パス / URL（手入力も可）"}</span>
+          {multiple ? (
+            <textarea
+              rows={3}
+              value={listValue(value)}
+              placeholder="/uploads/... または https://..."
+              onChange={(event) => updateItem(section, index, key, parseList(event.target.value))}
+            />
+          ) : (
+            <input
+              value={value ?? ""}
+              placeholder="/uploads/... または https://..."
+              onChange={(event) => updateItem(section, index, key, event.target.value)}
+            />
+          )}
+        </label>
+      </div>
+    );
+  };
+
   const renderWork = (item: any, index: number) => (
     <div className="admin-item" key={item.id || index}>
       <div className="admin-item-head">
@@ -211,8 +371,8 @@ export default function AdminPanel() {
         {renderInput("ステータス", "works", index, "status")}
         {renderInput("年", "works", index, "year")}
         {renderInput("外部URL", "works", index, "url", { placeholder: "https://..." })}
-        {renderInput("メイン画像URL", "works", index, "image", { placeholder: "https://..." })}
       </div>
+      {renderImageUploader("メイン画像", "works", index, "image")}
       {renderInput("短い説明", "works", index, "subtitle", { multiline: true })}
       {renderInput("詳細説明", "works", index, "description", { multiline: true })}
       <div className="admin-grid">
@@ -225,7 +385,7 @@ export default function AdminPanel() {
       </div>
       {renderInput("工夫したこと", "works", index, "challenge", { multiline: true })}
       {renderInput("ポイント（1行1項目）", "works", index, "highlights", { list: true })}
-      {renderInput("ギャラリー画像URL（1行1枚）", "works", index, "gallery", { list: true, placeholder: "https://..." })}
+      {renderImageUploader("ギャラリー画像", "works", index, "gallery", true)}
     </div>
   );
 
@@ -245,8 +405,8 @@ export default function AdminPanel() {
         {renderInput("年", "products", index, "year")}
         {renderInput("補足", "products", index, "meta")}
         {renderInput("リンクURL", "products", index, "url", { placeholder: "https://..." })}
-        {renderInput("画像URL", "products", index, "image", { placeholder: "https://..." })}
       </div>
+      {renderImageUploader("プロダクト画像", "products", index, "image")}
       {renderInput("説明", "products", index, "description", { multiline: true })}
     </div>
   );
@@ -266,8 +426,8 @@ export default function AdminPanel() {
         {renderInput("カテゴリ", "articles", index, "category")}
         {renderInput("日付", "articles", index, "date")}
         {renderInput("記事URL", "articles", index, "url", { placeholder: "https://..." })}
-        {renderInput("画像URL", "articles", index, "image", { placeholder: "https://..." })}
       </div>
+      {renderImageUploader("記事サムネイル", "articles", index, "image")}
       {renderInput("概要", "articles", index, "description", { multiline: true })}
     </div>
   );
@@ -317,7 +477,7 @@ export default function AdminPanel() {
                 </div>
 
                 <div className="admin-toolbar">
-                  <p>画像は <strong>https://...</strong> の画像URLを指定してください。</p>
+                  <p>画像はドラッグ＆ドロップでアップロードできます。アップロード後、最後に <strong>SAVE & DEPLOY</strong> を押してください。</p>
                   <button onClick={addItem}>＋ 項目を追加</button>
                 </div>
 
@@ -332,7 +492,7 @@ export default function AdminPanel() {
                     {!canSave && <span className="admin-warning">GitHub保存用トークンが未設定です。</span>}
                     {message && <span className="admin-message">{message}</span>}
                   </div>
-                  <button className="admin-primary" onClick={save} disabled={busy || !canSave}>{busy ? "保存中..." : "SAVE & DEPLOY"}</button>
+                  <button className="admin-primary" onClick={save} disabled={busy || Boolean(uploading) || !canSave}>{busy ? "保存中..." : "SAVE & DEPLOY"}</button>
                 </footer>
               </>
             )}
@@ -365,8 +525,8 @@ export default function AdminPanel() {
         .admin-tabs button.active { background: #0a0a0a; color: #fff; border-color: #0a0a0a; }
         .admin-tabs span { opacity: .55; margin-left: 6px; }
         .admin-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 28px; }
-        .admin-toolbar p { margin: 0; color: #666; font-size: 12px; }
-        .admin-toolbar button { padding: 9px 13px; border: 1.5px solid #0a0a0a; border-radius: 999px; background: #fff; font-weight: 800; cursor: pointer; }
+        .admin-toolbar p { margin: 0; color: #666; font-size: 12px; line-height: 1.6; }
+        .admin-toolbar button { flex: 0 0 auto; padding: 9px 13px; border: 1.5px solid #0a0a0a; border-radius: 999px; background: #fff; font-weight: 800; cursor: pointer; }
         .admin-items { display: grid; gap: 20px; padding: 0 28px 110px; }
         .admin-item { padding: 22px; background: #fff; border: 1px solid #d3d3d3; border-radius: 15px; }
         .admin-item-head { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding-bottom: 16px; margin-bottom: 18px; border-bottom: 1px solid #e2e2e2; }
@@ -376,9 +536,26 @@ export default function AdminPanel() {
         .admin-item-actions .danger { color: #a40000; }
         .admin-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
         .admin-field { display: grid; gap: 6px; margin-bottom: 12px; }
-        .admin-field span { color: #666; font-size: 10px; font-weight: 800; letter-spacing: .06em; }
+        .admin-field span, .admin-upload-label > span { color: #666; font-size: 10px; font-weight: 800; letter-spacing: .06em; }
         .admin-field input, .admin-field textarea { width: 100%; padding: 10px 11px; border: 1px solid #c7c7c7; border-radius: 8px; background: #fbfbfb; color: #111; font: inherit; font-size: 13px; resize: vertical; }
         .admin-field input:focus, .admin-field textarea:focus { outline: 2px solid #111; outline-offset: -1px; background: #fff; }
+        .admin-upload-field { margin: 7px 0 18px; padding: 16px; border: 1px solid #d7d7d7; border-radius: 12px; background: #fafafa; }
+        .admin-upload-label { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 10px; }
+        .admin-upload-label small { color: #888; font-size: 10px; }
+        .admin-dropzone { position: relative; min-height: 118px; display: grid; place-items: center; border: 2px dashed #aaa; border-radius: 11px; background: #fff; transition: border-color .18s ease, background .18s ease; }
+        .admin-dropzone:hover { border-color: #111; background: #f3f3f3; }
+        .admin-dropzone.uploading { opacity: .55; pointer-events: none; }
+        .admin-dropzone input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+        .admin-dropzone label { width: 100%; min-height: 114px; display: grid; place-content: center; gap: 6px; padding: 18px; text-align: center; cursor: pointer; }
+        .admin-dropzone label strong { font-size: 13px; letter-spacing: .03em; }
+        .admin-dropzone label span { color: #777; font-size: 11px; }
+        .admin-image-previews { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 12px; }
+        .admin-image-previews.multiple { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .admin-image-previews figure { position: relative; overflow: hidden; margin: 0; border: 1px solid #ccc; border-radius: 9px; background: #fff; }
+        .admin-image-previews img { width: 100%; aspect-ratio: 16 / 9; display: block; object-fit: cover; background: #eee; }
+        .admin-image-previews figcaption { overflow: hidden; padding: 7px 34px 7px 8px; color: #777; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+        .admin-image-previews figure > button { position: absolute; top: 6px; right: 6px; width: 27px; height: 27px; display: grid; place-items: center; border: 1px solid #111; border-radius: 50%; background: rgba(255,255,255,.94); color: #111; font-size: 17px; cursor: pointer; }
+        .admin-url-fallback { margin-top: 10px; margin-bottom: 0; }
         .admin-savebar { position: sticky; bottom: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; background: rgba(255,255,255,.97); border-top: 1px solid #ccc; backdrop-filter: blur(12px); }
         .admin-savebar > div { display: grid; gap: 4px; }
         @media (max-width: 700px) {
@@ -386,10 +563,11 @@ export default function AdminPanel() {
           .admin-panel { max-height: calc(100vh - 16px); border-radius: 14px; box-shadow: 6px 6px 0 #0a0a0a; }
           .admin-header, .admin-tabs, .admin-toolbar, .admin-items, .admin-savebar { padding-left: 15px; padding-right: 15px; }
           .admin-grid { grid-template-columns: 1fr; }
-          .admin-item-head, .admin-toolbar, .admin-savebar { align-items: flex-start; flex-direction: column; }
+          .admin-item-head, .admin-toolbar, .admin-savebar, .admin-upload-label { align-items: flex-start; flex-direction: column; }
           .admin-item-actions { width: 100%; }
           .admin-login { padding: 54px 22px 32px; }
           .admin-primary { width: 100%; }
+          .admin-image-previews.multiple { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
       `}</style>
     </>
