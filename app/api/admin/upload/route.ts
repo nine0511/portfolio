@@ -3,12 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
-const MAX_FILE_SIZE = 4 * 1024 * 1024;
-const MIME_EXTENSIONS: Record<string, string> = {
-  "image/png": "png",
-  "image/jpeg": "jpg",
-  "image/webp": "webp",
-  "image/gif": "gif",
+const MAX_IMAGE_SIZE = 4 * 1024 * 1024;
+const MAX_PDF_SIZE = 12 * 1024 * 1024;
+const MIME_EXTENSIONS: Record<string, { extension: string; directory: string; label: string }> = {
+  "image/png": { extension: "png", directory: "uploads", label: "画像" },
+  "image/jpeg": { extension: "jpg", directory: "uploads", label: "画像" },
+  "image/webp": { extension: "webp", directory: "uploads", label: "画像" },
+  "image/gif": { extension: "gif", directory: "uploads", label: "画像" },
+  "application/pdf": { extension: "pdf", directory: "documents", label: "PDF" },
 };
 
 function sessionToken(secret: string) {
@@ -43,7 +45,7 @@ function safeBaseName(name: string) {
     .replace(/[^a-zA-Z0-9_-]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 48);
-  return safe || "image";
+  return safe || "asset";
 }
 
 export async function POST(request: NextRequest) {
@@ -64,29 +66,31 @@ export async function POST(request: NextRequest) {
     const entry = formData.get("file");
 
     if (!(entry instanceof File)) {
-      return NextResponse.json({ ok: false, error: "画像ファイルを選択してください。" }, { status: 400 });
+      return NextResponse.json({ ok: false, error: "ファイルを選択してください。" }, { status: 400 });
     }
 
-    const extension = MIME_EXTENSIONS[entry.type];
-    if (!extension) {
+    const config = MIME_EXTENSIONS[entry.type];
+    if (!config) {
       return NextResponse.json(
-        { ok: false, error: "PNG / JPEG / WebP / GIF のみアップロードできます。" },
+        { ok: false, error: "PNG / JPEG / WebP / GIF / PDF のみアップロードできます。" },
         { status: 400 },
       );
     }
 
-    if (entry.size <= 0 || entry.size > MAX_FILE_SIZE) {
+    const maxSize = entry.type === "application/pdf" ? MAX_PDF_SIZE : MAX_IMAGE_SIZE;
+    if (entry.size <= 0 || entry.size > maxSize) {
+      const maxMb = Math.round(maxSize / 1024 / 1024);
       return NextResponse.json(
-        { ok: false, error: "画像は1ファイル4MB以下にしてください。" },
+        { ok: false, error: `${config.label}は1ファイル${maxMb}MB以下にしてください。` },
         { status: 400 },
       );
     }
 
     const bytes = Buffer.from(await entry.arrayBuffer());
     const shortId = randomUUID().replace(/-/g, "").slice(0, 10);
-    const filename = `${Date.now()}-${safeBaseName(entry.name)}-${shortId}.${extension}`;
-    const repositoryPath = `public/uploads/${filename}`;
-    const publicPath = `/uploads/${filename}`;
+    const filename = `${Date.now()}-${safeBaseName(entry.name)}-${shortId}.${config.extension}`;
+    const repositoryPath = `public/${config.directory}/${filename}`;
+    const publicPath = `/${config.directory}/${filename}`;
 
     const response = await fetch(
       `https://api.github.com/repos/${owner}/${repo}/contents/${repositoryPath}`,
@@ -99,7 +103,7 @@ export async function POST(request: NextRequest) {
           "X-GitHub-Api-Version": "2022-11-28",
         },
         body: JSON.stringify({
-          message: `Upload portfolio image: ${filename}`,
+          message: `Upload portfolio ${config.label}: ${filename}`,
           content: bytes.toString("base64"),
         }),
       },
@@ -107,14 +111,15 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const detail = await response.text();
-      throw new Error(`GitHubへの画像保存に失敗しました (${response.status}) ${detail.slice(0, 180)}`);
+      throw new Error(`GitHubへの${config.label}保存に失敗しました (${response.status}) ${detail.slice(0, 180)}`);
     }
 
     return NextResponse.json({
       ok: true,
       path: publicPath,
       filename,
-      message: "画像をアップロードしました。",
+      kind: entry.type === "application/pdf" ? "pdf" : "image",
+      message: `${config.label}をアップロードしました。`,
     });
   } catch (error) {
     return NextResponse.json(
