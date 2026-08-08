@@ -3,6 +3,8 @@ import "./globals.css";
 import "./portfolio-overrides.css";
 import "./accent.css";
 import "./showcase.css";
+import "./geometric-background.css";
+import GeometricBackground from "./components/GeometricBackground";
 
 export const metadata: Metadata = {
   title: "Portfolio | nine0511",
@@ -24,7 +26,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <GeometricBackground />
+        <div className="site-content">{children}</div>
+      </body>
     </html>
   );
 }
