@@ -24,38 +24,38 @@ const demoImage = (title: string, subtitle: string) =>
 
 const works = [
   {
+    slug: "smart-delivery",
     number: "01",
     title: "スマート配達",
     type: "WEB / AI",
     status: "AWARD",
     year: "2026",
     subtitle: "再配達を減らす、ドライバー目線の配送支援システム。",
-    description:
-      "配達員と受取人の双方が柔軟に予定を調整できる仕組みにより、再配達を減らすことを目指したチーム開発です。実装、自治体ヒアリング、LP制作を担当しました。",
+    description: "配達員と受取人の双方が柔軟に予定を調整できる仕組みにより、再配達を減らすことを目指したチーム開発です。実装、自治体ヒアリング、LP制作を担当しました。",
     tags: ["AWS", "Team Development", "UI/UX"],
     image: demoImage("SMART DELIVERY", "Delivery Support System"),
   },
   {
+    slug: "flipilf",
     number: "02",
     title: "FlipilF",
     type: "GAME",
     status: "UNITY",
     year: "2025",
     subtitle: "『何でも入れ替える』を軸にしたゲーム作品。",
-    description:
-      "オブジェクト同士を入れ替えるルールを中心に、プレイヤーが状況を読み替えながら進むゲームとして企画・制作しました。ゲームデザインと実装の両面を担当しています。",
+    description: "オブジェクト同士を入れ替えるルールを中心に、プレイヤーが状況を読み替えながら進むゲームとして企画・制作しました。ゲームデザインと実装の両面を担当しています。",
     tags: ["Unity", "C#", "Game Design"],
     image: demoImage("FLIPILF", "Unity Game Project"),
   },
   {
+    slug: "heroic-cards",
     number: "03",
     title: "中華統一 ～英雄札譚～",
     type: "PLANNING",
     status: "GAME",
     year: "2026",
     subtitle: "デッキ構築ローグライク × 中国史のゲーム企画。",
-    description:
-      "英雄や戦術をカードとして組み合わせながら中国統一を目指す企画です。リスクとリターンの選択、歴史人物による戦況変化、周回性を重視して設計しました。",
+    description: "英雄や戦術をカードとして組み合わせながら中国統一を目指す企画です。リスクとリターンの選択、歴史人物による戦況変化、周回性を重視して設計しました。",
     tags: ["Planning", "Level Design", "Scenario"],
     image: demoImage("HEROIC CARDS", "Deck-building Roguelike"),
   },
@@ -118,7 +118,8 @@ export default function Home() {
         .work-slide-description { margin: 18px 0 14px; color: #242424; font-size: 17px; line-height: 1.8; font-weight: 600; }
         .work-slide-footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; padding-top: 14px; border-top: 1px dashed #cfcfcf; }
         .work-hashtags { margin: 0; font-size: 13px; line-height: 1.7; font-weight: 800; }
-        .view-more { white-space: nowrap; font-size: 15px; font-weight: 900; letter-spacing: .04em; }
+        .view-more { white-space: nowrap; font-size: 15px; font-weight: 900; letter-spacing: .04em; transition: opacity .2s ease, transform .2s ease; }
+        .view-more:hover { opacity: .55; transform: translateX(3px); }
         .carousel-arrow { position: absolute; z-index: 5; top: 50%; width: 58px; height: 58px; display: grid; place-items: center; border: 3px solid #0a0a0a; border-radius: 50%; background: #fff; color: #0a0a0a; font-size: 28px; cursor: pointer; transform: translateY(-50%); transition: background .2s ease, color .2s ease, transform .2s ease; }
         .carousel-arrow:hover { background: #0a0a0a; color: #fff; transform: translateY(-50%) scale(1.06); }
         .carousel-arrow.left { left: max(0px, calc(50% - 570px)); }
@@ -126,7 +127,6 @@ export default function Home() {
         .carousel-dots { display: flex; justify-content: center; gap: 10px; margin-top: 2px; }
         .carousel-dot { width: 10px; height: 10px; padding: 0; border: 2px solid #0a0a0a; border-radius: 999px; background: #fff; cursor: pointer; }
         .carousel-dot.active { width: 34px; background: #0a0a0a; }
-
         .skills-showcase { padding: 110px 0 120px; background: #fff; border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf; }
         .skills-inner { text-align: center; }
         .skills-title { margin: 0; font-size: clamp(34px, 4vw, 52px); font-weight: 800; letter-spacing: -0.045em; }
@@ -137,7 +137,6 @@ export default function Home() {
         .skill-logo-item:hover { transform: translateY(-5px) scale(1.05); filter: drop-shadow(0 9px 12px rgba(20,20,20,.10)); }
         .skill-logo-item img { width: 100%; height: 100%; object-fit: contain; display: block; filter: none !important; opacity: 1 !important; }
         .skill-logo-item span { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-
         @media (max-width: 900px) {
           .work-carousel-stage { min-height: 650px; }
           .work-slide { width: min(760px, 82vw); min-height: 570px; padding: 24px; }
@@ -146,7 +145,6 @@ export default function Home() {
           .carousel-arrow.left { left: 4px; }
           .carousel-arrow.right { right: 4px; }
         }
-
         @media (max-width: 700px) {
           .work-carousel-wrap { padding-bottom: 54px; }
           .work-carousel-stage { min-height: 620px; }
@@ -171,18 +169,13 @@ export default function Home() {
 
       <header className="site-header">
         <a className="logo" href="#top" aria-label="トップへ">NINE0511</a>
-        <nav aria-label="メインナビゲーション">
-          <a href="#works">WORK</a><a href="#profile">PROFILE</a><a href="#skills">SKILLS</a><a href="#contact">CONTACT</a>
-        </nav>
+        <nav aria-label="メインナビゲーション"><a href="#works">WORK</a><a href="#profile">PROFILE</a><a href="#skills">SKILLS</a><a href="#contact">CONTACT</a></nav>
       </header>
 
       <section id="top" className="hero section-shell">
         <p className="eyebrow">PORTFOLIO / 2026</p>
         <h1>DESIGNING<br /><span>EXPERIENCES.</span></h1>
-        <div className="hero-bottom">
-          <p>ゲームとWebを中心に、企画・実装・UI/UXまで。<br />「遊びやすさ」と「伝わりやすさ」を考えてものづくりをしています。</p>
-          <a className="scroll-link" href="#works">SCROLL ↓</a>
-        </div>
+        <div className="hero-bottom"><p>ゲームとWebを中心に、企画・実装・UI/UXまで。<br />「遊びやすさ」と「伝わりやすさ」を考えてものづくりをしています。</p><a className="scroll-link" href="#works">SCROLL ↓</a></div>
       </section>
 
       <section id="works" className="section-shell section-block">
@@ -205,7 +198,7 @@ export default function Home() {
                   <p className="work-slide-description">{work.description}</p>
                   <div className="work-slide-footer">
                     <p className="work-hashtags">{work.tags.map((tag) => `#${tag.replaceAll(" ", "")}`).join("  ")}</p>
-                    <span className="view-more">VIEW MORE →</span>
+                    <a className="view-more" href={`/works/${work.slug}`} target="_blank" rel="noreferrer">VIEW MORE →</a>
                   </div>
                 </article>
               );
@@ -213,28 +206,17 @@ export default function Home() {
             <button className="carousel-arrow left" type="button" onClick={previousWork} aria-label="前の作品">←</button>
             <button className="carousel-arrow right" type="button" onClick={nextWork} aria-label="次の作品">→</button>
           </div>
-          <div className="carousel-dots" aria-label="作品を選択">
-            {works.map((work, index) => <button key={work.number} type="button" className={`carousel-dot ${index === activeWork ? "active" : ""}`} onClick={() => setActiveWork(index)} aria-label={`${work.title}を表示`} />)}
-          </div>
+          <div className="carousel-dots" aria-label="作品を選択">{works.map((work, index) => <button key={work.number} type="button" className={`carousel-dot ${index === activeWork ? "active" : ""}`} onClick={() => setActiveWork(index)} aria-label={`${work.title}を表示`} />)}</div>
         </div>
       </section>
 
       <section id="profile" className="section-shell section-block profile-grid">
         <div className="section-heading sticky-heading"><p className="eyebrow">ABOUT ME</p><h2>PROFILE</h2></div>
-        <div className="profile-copy">
-          <p className="lead">情報科学を学びながら、ゲーム制作・Web開発・チーム開発に取り組んでいます。</p>
-          <p>企画だけ、実装だけに閉じず、ユーザーがどう感じるかまで考えて形にすることを大切にしています。特にゲームではレベルデザインやUI、システム設計に関心があります。</p>
-          <dl className="profile-facts"><div><dt>FIELD</dt><dd>Game Design / Web / UI・UX</dd></div><div><dt>BASED IN</dt><dd>Hiroshima, Japan</dd></div><div><dt>FOCUS</dt><dd>Planning × Implementation</dd></div></dl>
-        </div>
+        <div className="profile-copy"><p className="lead">情報科学を学びながら、ゲーム制作・Web開発・チーム開発に取り組んでいます。</p><p>企画だけ、実装だけに閉じず、ユーザーがどう感じるかまで考えて形にすることを大切にしています。特にゲームではレベルデザインやUI、システム設計に関心があります。</p><dl className="profile-facts"><div><dt>FIELD</dt><dd>Game Design / Web / UI・UX</dd></div><div><dt>BASED IN</dt><dd>Hiroshima, Japan</dd></div><div><dt>FOCUS</dt><dd>Planning × Implementation</dd></div></dl></div>
       </section>
 
       <section id="skills" className="skills-showcase">
-        <div className="section-shell skills-inner">
-          <h2 className="skills-title">スキルセット</h2>
-          <div className="skill-groups">
-            {skillGroups.map((group) => <section className="skill-group" key={group.title}><h3>{group.title}</h3><div className="skill-logo-row">{group.skills.map((skill) => <div className="skill-logo-item" key={skill.name} title={skill.name} aria-label={skill.name}><img src={skill.icon} alt="" loading="lazy" /><span>{skill.name}</span></div>)}</div></section>)}
-          </div>
-        </div>
+        <div className="section-shell skills-inner"><h2 className="skills-title">スキルセット</h2><div className="skill-groups">{skillGroups.map((group) => <section className="skill-group" key={group.title}><h3>{group.title}</h3><div className="skill-logo-row">{group.skills.map((skill) => <div className="skill-logo-item" key={skill.name} title={skill.name} aria-label={skill.name}><img src={skill.icon} alt="" loading="lazy" /><span>{skill.name}</span></div>)}</div></section>)}</div></div>
       </section>
 
       <section id="contact" className="contact-section"><div className="section-shell contact-inner"><p className="eyebrow">GET IN TOUCH</p><h2>LET&apos;S MAKE<br />SOMETHING GOOD.</h2><div className="contact-links"><a href="https://github.com/nine0511" target="_blank" rel="noreferrer">GitHub ↗</a></div><footer><span>© 2026 nine0511</span><a href="#top">BACK TO TOP ↑</a></footer></div></section>
