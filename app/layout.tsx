@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./portfolio-overrides.css";
+import "./accent.css";
 
 export const metadata: Metadata = {
   title: "Portfolio | nine0511",
