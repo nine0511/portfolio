@@ -89,9 +89,9 @@
   color: #fff !important;
 }
 
-/* PRODUCTS */
+/* PRODUCTS: translucent so the geometric background remains visible. */
 .products-section {
-  background: #f3f7f4 !important;
+  background: rgba(243, 247, 244, 0.72) !important;
 }
 
 .product-card {
