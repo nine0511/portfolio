@@ -7,6 +7,11 @@
   padding-top: 76px;
 }
 
+/* End the portfolio at SKILL; remove the final contact page. */
+.contact-section {
+  display: none !important;
+}
+
 @media (max-width: 800px) {
   #works.section-block {
     padding-top: 56px;
