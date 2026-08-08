@@ -41,15 +41,15 @@ function sanitizeUrl(value: unknown) {
   }
 }
 
-function sanitizeMedia(value: unknown) {
+function sanitizeAsset(value: unknown) {
   if (typeof value !== "string" || !value.trim()) return "";
   const trimmed = value.trim();
   if (
-    trimmed.startsWith("/uploads/") &&
+    (trimmed.startsWith("/uploads/") || trimmed.startsWith("/documents/")) &&
     !trimmed.includes("..") &&
-    /^\/uploads\/[a-zA-Z0-9._/-]+$/.test(trimmed)
+    /^\/(uploads|documents)\/[a-zA-Z0-9._/-]+$/.test(trimmed)
   ) {
-    return trimmed.slice(0, 500);
+    return trimmed.slice(0, 700);
   }
   return sanitizeUrl(trimmed);
 }
@@ -79,14 +79,26 @@ function sanitizeContent(input: any) {
       subtitle: text(item.subtitle, 500),
       description: text(item.description, 5000),
       tags: stringList(item.tags),
-      image: sanitizeMedia(item.image),
+      image: sanitizeAsset(item.image),
       url: sanitizeUrl(item.url),
       role: text(item.role, 1000),
       team: text(item.team, 500),
       tools: stringList(item.tools),
       challenge: text(item.challenge, 5000),
       highlights: stringList(item.highlights),
-      gallery: stringList(item.gallery, 12).map(sanitizeMedia).filter(Boolean),
+      gallery: stringList(item.gallery, 12).map(sanitizeAsset).filter(Boolean),
+      plannerPoint: text(item.plannerPoint, 1200),
+      problem: text(item.problem, 5000),
+      intent: text(item.intent, 5000),
+      decision: text(item.decision, 5000),
+      result: text(item.result, 5000),
+      contribution: text(item.contribution, 2000),
+      proposalPdf: sanitizeAsset(item.proposalPdf),
+      specPdf: sanitizeAsset(item.specPdf),
+      presentationPdf: sanitizeAsset(item.presentationPdf),
+      playUrl: sanitizeUrl(item.playUrl),
+      videoUrl: sanitizeUrl(item.videoUrl),
+      repoUrl: sanitizeUrl(item.repoUrl),
     })),
     products: products.map((item: any, index: number) => ({
       id: text(item.id, 80) || `product-${Date.now()}-${index}`,
@@ -94,7 +106,7 @@ function sanitizeContent(input: any) {
       type: text(item.type, 80),
       year: text(item.year, 12),
       description: text(item.description, 3000),
-      image: sanitizeMedia(item.image),
+      image: sanitizeAsset(item.image),
       url: sanitizeUrl(item.url),
       meta: text(item.meta, 500),
     })),
@@ -106,7 +118,9 @@ function sanitizeContent(input: any) {
       title: text(item.title, 200),
       description: text(item.description, 4000),
       url: sanitizeUrl(item.url),
-      image: sanitizeMedia(item.image),
+      image: sanitizeAsset(item.image),
+      readTime: text(item.readTime, 40),
+      tags: stringList(item.tags, 10),
     })),
   };
 }
