@@ -1,0 +1,278 @@
+.site-content {
+  position: relative;
+  z-index: 1;
+}
+
+.geometric-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 14% 18%, rgba(49, 95, 72, 0.10), transparent 24%),
+    radial-gradient(circle at 83% 20%, rgba(15, 25, 19, 0.055), transparent 22%),
+    radial-gradient(circle at 76% 82%, rgba(49, 95, 72, 0.075), transparent 26%),
+    linear-gradient(180deg, #ffffff 0%, #fbfcfb 52%, #f7faf8 100%);
+}
+
+.geo-grid,
+.geo-diagonal {
+  position: absolute;
+  inset: -80px;
+}
+
+.geo-grid {
+  background-image:
+    linear-gradient(rgba(15, 25, 19, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 25, 19, 0.05) 1px, transparent 1px);
+  background-size: 52px 52px;
+  opacity: 0.34;
+  animation: geo-grid-drift 32s linear infinite;
+}
+
+.geo-diagonal {
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent 0,
+    transparent 33px,
+    rgba(49, 95, 72, 0.045) 33px,
+    rgba(49, 95, 72, 0.045) 34px
+  );
+  opacity: 0.46;
+  animation: geo-diagonal-drift 38s linear infinite;
+}
+
+.geo-glow,
+.geo-shape,
+.geo-ring,
+.geo-cross {
+  position: absolute;
+  will-change: transform;
+}
+
+.geo-glow {
+  border-radius: 50%;
+  filter: blur(2px);
+}
+
+.geo-glow-one {
+  top: 12%;
+  left: 4%;
+  width: 270px;
+  height: 270px;
+  background: radial-gradient(circle, rgba(49, 95, 72, 0.12), rgba(49, 95, 72, 0.015) 68%, transparent 72%);
+  animation: geo-float-a 17s ease-in-out infinite;
+}
+
+.geo-glow-two {
+  right: 3%;
+  bottom: 8%;
+  width: 390px;
+  height: 390px;
+  background: radial-gradient(circle, rgba(17, 30, 22, 0.07), rgba(17, 30, 22, 0.01) 67%, transparent 72%);
+  animation: geo-float-b 22s ease-in-out infinite;
+}
+
+.geo-shape {
+  border: 1.5px solid rgba(24, 41, 30, 0.14);
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.geo-square-one {
+  top: 18%;
+  right: 13%;
+  width: 112px;
+  height: 112px;
+  border-color: rgba(49, 95, 72, 0.21);
+  animation: geo-square-a 21s ease-in-out infinite;
+}
+
+.geo-square-two {
+  left: 13%;
+  bottom: 16%;
+  width: 74px;
+  height: 74px;
+  animation: geo-square-b 18s ease-in-out infinite;
+}
+
+.geo-triangle {
+  width: 116px;
+  height: 116px;
+  clip-path: polygon(50% 0%, 4% 96%, 96% 96%);
+  background: rgba(49, 95, 72, 0.055);
+  border: none;
+  outline: 1px solid rgba(49, 95, 72, 0.13);
+}
+
+.geo-triangle-one {
+  top: 51%;
+  right: 10%;
+  animation: geo-triangle-a 24s ease-in-out infinite;
+}
+
+.geo-triangle-two {
+  top: 61%;
+  left: 6%;
+  width: 82px;
+  height: 82px;
+  opacity: 0.74;
+  animation: geo-triangle-b 19s ease-in-out infinite;
+}
+
+.geo-ring {
+  border: 1.5px solid rgba(15, 25, 19, 0.105);
+  border-radius: 50%;
+}
+
+.geo-ring-one {
+  right: 22%;
+  bottom: 21%;
+  width: 175px;
+  height: 175px;
+  animation: geo-ring-a 20s ease-in-out infinite;
+}
+
+.geo-ring-two {
+  top: 9%;
+  left: 42%;
+  width: 104px;
+  height: 104px;
+  border-color: rgba(49, 95, 72, 0.20);
+  animation: geo-ring-b 16s ease-in-out infinite;
+}
+
+.geo-cross {
+  width: 54px;
+  height: 54px;
+  opacity: 0.15;
+}
+
+.geo-cross::before,
+.geo-cross::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: #315f48;
+  transform: translate(-50%, -50%);
+}
+
+.geo-cross::before {
+  width: 54px;
+  height: 1.5px;
+}
+
+.geo-cross::after {
+  width: 1.5px;
+  height: 54px;
+}
+
+.geo-cross-one {
+  top: 34%;
+  left: 28%;
+  animation: geo-cross-a 15s ease-in-out infinite;
+}
+
+.geo-cross-two {
+  right: 33%;
+  bottom: 11%;
+  transform: scale(0.7);
+  animation: geo-cross-b 18s ease-in-out infinite;
+}
+
+@keyframes geo-grid-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(52px, 52px, 0); }
+}
+
+@keyframes geo-diagonal-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(68px, -34px, 0); }
+}
+
+@keyframes geo-float-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(34px, -25px, 0) scale(1.08); }
+}
+
+@keyframes geo-float-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-38px, 28px, 0) scale(0.94); }
+}
+
+@keyframes geo-square-a {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(18deg); }
+  50% { transform: translate3d(-24px, 32px, 0) rotate(44deg); }
+}
+
+@keyframes geo-square-b {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-14deg); }
+  50% { transform: translate3d(30px, -24px, 0) rotate(-38deg); }
+}
+
+@keyframes geo-triangle-a {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(5deg); }
+  50% { transform: translate3d(-27px, -31px, 0) rotate(18deg); }
+}
+
+@keyframes geo-triangle-b {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-8deg); }
+  50% { transform: translate3d(22px, 25px, 0) rotate(-24deg); }
+}
+
+@keyframes geo-ring-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.72; }
+  50% { transform: translate3d(18px, -24px, 0) scale(1.09); opacity: 0.38; }
+}
+
+@keyframes geo-ring-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.78; }
+  50% { transform: translate3d(-20px, 18px, 0) scale(0.88); opacity: 0.40; }
+}
+
+@keyframes geo-cross-a {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(18px, -16px, 0) rotate(45deg); }
+}
+
+@keyframes geo-cross-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.7) rotate(0deg); }
+  50% { transform: translate3d(-20px, 14px, 0) scale(0.7) rotate(-45deg); }
+}
+
+@media (max-width: 800px) {
+  .geo-grid {
+    background-size: 38px 38px;
+  }
+
+  .geo-glow-one {
+    width: 190px;
+    height: 190px;
+  }
+
+  .geo-glow-two {
+    width: 250px;
+    height: 250px;
+  }
+
+  .geo-square-one,
+  .geo-triangle-one {
+    opacity: 0.58;
+  }
+
+  .geo-cross-one {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .geo-grid,
+  .geo-diagonal,
+  .geo-glow,
+  .geo-shape,
+  .geo-ring,
+  .geo-cross {
+    animation: none !important;
+  }
+}
