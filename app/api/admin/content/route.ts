@@ -41,6 +41,19 @@ function sanitizeUrl(value: unknown) {
   }
 }
 
+function sanitizeMedia(value: unknown) {
+  if (typeof value !== "string" || !value.trim()) return "";
+  const trimmed = value.trim();
+  if (
+    trimmed.startsWith("/uploads/") &&
+    !trimmed.includes("..") &&
+    /^\/uploads\/[a-zA-Z0-9._/-]+$/.test(trimmed)
+  ) {
+    return trimmed.slice(0, 500);
+  }
+  return sanitizeUrl(trimmed);
+}
+
 function text(value: unknown, max = 4000) {
   return typeof value === "string" ? value.slice(0, max) : "";
 }
@@ -66,14 +79,14 @@ function sanitizeContent(input: any) {
       subtitle: text(item.subtitle, 500),
       description: text(item.description, 5000),
       tags: stringList(item.tags),
-      image: sanitizeUrl(item.image),
+      image: sanitizeMedia(item.image),
       url: sanitizeUrl(item.url),
       role: text(item.role, 1000),
       team: text(item.team, 500),
       tools: stringList(item.tools),
       challenge: text(item.challenge, 5000),
       highlights: stringList(item.highlights),
-      gallery: stringList(item.gallery, 12).map(sanitizeUrl).filter(Boolean),
+      gallery: stringList(item.gallery, 12).map(sanitizeMedia).filter(Boolean),
     })),
     products: products.map((item: any, index: number) => ({
       id: text(item.id, 80) || `product-${Date.now()}-${index}`,
@@ -81,7 +94,7 @@ function sanitizeContent(input: any) {
       type: text(item.type, 80),
       year: text(item.year, 12),
       description: text(item.description, 3000),
-      image: sanitizeUrl(item.image),
+      image: sanitizeMedia(item.image),
       url: sanitizeUrl(item.url),
       meta: text(item.meta, 500),
     })),
@@ -93,7 +106,7 @@ function sanitizeContent(input: any) {
       title: text(item.title, 200),
       description: text(item.description, 4000),
       url: sanitizeUrl(item.url),
-      image: sanitizeUrl(item.image),
+      image: sanitizeMedia(item.image),
     })),
   };
 }
