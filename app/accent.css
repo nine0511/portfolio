@@ -1,0 +1,161 @@
+:root {
+  --accent: #315f48;
+  --accent-dark: #244936;
+  --accent-soft: #edf4ef;
+  --accent-line: #9cb2a3;
+}
+
+/* Keep the portfolio monochrome at its core, with restrained forest-green accents. */
+::selection {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.logo {
+  color: var(--accent);
+}
+
+.site-header nav a {
+  position: relative;
+}
+
+.site-header nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -5px;
+  height: 2px;
+  background: var(--accent);
+  transition: right 0.2s ease;
+}
+
+.site-header nav a:hover {
+  opacity: 1;
+  color: var(--accent);
+}
+
+.site-header nav a:hover::after {
+  right: 0;
+}
+
+.eyebrow,
+.profile-facts dt {
+  color: var(--accent) !important;
+}
+
+/* WORK */
+.work-slide.active {
+  box-shadow: 20px 20px 0 var(--accent-dark) !important;
+}
+
+.work-pill {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #fff !important;
+}
+
+.work-status {
+  border-color: var(--accent-line) !important;
+  color: var(--accent) !important;
+}
+
+.carousel-dot.active {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+
+.carousel-arrow:hover {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #fff !important;
+}
+
+.view-more,
+.work-external {
+  color: var(--accent) !important;
+}
+
+.view-more:hover {
+  color: var(--accent-dark) !important;
+}
+
+.work-external {
+  border-color: var(--accent) !important;
+}
+
+.work-external:hover {
+  background: var(--accent) !important;
+  color: #fff !important;
+}
+
+/* PRODUCTS */
+.products-section {
+  background: #f3f7f4 !important;
+}
+
+.product-card {
+  border-color: #d6e0d9 !important;
+}
+
+.product-tech {
+  border-color: var(--accent-line) !important;
+  color: var(--accent) !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+}
+
+.product-button {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
+.product-button:hover {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #fff !important;
+}
+
+/* ARTICLE */
+.article-meta,
+.article-arrow {
+  color: var(--accent) !important;
+}
+
+.article-card:hover {
+  background: var(--accent-soft) !important;
+}
+
+/* SKILLS */
+.skills-showcase {
+  border-top-color: #d7e2da !important;
+  border-bottom-color: #d7e2da !important;
+}
+
+.skill-group h3::after {
+  content: "";
+  display: block;
+  width: 34px;
+  height: 2px;
+  margin: 10px auto 0;
+  background: var(--accent-line);
+}
+
+/* CONTACT: almost black, but with a green undertone. */
+.contact-section {
+  background: #0d1712 !important;
+}
+
+.contact-links a {
+  color: #b9d0c0;
+}
+
+.contact-links a:hover {
+  color: #ffffff;
+  opacity: 1;
+}
+
+@media (max-width: 700px) {
+  .work-slide.active {
+    box-shadow: 10px 10px 0 var(--accent-dark) !important;
+  }
+}
