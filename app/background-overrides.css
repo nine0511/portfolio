@@ -1,0 +1,29 @@
+/* Ensure the animated geometric background remains visible through full-width content sections. */
+html,
+body,
+.site-content,
+.site-content > main {
+  background-color: transparent !important;
+}
+
+/* Page 3: PRODUCTS */
+.products-section {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Page 4: ARTICLE */
+.articles-section {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Keep cards readable while allowing the moving background to show between them. */
+.product-card,
+.article-card {
+  background-color: rgba(255, 255, 255, 0.94) !important;
+}
+
+.article-card:hover {
+  background-color: rgba(237, 244, 239, 0.96) !important;
+}
