@@ -94,6 +94,108 @@ const skillGroups = [
 export default function Home() {
   return (
     <main>
+      <style>{`
+        .skills-showcase {
+          padding: 110px 0 120px;
+          background:
+            radial-gradient(circle at 18% 22%, rgba(255,255,255,.72), transparent 31%),
+            radial-gradient(circle at 78% 38%, rgba(255,255,255,.58), transparent 34%),
+            #eeebf2;
+        }
+
+        .skills-inner {
+          text-align: center;
+        }
+
+        .skills-title {
+          margin: 0;
+          font-size: clamp(34px, 4vw, 52px);
+          font-weight: 800;
+          letter-spacing: -0.045em;
+        }
+
+        .skill-groups {
+          width: min(100%, 980px);
+          margin: 48px auto 0;
+          display: grid;
+          gap: 62px;
+        }
+
+        .skill-group h3 {
+          margin: 0 0 24px;
+          font-size: clamp(20px, 2.2vw, 28px);
+          font-weight: 800;
+          letter-spacing: -0.03em;
+        }
+
+        .skill-logo-row {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: center;
+          gap: clamp(24px, 4vw, 46px);
+        }
+
+        .skill-logo-item {
+          position: relative;
+          width: clamp(58px, 7vw, 78px);
+          height: clamp(58px, 7vw, 78px);
+          display: grid;
+          place-items: center;
+          transition: transform .18s ease, filter .18s ease;
+        }
+
+        .skill-logo-item:hover {
+          transform: translateY(-5px) scale(1.05);
+          filter: drop-shadow(0 9px 12px rgba(20,20,20,.10));
+        }
+
+        .skill-logo-item img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          display: block;
+        }
+
+        .skill-logo-item span {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+        }
+
+        @media (max-width: 700px) {
+          .skills-showcase {
+            padding: 82px 0 90px;
+          }
+
+          .skill-groups {
+            margin-top: 38px;
+            gap: 50px;
+          }
+
+          .skill-logo-row {
+            gap: 22px 28px;
+          }
+        }
+
+        @media (max-width: 420px) {
+          .skill-logo-item {
+            width: 54px;
+            height: 54px;
+          }
+
+          .skill-group h3 {
+            margin-bottom: 20px;
+          }
+        }
+      `}</style>
+
       <header className="site-header">
         <a className="logo" href="#top" aria-label="トップへ">
           NINE0511
@@ -193,8 +295,13 @@ export default function Home() {
                 <h3>{group.title}</h3>
                 <div className="skill-logo-row">
                   {group.skills.map((skill) => (
-                    <div className="skill-logo-item" key={skill.name} title={skill.name}>
-                      <img src={skill.icon} alt={skill.name} loading="lazy" />
+                    <div
+                      className="skill-logo-item"
+                      key={skill.name}
+                      title={skill.name}
+                      aria-label={skill.name}
+                    >
+                      <img src={skill.icon} alt="" loading="lazy" />
                       <span>{skill.name}</span>
                     </div>
                   ))}
