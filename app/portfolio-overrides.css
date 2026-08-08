@@ -4,7 +4,7 @@
 }
 
 #works.section-block {
-  padding-top: 76px;
+  padding-top: 60px;
 }
 
 /* End the portfolio at SKILL; remove the final contact page. */
@@ -97,8 +97,123 @@ h6,
   font-style: normal !important;
 }
 
+/* WORK carousel: slightly more compact so the full card sits comfortably in view. */
+#works .section-heading {
+  margin-bottom: 34px;
+}
+
+.work-carousel-wrap {
+  margin-top: 8px !important;
+  padding-top: 12px !important;
+  padding-bottom: 56px !important;
+}
+
+.work-carousel-stage {
+  min-height: 620px !important;
+}
+
+.work-slide {
+  width: min(740px, 66vw) !important;
+  min-height: 540px !important;
+  padding: 24px 26px 22px !important;
+  border-width: 3px !important;
+  border-radius: 24px !important;
+  box-shadow: 15px 15px 0 #0a0a0a !important;
+}
+
+.work-slide.active {
+  box-shadow: 15px 15px 0 var(--accent-dark) !important;
+}
+
+.work-slide h3 {
+  font-size: clamp(34px, 4.4vw, 58px) !important;
+}
+
+.work-slide-subtitle {
+  margin-bottom: 12px !important;
+  font-size: 14px !important;
+}
+
+.work-thumb {
+  aspect-ratio: 16 / 8.2 !important;
+  border-width: 2px !important;
+  border-radius: 14px !important;
+}
+
+.work-slide-description {
+  margin: 14px 0 11px !important;
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+}
+
+.work-meta {
+  gap: 8px !important;
+  font-size: 11px !important;
+}
+
+.work-index,
+.work-year {
+  font-size: 13px !important;
+}
+
+.work-pill,
+.work-status {
+  padding: 5px 8px !important;
+}
+
+.work-slide-footer {
+  padding-top: 10px !important;
+}
+
+.work-hashtags {
+  font-size: 11px !important;
+}
+
+.view-more {
+  font-size: 13px !important;
+}
+
+.carousel-arrow {
+  width: 52px !important;
+  height: 52px !important;
+  font-size: 24px !important;
+}
+
+@media (max-width: 900px) {
+  .work-carousel-stage {
+    min-height: 580px !important;
+  }
+
+  .work-slide {
+    width: min(680px, 78vw) !important;
+    min-height: 510px !important;
+    padding: 22px !important;
+  }
+}
+
 @media (max-width: 800px) {
   #works.section-block {
-    padding-top: 56px;
+    padding-top: 44px;
+  }
+}
+
+@media (max-width: 700px) {
+  .work-carousel-stage {
+    min-height: 555px !important;
+  }
+
+  .work-slide {
+    width: calc(100% - 32px) !important;
+    min-height: 500px !important;
+    padding: 18px !important;
+    border-radius: 19px !important;
+  }
+
+  .work-slide.active {
+    box-shadow: 8px 8px 0 var(--accent-dark) !important;
+  }
+
+  .work-slide h3 {
+    font-size: clamp(30px, 9vw, 44px) !important;
   }
 }
