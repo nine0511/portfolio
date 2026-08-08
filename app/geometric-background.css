@@ -16,6 +16,15 @@
     linear-gradient(180deg, #ffffff 0%, #fbfcfb 52%, #f7faf8 100%);
 }
 
+/* Keep section colors, but let the animated geometry remain visible underneath. */
+.products-section {
+  background: rgba(243, 247, 244, 0.72) !important;
+}
+
+.articles-section {
+  background: rgba(255, 255, 255, 0.72) !important;
+}
+
 .geo-grid,
 .geo-diagonal {
   position: absolute;
