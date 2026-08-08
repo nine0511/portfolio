@@ -1,0 +1,14 @@
+/* Portfolio starts directly from WORK. */
+.hero {
+  display: none !important;
+}
+
+#works.section-block {
+  padding-top: 76px;
+}
+
+@media (max-width: 800px) {
+  #works.section-block {
+    padding-top: 56px;
+  }
+}
