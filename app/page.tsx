@@ -25,90 +25,71 @@ const works = [
   },
 ];
 
-const skills = [
+const skillGroups = [
   {
-    name: "Unity",
-    category: "ENGINE",
-    icon: "https://cdn.simpleicons.org/unity/161616",
+    title: "制作で頻繁に使用",
+    skills: [
+      {
+        name: "C#",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg",
+      },
+      {
+        name: "Unity",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg",
+      },
+      {
+        name: "Python",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
+      },
+      {
+        name: "GitHub",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg",
+      },
+      {
+        name: "Git",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg",
+      },
+    ],
   },
   {
-    name: "C#",
-    category: "LANGUAGE",
-    icon: "https://cdn.simpleicons.org/csharp/512BD4",
+    title: "使って制作経験あり",
+    skills: [
+      {
+        name: "JavaScript",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
+      },
+      {
+        name: "TypeScript",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg",
+      },
+      {
+        name: "HTML5",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg",
+      },
+      {
+        name: "CSS3",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg",
+      },
+      {
+        name: "AWS",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
+      },
+    ],
   },
   {
-    name: "Python",
-    category: "LANGUAGE",
-    icon: "https://cdn.simpleicons.org/python/3776AB",
-  },
-  {
-    name: "JavaScript",
-    category: "LANGUAGE",
-    icon: "https://cdn.simpleicons.org/javascript/F7DF1E",
-  },
-  {
-    name: "TypeScript",
-    category: "LANGUAGE",
-    icon: "https://cdn.simpleicons.org/typescript/3178C6",
-  },
-  {
-    name: "HTML5",
-    category: "WEB",
-    icon: "https://cdn.simpleicons.org/html5/E34F26",
-  },
-  {
-    name: "CSS",
-    category: "WEB",
-    icon: "https://cdn.simpleicons.org/css/663399",
-  },
-  {
-    name: "Git",
-    category: "TOOL",
-    icon: "https://cdn.simpleicons.org/git/F05032",
-  },
-  {
-    name: "GitHub",
-    category: "TOOL",
-    icon: "https://cdn.simpleicons.org/github/181717",
-  },
-  {
-    name: "AWS",
-    category: "CLOUD",
-    icon: "https://cdn.simpleicons.org/amazonwebservices/232F3E",
-  },
-  {
-    name: "Game Planning",
-    category: "DESIGN",
-    customIcon: "game",
-  },
-  {
-    name: "UI / UX",
-    category: "DESIGN",
-    customIcon: "design",
+    title: "講義・研究で触れたことがある",
+    skills: [
+      {
+        name: "C",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg",
+      },
+      {
+        name: "Java",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg",
+      },
+    ],
   },
 ];
-
-function SkillIcon({ skill }: { skill: (typeof skills)[number] }) {
-  if (skill.icon) {
-    return <img src={skill.icon} alt="" width="54" height="54" loading="lazy" />;
-  }
-
-  if (skill.customIcon === "game") {
-    return (
-      <svg viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M20 22h24c7 0 12 5 14 13l2 9c1 5-2 9-7 9-3 0-5-1-8-5l-4-5H23l-4 5c-3 4-5 5-8 5-5 0-8-4-7-9l2-9c2-8 7-13 14-13Z" />
-        <path d="M18 30v12M12 36h12M43 33h.1M50 40h.1" />
-      </svg>
-    );
-  }
-
-  return (
-    <svg viewBox="0 0 64 64" aria-hidden="true">
-      <path d="M12 48 42 18l4 4-30 30-8 2 2-8Z" />
-      <path d="m38 22 6-6 6 6-6 6M14 12h38v38H30" />
-    </svg>
-  );
-}
 
 export default function Home() {
   return (
@@ -202,29 +183,25 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="skills" className="section-shell section-block">
-        <div className="section-heading skills-heading">
-          <div>
-            <p className="eyebrow">TOOLS & FIELDS</p>
-            <h2>SKILLS</h2>
-          </div>
-          <p className="skills-intro">
-            制作・研究で使用している言語やツール、得意とする領域です。
-          </p>
-        </div>
+      <section id="skills" className="skills-showcase">
+        <div className="section-shell skills-inner">
+          <h2 className="skills-title">スキルセット</h2>
 
-        <div className="skills-grid" aria-label="スキル一覧">
-          {skills.map((skill) => (
-            <article className="skill-card" key={skill.name}>
-              <div className="skill-icon">
-                <SkillIcon skill={skill} />
-              </div>
-              <div className="skill-meta">
-                <p>{skill.name}</p>
-                <span>{skill.category}</span>
-              </div>
-            </article>
-          ))}
+          <div className="skill-groups">
+            {skillGroups.map((group) => (
+              <section className="skill-group" key={group.title}>
+                <h3>{group.title}</h3>
+                <div className="skill-logo-row">
+                  {group.skills.map((skill) => (
+                    <div className="skill-logo-item" key={skill.name} title={skill.name}>
+                      <img src={skill.icon} alt={skill.name} loading="lazy" />
+                      <span>{skill.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
         </div>
       </section>
 
