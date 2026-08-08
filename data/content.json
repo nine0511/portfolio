@@ -17,6 +17,19 @@
       "tools": ["AWS", "TypeScript", "HTML/CSS", "GitHub"],
       "challenge": "限られた開発期間の中で、プロダクトのコア機能を早い段階で完成させ、プレゼンや検証に時間を回せる進め方を意識しました。",
       "highlights": ["実装スピードを上げる開発フローを整備", "コア機能を早期に完成させ、発表準備の時間を確保", "ヒアリングを通して課題との接続を強化"],
+      "gallery": ["https://placehold.co/1200x760/ffffff/111111?text=SMART+DELIVERY+01", "https://placehold.co/1200x760/f3f3f3/111111?text=SMART+DELIVERY+02", "https://placehold.co/1200x760/eeeeee/111111?text=SMART+DELIVERY+03"],
+      "plannerPoint": "地域課題を機能に落とし込みつつ、開発時間の使い方まで設計したこと。",
+      "problem": "再配達によるドライバー負担を減らしながら、受取人側にも無理のない調整方法を作る必要がありました。",
+      "intent": "配達側・受取側のどちらか一方に負担を寄せず、柔軟な予定調整によって不在そのものを減らすことを狙いました。",
+      "decision": "コア機能を早期に完成させる開発順序を取り、自治体へのヒアリングと発表準備に時間を残す判断をしました。",
+      "result": "実装だけでなく、地域課題との接続やプレゼンまで含めてプロダクトの説得力を高めました。",
+      "contribution": "実装を中心に、ヒアリング、LP制作、開発フロー改善まで担当。",
+      "proposalPdf": "",
+      "specPdf": "",
+      "presentationPdf": "",
+      "playUrl": "",
+      "videoUrl": "",
+      "repoUrl": "https://github.com/nine0511",
       "gallery": ["https://placehold.co/1200x760/ffffff/111111?text=SMART+DELIVERY+01", "https://placehold.co/1200x760/f3f3f3/111111?text=SMART+DELIVERY+02", "https://placehold.co/1200x760/eeeeee/111111?text=SMART+DELIVERY+03"]
     },
     {
@@ -36,6 +49,18 @@
       "tools": ["Unity", "C#"],
       "challenge": "『入れ替える』という一つのルールから、プレイヤーが試行錯誤したくなる状況をどこまで作れるかを重視して設計しました。",
       "highlights": ["ルールを短時間で理解できる導入", "同じ操作から異なる攻略方法が生まれる構成", "視覚的なフィードバックを重視"],
+      "plannerPoint": "一つのルールを、攻略・発見・試行錯誤へ広げるレベルデザイン。",
+      "problem": "『入れ替える』操作が単なるギミックで終わると、遊びの広がりが生まれにくい点が課題でした。",
+      "intent": "プレイヤー自身が対象の組み合わせを発見し、ルールを利用して状況を攻略する感覚を作ることを狙いました。",
+      "decision": "説明を増やすより、ステージ構成と視覚フィードバックを通してルールを理解できる設計を優先しました。",
+      "result": "同じ操作でも状況によって異なる使い方を考えられる構成を目指しました。",
+      "contribution": "企画、ゲームデザイン、実装を担当。",
+      "proposalPdf": "",
+      "specPdf": "",
+      "presentationPdf": "",
+      "playUrl": "",
+      "videoUrl": "",
+      "repoUrl": "",
       "gallery": ["https://placehold.co/1200x760/ffffff/111111?text=FLIPILF+01", "https://placehold.co/1200x760/f3f3f3/111111?text=FLIPILF+02", "https://placehold.co/1200x760/eeeeee/111111?text=FLIPILF+03"]
     },
     {
@@ -55,6 +80,18 @@
       "tools": ["Game Planning", "Level Design", "Scenario"],
       "challenge": "歴史題材を単なる世界観として使うのではなく、武将の個性や勢力関係がゲームの選択そのものに影響する構造を目指しました。",
       "highlights": ["デッキ構築と勢力争いを結び付けたシステム", "安全策と高リターンの選択を常に提示", "周回ごとに異なるイベントが生まれる構成"],
+      "plannerPoint": "歴史上の関係性を、プレイヤーのリスクとリターンの選択へ変換すること。",
+      "problem": "中国史を題材にしても、固有名詞だけが違う一般的なカードゲームになる危険がありました。",
+      "intent": "武将・勢力・イベントの関係が、デッキ構築や進行ルートの判断に直接影響するゲームを狙いました。",
+      "decision": "世界観説明ではなく、勢力争いや人物特性そのものをゲームルールへ組み込む方針にしました。",
+      "result": "歴史題材とローグライクの選択構造を結び付け、周回ごとに異なる判断が生まれる企画にしました。",
+      "contribution": "企画、システム設計、レベルデザイン、シナリオを担当。",
+      "proposalPdf": "",
+      "specPdf": "",
+      "presentationPdf": "",
+      "playUrl": "",
+      "videoUrl": "",
+      "repoUrl": "",
       "gallery": ["https://placehold.co/1200x760/ffffff/111111?text=HEROIC+CARDS+01", "https://placehold.co/1200x760/f3f3f3/111111?text=HEROIC+CARDS+02", "https://placehold.co/1200x760/eeeeee/111111?text=HEROIC+CARDS+03"]
     }
   ],
@@ -99,7 +136,9 @@
       "title": "開発で考えたことをまとめる記事",
       "description": "制作の中で判断したこと、試したこと、うまくいかなかったことなどを記録するための記事スペースです。",
       "url": "",
-      "image": ""
+      "image": "",
+      "readTime": "6 MIN READ",
+      "tags": ["Team Development", "Process"]
     },
     {
       "id": "game-design-note",
@@ -109,7 +148,9 @@
       "title": "ゲームデザイン・レベルデザインのメモ",
       "description": "遊びやすさ、導線、リスクとリターンなど、ゲーム制作で意識していることを整理して紹介します。",
       "url": "",
-      "image": ""
+      "image": "",
+      "readTime": "8 MIN READ",
+      "tags": ["Level Design", "Game Design"]
     },
     {
       "id": "web-ui-note",
@@ -119,7 +160,9 @@
       "title": "Web・UI/UXについての制作記録",
       "description": "Web制作やUI設計で工夫した点を、画面や図を交えながら紹介するための枠です。",
       "url": "",
-      "image": ""
+      "image": "",
+      "readTime": "5 MIN READ",
+      "tags": ["UI/UX", "Web"]
     }
   ]
 }
