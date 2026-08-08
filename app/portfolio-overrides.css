@@ -97,6 +97,22 @@ h6,
   font-style: normal !important;
 }
 
+/* Hobbies / game preferences shown as an additional profile block. */
+.profile-copy::after {
+  content: "HOBBY\A ゲーム制作 / 創作 / TRPG\A\A ゲームはジャンルを問わず基本なんでも好きです。特に、ルールそのものをハックする遊びや、選択にスリルを感じられるゲームが好きです。";
+  display: block;
+  margin-top: 46px;
+  padding: 22px 24px;
+  border-top: 1px solid var(--accent-line, #9cb2a3);
+  border-bottom: 1px solid var(--accent-line, #9cb2a3);
+  color: #343434;
+  white-space: pre-line;
+  font-family: var(--portfolio-font) !important;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.9;
+}
+
 /* WORK carousel: slightly more compact so the full card sits comfortably in view. */
 #works .section-heading {
   margin-bottom: 34px;
@@ -198,6 +214,12 @@ h6,
 }
 
 @media (max-width: 700px) {
+  .profile-copy::after {
+    margin-top: 34px;
+    padding: 18px 16px;
+    font-size: 13px;
+  }
+
   .work-carousel-stage {
     min-height: 555px !important;
   }
