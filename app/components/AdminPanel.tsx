@@ -3,11 +3,7 @@
 import { useState } from "react";
 
 type SectionKey = "works" | "products" | "articles";
-type SiteContent = {
-  works: any[];
-  products: any[];
-  articles: any[];
-};
+type SiteContent = { works: any[]; products: any[]; articles: any[] };
 
 const emptyContent: SiteContent = { works: [], products: [], articles: [] };
 const acceptedImageTypes = ["image/png", "image/jpeg", "image/webp", "image/gif"];
@@ -19,12 +15,12 @@ const sectionLabels: Record<SectionKey, string> = {
   articles: "ARTICLE",
 };
 
-function newItem(section: SectionKey, index: number) {
+function newItem(section: SectionKey) {
   const baseId = `${section.slice(0, -1)}-${Date.now()}`;
   if (section === "works") {
     return {
       id: baseId,
-      number: String(index + 1).padStart(2, "0"),
+      number: "01",
       title: "新しいWORK",
       type: "PROJECT",
       status: "NEW",
@@ -56,13 +52,27 @@ function newItem(section: SectionKey, index: number) {
   }
   return {
     id: baseId,
-    number: String(index + 1).padStart(2, "0"),
+    number: "01",
     date: `${new Date().getFullYear()}.08`,
     category: "ARTICLE",
     title: "新しい記事",
     description: "記事の概要を入力してください。",
     url: "",
     image: "",
+  };
+}
+
+function normalizeContent(content: SiteContent): SiteContent {
+  return {
+    ...content,
+    works: content.works.map((item, index) => ({
+      ...item,
+      number: String(index + 1).padStart(2, "0"),
+    })),
+    articles: content.articles.map((item, index) => ({
+      ...item,
+      number: String(index + 1).padStart(2, "0"),
+    })),
   };
 }
 
@@ -89,12 +99,12 @@ export default function AdminPanel() {
       const authBody = await auth.json();
       if (!auth.ok) throw new Error(authBody.error || "認証に失敗しました。");
 
-      const dataResponse = await fetch("/api/admin/content", { cache: "no-store" });
-      const dataBody = await dataResponse.json();
-      if (!dataResponse.ok) throw new Error(dataBody.error || "コンテンツを取得できませんでした。");
+      const response = await fetch("/api/admin/content", { cache: "no-store" });
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.error || "コンテンツを取得できませんでした。");
 
-      setContent(dataBody.content);
-      setCanSave(Boolean(dataBody.canSave));
+      setContent(normalizeContent(body.content));
+      setCanSave(Boolean(body.canSave));
       setAuthenticated(true);
       setPassword("");
     } catch (error) {
@@ -122,47 +132,57 @@ export default function AdminPanel() {
   };
 
   const addItem = () => {
-    setContent((current) => ({
-      ...current,
-      [activeSection]: [
-        ...current[activeSection],
-        newItem(activeSection, current[activeSection].length),
-      ],
-    }));
+    setContent((current) => {
+      const next = {
+        ...current,
+        [activeSection]: [newItem(activeSection), ...current[activeSection]],
+      } as SiteContent;
+      return normalizeContent(next);
+    });
+    setMessage("新しい項目を先頭に追加しました。");
+
+    window.setTimeout(() => {
+      const firstItem = document.querySelector<HTMLElement>(".admin-items .admin-item:first-child");
+      firstItem?.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.setTimeout(() => {
+        const primaryInput = firstItem?.querySelector<HTMLInputElement>("[data-primary-input='true']");
+        primaryInput?.focus();
+        primaryInput?.select();
+      }, 250);
+    }, 0);
   };
 
   const deleteItem = (index: number) => {
     if (!window.confirm("この項目を削除しますか？")) return;
-    setContent((current) => ({
+    setContent((current) => normalizeContent({
       ...current,
       [activeSection]: current[activeSection].filter((_, itemIndex) => itemIndex !== index),
-    }));
+    } as SiteContent));
   };
 
   const moveItem = (index: number, direction: -1 | 1) => {
-    const target = index + direction;
-    const list = [...content[activeSection]];
-    if (target < 0 || target >= list.length) return;
-    [list[index], list[target]] = [list[target], list[index]];
-    setContent((current) => ({ ...current, [activeSection]: list }));
+    setContent((current) => {
+      const list = [...current[activeSection]];
+      const target = index + direction;
+      if (target < 0 || target >= list.length) return current;
+      [list[index], list[target]] = [list[target], list[index]];
+      return normalizeContent({ ...current, [activeSection]: list } as SiteContent);
+    });
   };
 
   const save = async () => {
+    const normalized = normalizeContent(content);
+    setContent(normalized);
     setBusy(true);
     setMessage("");
     try {
       const response = await fetch("/api/admin/content", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content }),
+        body: JSON.stringify({ content: normalized }),
       });
       const body = await response.json();
       if (!response.ok) throw new Error(body.error || "保存に失敗しました。");
-      setContent((current) => ({
-        ...current,
-        works: current.works.map((item, index) => ({ ...item, number: String(index + 1).padStart(2, "0") })),
-        articles: current.articles.map((item, index) => ({ ...item, number: String(index + 1).padStart(2, "0") })),
-      }));
       setMessage(body.message || "保存しました。");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "保存に失敗しました。");
@@ -199,27 +219,26 @@ export default function AdminPanel() {
     try {
       const uploadedPaths: string[] = [];
       const filesToUpload = multiple ? files.slice(0, 12) : files.slice(0, 1);
-
       for (const file of filesToUpload) {
         const formData = new FormData();
         formData.append("file", file);
-        const response = await fetch("/api/admin/upload", {
-          method: "POST",
-          body: formData,
-        });
+        const response = await fetch("/api/admin/upload", { method: "POST", body: formData });
         const body = await response.json();
         if (!response.ok) throw new Error(body.error || `${file.name} のアップロードに失敗しました。`);
         uploadedPaths.push(body.path);
       }
 
-      if (multiple) {
-        const currentValue = content[section][index]?.[key];
-        const currentPaths = Array.isArray(currentValue) ? currentValue : [];
-        updateItem(section, index, key, [...currentPaths, ...uploadedPaths].slice(0, 12));
-      } else {
-        updateItem(section, index, key, uploadedPaths[0] || "");
-      }
-
+      setContent((current) => ({
+        ...current,
+        [section]: current[section].map((item, itemIndex) => {
+          if (itemIndex !== index) return item;
+          if (multiple) {
+            const previous = Array.isArray(item[key]) ? item[key] : [];
+            return { ...item, [key]: [...previous, ...uploadedPaths].slice(0, 12) };
+          }
+          return { ...item, [key]: uploadedPaths[0] || "" };
+        }),
+      }));
       setMessage(`${uploadedPaths.length}枚の画像をアップロードしました。最後に「SAVE & DEPLOY」を押してください。`);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "画像アップロードに失敗しました。");
@@ -236,7 +255,7 @@ export default function AdminPanel() {
     section: SectionKey,
     index: number,
     key: string,
-    options?: { multiline?: boolean; list?: boolean; placeholder?: string },
+    options?: { multiline?: boolean; list?: boolean; placeholder?: string; primary?: boolean },
   ) => {
     const item = content[section][index];
     const value = options?.list ? listValue(item[key]) : item[key] ?? "";
@@ -253,6 +272,7 @@ export default function AdminPanel() {
         ) : (
           <input
             value={value}
+            data-primary-input={options?.primary ? "true" : undefined}
             placeholder={options?.placeholder}
             onChange={(event) => updateItem(section, index, key, event.target.value)}
           />
@@ -281,7 +301,6 @@ export default function AdminPanel() {
           <span>{label}</span>
           <small>{multiple ? "複数選択可・最大12枚" : "1枚"} / PNG・JPEG・WebP・GIF / 4MB以下</small>
         </div>
-
         <div
           className={`admin-dropzone ${isUploading ? "uploading" : ""}`}
           onDragOver={(event) => {
@@ -320,15 +339,10 @@ export default function AdminPanel() {
                 <button
                   type="button"
                   onClick={() => {
-                    if (multiple) {
-                      updateItem(section, index, key, paths.filter((_, currentIndex) => currentIndex !== pathIndex));
-                    } else {
-                      updateItem(section, index, key, "");
-                    }
+                    if (multiple) updateItem(section, index, key, paths.filter((_, currentIndex) => currentIndex !== pathIndex));
+                    else updateItem(section, index, key, "");
                   }}
-                >
-                  ×
-                </button>
+                >×</button>
               </figure>
             ))}
           </div>
@@ -337,36 +351,31 @@ export default function AdminPanel() {
         <label className="admin-field admin-url-fallback">
           <span>{multiple ? "画像パス / URL（1行1枚・手入力も可）" : "画像パス / URL（手入力も可）"}</span>
           {multiple ? (
-            <textarea
-              rows={3}
-              value={listValue(value)}
-              placeholder="/uploads/... または https://..."
-              onChange={(event) => updateItem(section, index, key, parseList(event.target.value))}
-            />
+            <textarea rows={3} value={listValue(value)} placeholder="/uploads/... または https://..." onChange={(event) => updateItem(section, index, key, parseList(event.target.value))} />
           ) : (
-            <input
-              value={value ?? ""}
-              placeholder="/uploads/... または https://..."
-              onChange={(event) => updateItem(section, index, key, event.target.value)}
-            />
+            <input value={value ?? ""} placeholder="/uploads/... または https://..." onChange={(event) => updateItem(section, index, key, event.target.value)} />
           )}
         </label>
       </div>
     );
   };
 
+  const itemHeader = (section: SectionKey, item: any, index: number) => (
+    <div className="admin-item-head">
+      <strong>{String(index + 1).padStart(2, "0")} / {item.title || "Untitled"}</strong>
+      <div className="admin-item-actions">
+        <button type="button" onClick={() => moveItem(index, -1)} disabled={index === 0}>↑</button>
+        <button type="button" onClick={() => moveItem(index, 1)} disabled={index === content[section].length - 1}>↓</button>
+        <button type="button" className="danger" onClick={() => deleteItem(index)}>削除</button>
+      </div>
+    </div>
+  );
+
   const renderWork = (item: any, index: number) => (
     <div className="admin-item" key={item.id || index}>
-      <div className="admin-item-head">
-        <strong>{String(index + 1).padStart(2, "0")} / {item.title || "Untitled"}</strong>
-        <div className="admin-item-actions">
-          <button onClick={() => moveItem(index, -1)} disabled={index === 0}>↑</button>
-          <button onClick={() => moveItem(index, 1)} disabled={index === content.works.length - 1}>↓</button>
-          <button className="danger" onClick={() => deleteItem(index)}>削除</button>
-        </div>
-      </div>
+      {itemHeader("works", item, index)}
       <div className="admin-grid">
-        {renderInput("タイトル", "works", index, "title")}
+        {renderInput("タイトル", "works", index, "title", { primary: true })}
         {renderInput("種別", "works", index, "type")}
         {renderInput("ステータス", "works", index, "status")}
         {renderInput("年", "works", index, "year")}
@@ -391,16 +400,9 @@ export default function AdminPanel() {
 
   const renderProduct = (item: any, index: number) => (
     <div className="admin-item" key={item.id || index}>
-      <div className="admin-item-head">
-        <strong>{String(index + 1).padStart(2, "0")} / {item.title || "Untitled"}</strong>
-        <div className="admin-item-actions">
-          <button onClick={() => moveItem(index, -1)} disabled={index === 0}>↑</button>
-          <button onClick={() => moveItem(index, 1)} disabled={index === content.products.length - 1}>↓</button>
-          <button className="danger" onClick={() => deleteItem(index)}>削除</button>
-        </div>
-      </div>
+      {itemHeader("products", item, index)}
       <div className="admin-grid">
-        {renderInput("タイトル", "products", index, "title")}
+        {renderInput("タイトル", "products", index, "title", { primary: true })}
         {renderInput("種別", "products", index, "type")}
         {renderInput("年", "products", index, "year")}
         {renderInput("補足", "products", index, "meta")}
@@ -413,16 +415,9 @@ export default function AdminPanel() {
 
   const renderArticle = (item: any, index: number) => (
     <div className="admin-item" key={item.id || index}>
-      <div className="admin-item-head">
-        <strong>{String(index + 1).padStart(2, "0")} / {item.title || "Untitled"}</strong>
-        <div className="admin-item-actions">
-          <button onClick={() => moveItem(index, -1)} disabled={index === 0}>↑</button>
-          <button onClick={() => moveItem(index, 1)} disabled={index === content.articles.length - 1}>↓</button>
-          <button className="danger" onClick={() => deleteItem(index)}>削除</button>
-        </div>
-      </div>
+      {itemHeader("articles", item, index)}
       <div className="admin-grid">
-        {renderInput("タイトル", "articles", index, "title")}
+        {renderInput("タイトル", "articles", index, "title", { primary: true })}
         {renderInput("カテゴリ", "articles", index, "category")}
         {renderInput("日付", "articles", index, "date")}
         {renderInput("記事URL", "articles", index, "url", { placeholder: "https://..." })}
@@ -434,9 +429,7 @@ export default function AdminPanel() {
 
   return (
     <>
-      <button className="admin-launcher" type="button" onClick={() => setOpen(true)} aria-label="ポートフォリオを編集">
-        EDIT
-      </button>
+      <button className="admin-launcher" type="button" onClick={() => setOpen(true)} aria-label="ポートフォリオを編集">EDIT</button>
 
       {open && (
         <div className="admin-backdrop" onMouseDown={(event) => { if (event.currentTarget === event.target) setOpen(false); }}>
@@ -447,14 +440,7 @@ export default function AdminPanel() {
                 <p className="admin-kicker">PORTFOLIO ADMIN</p>
                 <h2>編集する</h2>
                 <p>管理パスワードを入力してください。</p>
-                <input
-                  type="password"
-                  value={password}
-                  autoFocus
-                  placeholder="Password"
-                  onChange={(event) => setPassword(event.target.value)}
-                  onKeyDown={(event) => { if (event.key === "Enter") login(); }}
-                />
+                <input type="password" value={password} autoFocus placeholder="Password" onChange={(event) => setPassword(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") login(); }} />
                 <button className="admin-primary" onClick={login} disabled={busy || !password}>{busy ? "確認中..." : "LOGIN"}</button>
                 {message && <p className="admin-message">{message}</p>}
               </div>
@@ -462,10 +448,7 @@ export default function AdminPanel() {
               <>
                 <header className="admin-header">
                   <div><p className="admin-kicker">PORTFOLIO ADMIN</p><h2>CONTENT EDITOR</h2></div>
-                  <div className="admin-header-actions">
-                    <button onClick={logout}>LOGOUT</button>
-                    <button className="admin-close" onClick={() => setOpen(false)}>×</button>
-                  </div>
+                  <div className="admin-header-actions"><button onClick={logout}>LOGOUT</button><button className="admin-close" onClick={() => setOpen(false)}>×</button></div>
                 </header>
 
                 <div className="admin-tabs">
@@ -477,7 +460,7 @@ export default function AdminPanel() {
                 </div>
 
                 <div className="admin-toolbar">
-                  <p>画像はドラッグ＆ドロップでアップロードできます。アップロード後、最後に <strong>SAVE & DEPLOY</strong> を押してください。</p>
+                  <p>「＋ 項目を追加」で新しい項目が一番上に追加され、そのままタイトルを編集できます。</p>
                   <button onClick={addItem}>＋ 項目を追加</button>
                 </div>
 
@@ -501,15 +484,15 @@ export default function AdminPanel() {
       )}
 
       <style jsx global>{`
-        .admin-launcher { position: fixed; right: 18px; bottom: 18px; z-index: 80; padding: 9px 13px; border: 1.5px solid #0a0a0a; border-radius: 999px; background: #fff; color: #0a0a0a; font: 800 10px/1 Arial, sans-serif; letter-spacing: .12em; cursor: pointer; box-shadow: 0 5px 18px rgba(0,0,0,.12); }
+        .admin-launcher { position: fixed; right: 18px; bottom: 18px; z-index: 80; padding: 9px 13px; border: 1.5px solid #0a0a0a; border-radius: 999px; background: #fff; color: #0a0a0a; font-size: 10px; font-weight: 800; letter-spacing: .12em; cursor: pointer; box-shadow: 0 5px 18px rgba(0,0,0,.12); }
         .admin-launcher:hover { background: #0a0a0a; color: #fff; }
         .admin-backdrop { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 20px; background: rgba(0,0,0,.72); backdrop-filter: blur(7px); }
-        .admin-panel { width: min(1120px, 100%); max-height: calc(100vh - 40px); overflow: auto; background: #f7f7f7; border: 2px solid #0a0a0a; border-radius: 22px; box-shadow: 14px 14px 0 #0a0a0a; color: #0a0a0a; }
+        .admin-panel { width: min(1120px, 100%); max-height: calc(100vh - 40px); overflow: auto; scroll-behavior: smooth; background: #f7f7f7; border: 2px solid #0a0a0a; border-radius: 22px; box-shadow: 14px 14px 0 #0a0a0a; color: #0a0a0a; }
         .admin-login { position: relative; width: min(480px, 100%); margin: auto; padding: 54px 42px; background: #fff; }
         .admin-login h2, .admin-header h2 { margin: 4px 0 12px; font-size: clamp(32px, 4vw, 54px); letter-spacing: -.055em; }
         .admin-login > p:not(.admin-kicker):not(.admin-message) { color: #666; }
         .admin-login input { width: 100%; padding: 14px; margin: 18px 0 12px; border: 1.5px solid #aaa; border-radius: 9px; font-size: 16px; }
-        .admin-kicker { margin: 0; color: #777; font: 800 10px/1.2 Arial, sans-serif; letter-spacing: .16em; }
+        .admin-kicker { margin: 0; color: #777; font-size: 10px; font-weight: 800; letter-spacing: .16em; }
         .admin-close { width: 42px; height: 42px; display: grid; place-items: center; border: 1.5px solid #0a0a0a; border-radius: 50%; background: #fff; font-size: 23px; cursor: pointer; }
         .admin-login .admin-close { position: absolute; top: 18px; right: 18px; }
         .admin-primary { padding: 12px 18px; border: 1.5px solid #0a0a0a; border-radius: 8px; background: #0a0a0a; color: #fff; font-weight: 800; cursor: pointer; }
@@ -526,9 +509,11 @@ export default function AdminPanel() {
         .admin-tabs span { opacity: .55; margin-left: 6px; }
         .admin-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 28px; }
         .admin-toolbar p { margin: 0; color: #666; font-size: 12px; line-height: 1.6; }
-        .admin-toolbar button { flex: 0 0 auto; padding: 9px 13px; border: 1.5px solid #0a0a0a; border-radius: 999px; background: #fff; font-weight: 800; cursor: pointer; }
-        .admin-items { display: grid; gap: 20px; padding: 0 28px 110px; }
-        .admin-item { padding: 22px; background: #fff; border: 1px solid #d3d3d3; border-radius: 15px; }
+        .admin-toolbar button { flex: 0 0 auto; padding: 9px 13px; border: 1.5px solid #315f48; border-radius: 999px; background: #315f48; color: #fff; font-weight: 800; cursor: pointer; }
+        .admin-toolbar button:hover { background: #244936; }
+        .admin-items { display: grid; gap: 20px; padding: 0 28px 110px; scroll-margin-top: 160px; }
+        .admin-item { padding: 22px; scroll-margin-top: 165px; background: #fff; border: 1px solid #d3d3d3; border-radius: 15px; }
+        .admin-item:first-child { border-color: #9cb2a3; }
         .admin-item-head { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding-bottom: 16px; margin-bottom: 18px; border-bottom: 1px solid #e2e2e2; }
         .admin-item-actions { display: flex; gap: 7px; }
         .admin-item-actions button { min-width: 34px; padding: 7px 9px; border: 1px solid #bbb; border-radius: 7px; background: #fff; font-weight: 700; cursor: pointer; }
@@ -538,12 +523,12 @@ export default function AdminPanel() {
         .admin-field { display: grid; gap: 6px; margin-bottom: 12px; }
         .admin-field span, .admin-upload-label > span { color: #666; font-size: 10px; font-weight: 800; letter-spacing: .06em; }
         .admin-field input, .admin-field textarea { width: 100%; padding: 10px 11px; border: 1px solid #c7c7c7; border-radius: 8px; background: #fbfbfb; color: #111; font: inherit; font-size: 13px; resize: vertical; }
-        .admin-field input:focus, .admin-field textarea:focus { outline: 2px solid #111; outline-offset: -1px; background: #fff; }
+        .admin-field input:focus, .admin-field textarea:focus { outline: 2px solid #315f48; outline-offset: -1px; background: #fff; }
         .admin-upload-field { margin: 7px 0 18px; padding: 16px; border: 1px solid #d7d7d7; border-radius: 12px; background: #fafafa; }
         .admin-upload-label { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 10px; }
         .admin-upload-label small { color: #888; font-size: 10px; }
         .admin-dropzone { position: relative; min-height: 118px; display: grid; place-items: center; border: 2px dashed #aaa; border-radius: 11px; background: #fff; transition: border-color .18s ease, background .18s ease; }
-        .admin-dropzone:hover { border-color: #111; background: #f3f3f3; }
+        .admin-dropzone:hover { border-color: #315f48; background: #f3f7f4; }
         .admin-dropzone.uploading { opacity: .55; pointer-events: none; }
         .admin-dropzone input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
         .admin-dropzone label { width: 100%; min-height: 114px; display: grid; place-content: center; gap: 6px; padding: 18px; text-align: center; cursor: pointer; }
