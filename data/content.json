@@ -1,0 +1,125 @@
+{
+  "works": [
+    {
+      "id": "smart-delivery",
+      "number": "01",
+      "title": "スマート配達",
+      "type": "WEB / AI",
+      "status": "AWARD",
+      "year": "2026",
+      "subtitle": "再配達を減らす、ドライバー目線の配送支援システム。",
+      "description": "配達員と受取人の双方が柔軟に予定を調整できる仕組みにより、再配達を減らすことを目指したチーム開発です。実装、自治体ヒアリング、LP制作を担当しました。",
+      "tags": ["AWS", "Team Development", "UI/UX"],
+      "image": "",
+      "url": "",
+      "role": "実装 / ヒアリング / LP制作",
+      "team": "3人チーム",
+      "tools": ["AWS", "TypeScript", "HTML/CSS", "GitHub"],
+      "challenge": "限られた開発期間の中で、プロダクトのコア機能を早い段階で完成させ、プレゼンや検証に時間を回せる進め方を意識しました。",
+      "highlights": ["実装スピードを上げる開発フローを整備", "コア機能を早期に完成させ、発表準備の時間を確保", "ヒアリングを通して課題との接続を強化"],
+      "gallery": []
+    },
+    {
+      "id": "flipilf",
+      "number": "02",
+      "title": "FlipilF",
+      "type": "GAME",
+      "status": "UNITY",
+      "year": "2025",
+      "subtitle": "『何でも入れ替える』を軸にしたゲーム作品。",
+      "description": "オブジェクト同士を入れ替えるルールを中心に、プレイヤーが状況を読み替えながら進むゲームとして企画・制作しました。",
+      "tags": ["Unity", "C#", "Game Design"],
+      "image": "",
+      "url": "",
+      "role": "企画 / ゲームデザイン / 実装",
+      "team": "個人制作",
+      "tools": ["Unity", "C#"],
+      "challenge": "『入れ替える』という一つのルールから、プレイヤーが試行錯誤したくなる状況をどこまで作れるかを重視して設計しました。",
+      "highlights": ["ルールを短時間で理解できる導入", "同じ操作から異なる攻略方法が生まれる構成", "視覚的なフィードバックを重視"],
+      "gallery": []
+    },
+    {
+      "id": "heroic-cards",
+      "number": "03",
+      "title": "中華統一 ～英雄札譚～",
+      "type": "PLANNING",
+      "status": "GAME",
+      "year": "2026",
+      "subtitle": "デッキ構築ローグライク × 中国史のゲーム企画。",
+      "description": "英雄や戦術をカードとして組み合わせながら中国統一を目指す企画です。リスクとリターンの選択や周回性を重視して設計しました。",
+      "tags": ["Planning", "Level Design", "Scenario"],
+      "image": "",
+      "url": "",
+      "role": "企画 / システム設計 / レベルデザイン / シナリオ",
+      "team": "企画作品",
+      "tools": ["Game Planning", "Level Design", "Scenario"],
+      "challenge": "歴史題材を単なる世界観として使うのではなく、武将の個性や勢力関係がゲームの選択そのものに影響する構造を目指しました。",
+      "highlights": ["デッキ構築と勢力争いを結び付けたシステム", "安全策と高リターンの選択を常に提示", "周回ごとに異なるイベントが生まれる構成"],
+      "gallery": []
+    }
+  ],
+  "products": [
+    {
+      "id": "smart-delivery-product",
+      "title": "スマート配達",
+      "type": "WEB / AI",
+      "year": "2026",
+      "description": "再配達を減らすことを目指した配送支援システム。",
+      "image": "",
+      "url": "",
+      "meta": "3人チーム"
+    },
+    {
+      "id": "flipilf-product",
+      "title": "FlipilF",
+      "type": "GAME",
+      "year": "2025",
+      "description": "『何でも入れ替える』を軸にしたUnityゲーム作品。",
+      "image": "",
+      "url": "",
+      "meta": "個人制作"
+    },
+    {
+      "id": "heroic-cards-product",
+      "title": "中華統一 ～英雄札譚～",
+      "type": "PLANNING",
+      "year": "2026",
+      "description": "デッキ構築ローグライクと中国史を組み合わせたゲーム企画。",
+      "image": "",
+      "url": "",
+      "meta": "企画作品"
+    }
+  ],
+  "articles": [
+    {
+      "id": "development-note",
+      "number": "01",
+      "date": "2026.08",
+      "category": "DEVELOPMENT",
+      "title": "開発で考えたことをまとめる記事",
+      "description": "制作の中で判断したこと、試したこと、うまくいかなかったことなどを記録するための記事スペースです。",
+      "url": "",
+      "image": ""
+    },
+    {
+      "id": "game-design-note",
+      "number": "02",
+      "date": "2026.08",
+      "category": "GAME DESIGN",
+      "title": "ゲームデザイン・レベルデザインのメモ",
+      "description": "遊びやすさ、導線、リスクとリターンなど、ゲーム制作で意識していることを整理して紹介します。",
+      "url": "",
+      "image": ""
+    },
+    {
+      "id": "web-ui-note",
+      "number": "03",
+      "date": "2026.08",
+      "category": "TECH",
+      "title": "Web・UI/UXについての制作記録",
+      "description": "Web制作やUI設計で工夫した点を、画面や図を交えながら紹介するための枠です。",
+      "url": "",
+      "image": ""
+    }
+  ]
+}
