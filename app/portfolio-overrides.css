@@ -12,6 +12,91 @@
   display: none !important;
 }
 
+/* Unified typography: one family for Japanese and Latin text. */
+:root {
+  --portfolio-font: "Noto Sans JP", "Hiragino Sans", "Yu Gothic UI", "Yu Gothic", Meiryo, sans-serif;
+}
+
+html,
+body,
+button,
+input,
+textarea,
+select,
+a,
+p,
+span,
+div,
+li,
+dt,
+dd,
+label,
+strong,
+small,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.logo,
+.site-header nav,
+.eyebrow,
+.section-heading h2,
+.skills-title,
+.skill-group h3,
+.work-slide h3,
+.work-index,
+.work-year,
+.work-meta,
+.work-slide-subtitle,
+.work-slide-description,
+.work-hashtags,
+.view-more,
+.products-heading h2,
+.product-body h3,
+.product-meta,
+.product-button,
+.articles-heading h2,
+.article-number,
+.article-meta,
+.article-main h3,
+.modal-title,
+.modal-info-grid h3,
+.modal-meta,
+.modal-facts,
+.admin-panel,
+.admin-panel button,
+.admin-panel input,
+.admin-panel textarea,
+.admin-kicker,
+.admin-header h2 {
+  font-family: var(--portfolio-font) !important;
+}
+
+/* Keep number columns aligned without switching to a different monospace face. */
+.work-index,
+.work-year,
+.article-number,
+.article-meta {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Headings share the same visual voice; hierarchy comes from size and weight. */
+.section-heading h2,
+.products-heading h2,
+.articles-heading h2,
+.skills-title,
+.work-slide h3,
+.product-body h3,
+.article-main h3,
+.modal-title,
+.modal-info-grid h3,
+.profile-copy .lead {
+  font-weight: 800 !important;
+  font-style: normal !important;
+}
+
 @media (max-width: 800px) {
   #works.section-block {
     padding-top: 56px;
