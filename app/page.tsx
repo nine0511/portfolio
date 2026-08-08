@@ -2,23 +2,29 @@
 
 import { useEffect, useState } from "react";
 
-const demoImage = (title: string, subtitle: string) =>
+const demoImage = (title: string, subtitle: string, variant = 1) =>
   `data:image/svg+xml;utf8,${encodeURIComponent(`
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700">
       <rect width="1200" height="700" fill="#f3f3f3"/>
       <rect x="42" y="42" width="1116" height="616" rx="24" fill="#fff" stroke="#111" stroke-width="5"/>
-      <rect x="88" y="90" width="310" height="520" rx="28" fill="#efefef" stroke="#bdbdbd" stroke-width="3"/>
-      <rect x="445" y="90" width="310" height="520" rx="28" fill="#f8f8f8" stroke="#bdbdbd" stroke-width="3"/>
-      <rect x="802" y="90" width="310" height="520" rx="28" fill="#efefef" stroke="#bdbdbd" stroke-width="3"/>
-      <rect x="128" y="155" width="230" height="55" rx="12" fill="#111"/>
-      <rect x="485" y="155" width="230" height="55" rx="12" fill="#111"/>
-      <rect x="842" y="155" width="230" height="55" rx="12" fill="#111"/>
-      <rect x="128" y="250" width="230" height="230" rx="18" fill="#d8d8d8"/>
-      <rect x="485" y="250" width="230" height="230" rx="18" fill="#e5e5e5"/>
-      <rect x="842" y="250" width="230" height="230" rx="18" fill="#d8d8d8"/>
-      <text x="600" y="352" text-anchor="middle" font-family="Arial, sans-serif" font-size="72" font-weight="800" fill="#111">${title}</text>
-      <text x="600" y="410" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#666">${subtitle}</text>
-      <text x="600" y="565" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#888">DEMO PROJECT VISUAL</text>
+      ${variant === 1 ? `
+        <rect x="90" y="100" width="300" height="500" rx="28" fill="#ededed" stroke="#bdbdbd" stroke-width="3"/>
+        <rect x="450" y="100" width="300" height="500" rx="28" fill="#f8f8f8" stroke="#bdbdbd" stroke-width="3"/>
+        <rect x="810" y="100" width="300" height="500" rx="28" fill="#ededed" stroke="#bdbdbd" stroke-width="3"/>
+      ` : variant === 2 ? `
+        <rect x="95" y="95" width="1010" height="105" rx="20" fill="#111"/>
+        <rect x="95" y="245" width="310" height="345" rx="22" fill="#e1e1e1"/>
+        <rect x="445" y="245" width="310" height="345" rx="22" fill="#f0f0f0"/>
+        <rect x="795" y="245" width="310" height="345" rx="22" fill="#e1e1e1"/>
+      ` : `
+        <rect x="95" y="100" width="1010" height="365" rx="24" fill="#e9e9e9" stroke="#bdbdbd" stroke-width="3"/>
+        <rect x="95" y="505" width="300" height="95" rx="18" fill="#111"/>
+        <rect x="450" y="505" width="300" height="95" rx="18" fill="#d6d6d6"/>
+        <rect x="805" y="505" width="300" height="95" rx="18" fill="#ededed"/>
+      `}
+      <text x="600" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="68" font-weight="800" fill="#111">${title}</text>
+      <text x="600" y="405" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#666">${subtitle}</text>
+      <text x="600" y="640" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#888">DEMO PROJECT VISUAL</text>
     </svg>
   `)}`;
 
@@ -58,12 +64,12 @@ const works = [
     subtitle: "再配達を減らす、ドライバー目線の配送支援システム。",
     description: "配達員と受取人の双方が柔軟に予定を調整できる仕組みにより、再配達を減らすことを目指したチーム開発です。実装、自治体ヒアリング、LP制作を担当しました。",
     tags: ["AWS", "Team Development", "UI/UX"],
-    image: demoImage("SMART DELIVERY", "Delivery Support System"),
-    role: "実装 / 東広島市へのヒアリング / LP制作",
+    image: demoImage("SMART DELIVERY", "Delivery Support System", 1),
+    role: "実装 / ヒアリング / LP制作",
     team: "3人チーム",
     tools: ["AWS", "TypeScript", "HTML/CSS", "GitHub"],
     challenge: "限られた開発期間の中で、プロダクトのコア機能を早い段階で完成させ、プレゼンや検証に時間を回せる進め方を意識しました。",
-    highlights: ["CodeXの導入を主導し、チーム全体の実装スピードを向上", "コア機能を早期に完成させ、発表資料の制作時間を確保", "東広島市へのヒアリングを通して地域課題との接続を強化"],
+    highlights: ["実装スピードを上げる開発フローを整備", "コア機能を早期に完成させ、発表準備の時間を確保", "ヒアリングを通して課題との接続を強化"],
     gallery: [galleryImage("SMART DELIVERY", "DRIVER DASHBOARD", 1), galleryImage("SMART DELIVERY", "DELIVERY FLOW", 2), galleryImage("SMART DELIVERY", "LANDING PAGE", 3)],
   },
   {
@@ -73,14 +79,14 @@ const works = [
     status: "UNITY",
     year: "2025",
     subtitle: "『何でも入れ替える』を軸にしたゲーム作品。",
-    description: "オブジェクト同士を入れ替えるルールを中心に、プレイヤーが状況を読み替えながら進むゲームとして企画・制作しました。ゲームデザインと実装の両面を担当しています。",
+    description: "オブジェクト同士を入れ替えるルールを中心に、プレイヤーが状況を読み替えながら進むゲームとして企画・制作しました。",
     tags: ["Unity", "C#", "Game Design"],
-    image: demoImage("FLIPILF", "Unity Game Project"),
+    image: demoImage("FLIPILF", "Unity Game Project", 2),
     role: "企画 / ゲームデザイン / 実装",
     team: "個人制作",
     tools: ["Unity", "C#"],
     challenge: "『入れ替える』という一つのルールから、プレイヤーが試行錯誤したくなる状況をどこまで作れるかを重視して設計しました。",
-    highlights: ["ルールを短時間で理解できる導入を設計", "同じ操作から異なる攻略方法が生まれるステージ構成", "視覚的なフィードバックで入れ替え結果を分かりやすく表現"],
+    highlights: ["ルールを短時間で理解できる導入", "同じ操作から異なる攻略方法が生まれる構成", "視覚的なフィードバックを重視"],
     gallery: [galleryImage("FLIPILF", "GAME PLAY", 1), galleryImage("FLIPILF", "LEVEL DESIGN", 2), galleryImage("FLIPILF", "SYSTEM UI", 3)],
   },
   {
@@ -90,15 +96,39 @@ const works = [
     status: "GAME",
     year: "2026",
     subtitle: "デッキ構築ローグライク × 中国史のゲーム企画。",
-    description: "英雄や戦術をカードとして組み合わせながら中国統一を目指す企画です。リスクとリターンの選択、歴史人物による戦況変化、周回性を重視して設計しました。",
+    description: "英雄や戦術をカードとして組み合わせながら中国統一を目指す企画です。リスクとリターンの選択や周回性を重視して設計しました。",
     tags: ["Planning", "Level Design", "Scenario"],
-    image: demoImage("HEROIC CARDS", "Deck-building Roguelike"),
+    image: demoImage("HEROIC CARDS", "Deck-building Roguelike", 3),
     role: "企画 / システム設計 / レベルデザイン / シナリオ",
     team: "企画作品",
     tools: ["Game Planning", "Level Design", "Scenario"],
     challenge: "歴史題材を単なる世界観として使うのではなく、武将の個性や勢力関係がゲームの選択そのものに影響する構造を目指しました。",
-    highlights: ["デッキ構築と歴史上の勢力争いを結び付けたシステム", "安全策と高リターンの選択を常に提示", "周回ごとに異なる武将・イベントが生まれる構成"],
+    highlights: ["デッキ構築と勢力争いを結び付けたシステム", "安全策と高リターンの選択を常に提示", "周回ごとに異なるイベントが生まれる構成"],
     gallery: [galleryImage("HEROIC CARDS", "BATTLE SCREEN", 1), galleryImage("HEROIC CARDS", "CARD SYSTEM", 2), galleryImage("HEROIC CARDS", "WORLD MAP", 3)],
+  },
+];
+
+const articles = [
+  {
+    number: "01",
+    date: "2026.08",
+    category: "DEVELOPMENT",
+    title: "開発で考えたことをまとめる記事",
+    description: "制作の中で判断したこと、試したこと、うまくいかなかったことなどを記録するための記事スペースです。",
+  },
+  {
+    number: "02",
+    date: "2026.08",
+    category: "GAME DESIGN",
+    title: "ゲームデザイン・レベルデザインのメモ",
+    description: "遊びやすさ、導線、リスクとリターンなど、ゲーム制作で意識していることを整理して紹介します。",
+  },
+  {
+    number: "03",
+    date: "2026.08",
+    category: "TECH",
+    title: "Web・UI/UXについての制作記録",
+    description: "Web制作やUI設計で工夫した点を、画面や図を交えながら紹介するための枠です。",
   },
 ];
 
@@ -159,6 +189,10 @@ export default function Home() {
   return (
     <main>
       <style>{`
+        .site-header nav { overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+        .site-header nav::-webkit-scrollbar { display: none; }
+        .site-header nav a { display: inline-flex !important; }
+
         .work-carousel-wrap { position: relative; margin-top: 24px; padding: 18px 0 72px; overflow: hidden; }
         .work-carousel-stage { position: relative; min-height: 710px; display: flex; align-items: center; justify-content: center; }
         .work-slide { position: absolute; width: min(820px, 72vw); min-height: 620px; padding: 30px 32px 28px; background: #fff; border: 4px solid #0a0a0a; border-radius: 30px; box-shadow: 20px 20px 0 #0a0a0a; transition: transform .45s ease, opacity .45s ease, filter .45s ease; }
@@ -178,73 +212,79 @@ export default function Home() {
         .work-slide-description { margin: 18px 0 14px; color: #242424; font-size: 17px; line-height: 1.8; font-weight: 600; }
         .work-slide-footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; padding-top: 14px; border-top: 1px dashed #cfcfcf; }
         .work-hashtags { margin: 0; font-size: 13px; line-height: 1.7; font-weight: 800; }
-        .view-more { appearance: none; padding: 0; border: 0; background: transparent; color: inherit; cursor: pointer; white-space: nowrap; font: inherit; font-size: 15px; font-weight: 900; letter-spacing: .04em; transition: opacity .2s ease, transform .2s ease; }
-        .view-more:hover { opacity: .55; transform: translateX(3px); }
-        .carousel-arrow { position: absolute; z-index: 5; top: 50%; width: 58px; height: 58px; display: grid; place-items: center; border: 3px solid #0a0a0a; border-radius: 50%; background: #fff; color: #0a0a0a; font-size: 28px; cursor: pointer; transform: translateY(-50%); transition: background .2s ease, color .2s ease, transform .2s ease; }
-        .carousel-arrow:hover { background: #0a0a0a; color: #fff; transform: translateY(-50%) scale(1.06); }
+        .view-more { appearance: none; padding: 0; border: 0; background: transparent; color: inherit; white-space: nowrap; font-size: 15px; font-weight: 900; letter-spacing: .04em; cursor: pointer; }
+        .view-more:hover { opacity: .55; }
+        .carousel-arrow { position: absolute; z-index: 5; top: 50%; width: 58px; height: 58px; display: grid; place-items: center; border: 3px solid #0a0a0a; border-radius: 50%; background: #fff; color: #0a0a0a; font-size: 28px; cursor: pointer; transform: translateY(-50%); }
+        .carousel-arrow:hover { background: #0a0a0a; color: #fff; }
         .carousel-arrow.left { left: max(0px, calc(50% - 570px)); }
         .carousel-arrow.right { right: max(0px, calc(50% - 570px)); }
         .carousel-dots { display: flex; justify-content: center; gap: 10px; margin-top: 2px; }
         .carousel-dot { width: 10px; height: 10px; padding: 0; border: 2px solid #0a0a0a; border-radius: 999px; background: #fff; cursor: pointer; }
         .carousel-dot.active { width: 34px; background: #0a0a0a; }
 
-        .work-modal-backdrop { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 28px; background: rgba(0,0,0,.72); backdrop-filter: blur(8px); animation: modalFade .2s ease; }
-        .work-modal { position: relative; width: min(1080px, 94vw); max-height: 90vh; overflow-y: auto; overscroll-behavior: contain; padding: 38px; background: #fff; border: 4px solid #0a0a0a; border-radius: 28px; box-shadow: 18px 18px 0 rgba(0,0,0,.85); animation: modalRise .24s ease; }
-        .modal-close { position: sticky; top: 0; z-index: 3; float: right; width: 48px; height: 48px; margin: -8px -8px 0 18px; border: 3px solid #0a0a0a; border-radius: 50%; background: #fff; color: #0a0a0a; font-size: 24px; font-weight: 900; cursor: pointer; }
-        .modal-close:hover { background: #0a0a0a; color: #fff; }
-        .modal-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; margin-bottom: 14px; font-size: 12px; font-weight: 900; letter-spacing: .05em; }
-        .modal-number { font-family: monospace; font-size: 14px; }
-        .modal-type { padding: 6px 10px; background: #0a0a0a; color: #fff; border-radius: 4px; }
-        .modal-status { padding: 5px 9px; border: 2px solid #0a0a0a; border-radius: 4px; }
-        .modal-year { margin-left: auto; color: #888; font-family: monospace; font-size: 15px; }
-        .work-modal h2 { margin: 0; padding-right: 54px; font-size: clamp(48px, 7vw, 92px); line-height: .92; letter-spacing: -.065em; }
-        .modal-lead { max-width: 760px; margin: 12px 0 28px; color: #666; font-size: 17px; font-weight: 700; line-height: 1.7; }
-        .modal-hero { width: 100%; display: block; aspect-ratio: 16 / 8.5; object-fit: cover; border: 3px solid #0a0a0a; border-radius: 18px; background: #f1f1f1; }
-        .modal-info-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 56px; padding: 52px 0; }
-        .modal-label { margin: 0 0 12px; color: #777; font-size: 11px; font-weight: 900; letter-spacing: .1em; }
-        .modal-info-grid h3, .modal-gallery-heading h3 { margin: 0; font-size: clamp(34px, 5vw, 62px); line-height: .95; letter-spacing: -.055em; }
-        .modal-description { margin: 0; color: #333; font-size: 16px; line-height: 1.95; }
-        .modal-facts { margin: 32px 0 0; border-top: 1px solid #d5d5d5; }
-        .modal-facts div { display: grid; grid-template-columns: 105px 1fr; gap: 18px; padding: 15px 0; border-bottom: 1px solid #d5d5d5; }
-        .modal-facts dt { color: #777; font-size: 10px; font-weight: 900; letter-spacing: .08em; }
-        .modal-facts dd { margin: 0; font-weight: 700; line-height: 1.6; }
-        .modal-tools { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
-        .modal-tools li { padding: 5px 8px; border: 1px solid #aaa; border-radius: 999px; font-size: 10px; }
-        .modal-challenge { padding: 44px 0 54px; border-top: 1px solid #d5d5d5; }
-        .modal-challenge > p:not(.modal-label) { margin: 0 0 26px; color: #333; font-size: 16px; line-height: 1.9; }
-        .modal-highlights { margin: 0; padding: 0; list-style: none; border-top: 1px solid #d5d5d5; }
-        .modal-highlights li { padding: 14px 0; border-bottom: 1px solid #d5d5d5; font-weight: 700; line-height: 1.6; }
-        .modal-highlights li::before { content: "↗"; margin-right: 10px; }
-        .modal-gallery { padding-top: 46px; border-top: 3px solid #0a0a0a; }
-        .modal-gallery-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 26px; }
-        .modal-gallery-heading span { color: #777; font-size: 11px; font-weight: 900; letter-spacing: .08em; }
-        .modal-gallery-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-        .modal-gallery-item { margin: 0; }
-        .modal-gallery-item:first-child { grid-column: 1 / -1; }
-        .modal-gallery-item img { width: 100%; display: block; border: 2px solid #0a0a0a; border-radius: 14px; background: #f3f3f3; }
-        .modal-gallery-item figcaption { margin-top: 7px; color: #777; font-family: monospace; font-size: 10px; font-weight: 700; }
-        @keyframes modalFade { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes modalRise { from { opacity: 0; transform: translateY(22px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .products-section { padding: 128px 0; background: #f7f7f7; border-top: 1px solid #dedede; border-bottom: 1px solid #dedede; }
+        .products-heading, .articles-heading { display: flex; align-items: end; justify-content: space-between; gap: 32px; margin-bottom: 52px; }
+        .products-heading h2, .articles-heading h2 { margin: 0; font-size: clamp(58px, 8vw, 108px); line-height: .9; letter-spacing: -.07em; }
+        .section-description { max-width: 430px; margin: 0 0 4px; color: #666; font-size: 14px; line-height: 1.8; }
+        .products-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+        .product-card { overflow: hidden; display: flex; flex-direction: column; background: #fff; border: 1px solid #d6d6d6; border-radius: 22px; box-shadow: 0 12px 28px rgba(0,0,0,.06); }
+        .product-image-wrap { position: relative; overflow: hidden; aspect-ratio: 16 / 9; border-bottom: 1px solid #dedede; background: #eee; }
+        .product-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+        .product-card:hover .product-image-wrap img { transform: scale(1.025); }
+        .product-tech { position: absolute; top: 14px; right: 14px; padding: 7px 10px; border: 1px solid #bbb; border-radius: 999px; background: rgba(255,255,255,.92); font-size: 10px; font-weight: 800; letter-spacing: .07em; }
+        .product-body { display: flex; flex: 1; flex-direction: column; padding: 26px 28px 22px; }
+        .product-body h3 { margin: 0; font-size: clamp(24px, 2.5vw, 34px); line-height: 1.2; letter-spacing: -.04em; }
+        .product-body > p { margin: 14px 0 22px; color: #4b4b4b; font-size: 14px; line-height: 1.8; }
+        .product-bottom { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-top: auto; padding-top: 16px; border-top: 1px solid #ececec; }
+        .product-meta { color: #777; font-size: 11px; line-height: 1.6; }
+        .product-button { appearance: none; padding: 9px 13px; border: 1.5px solid #0a0a0a; border-radius: 999px; background: #fff; color: #0a0a0a; font-size: 11px; font-weight: 800; cursor: pointer; }
+        .product-button:hover { background: #0a0a0a; color: #fff; }
 
-        .skills-showcase { padding: 110px 0 120px; background: #fff; border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf; }
-        .skills-inner { text-align: center; }
-        .skills-title { margin: 0; font-size: clamp(34px, 4vw, 52px); font-weight: 800; letter-spacing: -0.045em; }
-        .skill-groups { width: min(100%, 980px); margin: 48px auto 0; display: grid; gap: 62px; }
-        .skill-group h3 { margin: 0 0 24px; font-size: clamp(20px, 2.2vw, 28px); font-weight: 800; letter-spacing: -0.03em; }
-        .skill-logo-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: clamp(24px, 4vw, 46px); }
-        .skill-logo-item { position: relative; width: clamp(58px, 7vw, 78px); height: clamp(58px, 7vw, 78px); display: grid; place-items: center; transition: transform .18s ease, filter .18s ease; }
-        .skill-logo-item:hover { transform: translateY(-5px) scale(1.05); filter: drop-shadow(0 9px 12px rgba(20,20,20,.10)); }
-        .skill-logo-item img { width: 100%; height: 100%; object-fit: contain; display: block; filter: none !important; opacity: 1 !important; }
-        .skill-logo-item span { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+        .articles-section { padding: 128px 0; background: #fff; }
+        .article-list { border-top: 1px solid #bdbdbd; }
+        .article-card { display: grid; grid-template-columns: 72px 150px 1fr 32px; gap: 24px; align-items: start; padding: 30px 0; border-bottom: 1px solid #dedede; transition: padding .2s ease, background .2s ease; }
+        .article-card:hover { padding-left: 16px; padding-right: 16px; background: #f7f7f7; }
+        .article-number { color: #777; font-family: monospace; font-size: 13px; font-weight: 800; }
+        .article-meta { color: #777; font-size: 10px; font-weight: 800; line-height: 1.6; letter-spacing: .08em; }
+        .article-main h3 { margin: 0; font-size: clamp(24px, 3vw, 38px); letter-spacing: -.04em; }
+        .article-main p { max-width: 720px; margin: 10px 0 0; color: #4b4b4b; font-size: 14px; line-height: 1.8; }
+        .article-arrow { font-size: 24px; text-align: right; }
+
+        .modal-backdrop { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 32px; background: rgba(0,0,0,.72); backdrop-filter: blur(5px); }
+        .modal-window { position: relative; width: min(1040px, 100%); max-height: calc(100vh - 64px); overflow-y: auto; padding: 40px; background: #fff; border: 3px solid #0a0a0a; border-radius: 26px; box-shadow: 18px 18px 0 #0a0a0a; }
+        .modal-close { position: sticky; top: 0; z-index: 3; float: right; width: 48px; height: 48px; border: 2px solid #0a0a0a; border-radius: 50%; background: #fff; font-size: 26px; cursor: pointer; }
+        .modal-close:hover { background: #0a0a0a; color: #fff; }
+        .modal-meta { display: flex; flex-wrap: wrap; gap: 9px; padding-right: 64px; font-size: 11px; font-weight: 800; }
+        .modal-title { margin: 14px 70px 8px 0; font-size: clamp(42px, 7vw, 82px); line-height: .95; letter-spacing: -.065em; }
+        .modal-lead { max-width: 760px; margin: 0 0 24px; color: #555; font-size: 16px; line-height: 1.8; }
+        .modal-main-image { width: 100%; display: block; border: 2px solid #0a0a0a; border-radius: 16px; }
+        .modal-info-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 52px; padding: 50px 0; }
+        .modal-info-grid h3 { margin: 0; font-size: clamp(32px, 4vw, 52px); letter-spacing: -.05em; }
+        .modal-copy { color: #333; font-size: 14px; line-height: 1.9; }
+        .modal-facts { margin-top: 30px; border-top: 1px solid #ccc; }
+        .modal-facts div { display: grid; grid-template-columns: 105px 1fr; gap: 18px; padding: 14px 0; border-bottom: 1px solid #ddd; }
+        .modal-facts dt { color: #777; font-size: 10px; font-weight: 800; letter-spacing: .08em; }
+        .modal-facts dd { margin: 0; font-size: 13px; font-weight: 700; }
+        .modal-tools { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; list-style: none; }
+        .modal-tools li { padding: 4px 8px; border: 1px solid #aaa; border-radius: 999px; font-size: 10px; }
+        .modal-highlights { margin: 22px 0 0; padding: 0; list-style: none; border-top: 1px solid #ccc; }
+        .modal-highlights li { padding: 13px 0; border-bottom: 1px solid #ddd; font-size: 13px; font-weight: 700; }
+        .modal-highlights li::before { content: "↗"; margin-right: 9px; }
+        .modal-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+        .modal-gallery img { width: 100%; display: block; border: 2px solid #0a0a0a; border-radius: 14px; }
+        .modal-gallery img:first-child { grid-column: 1 / -1; }
 
         @media (max-width: 900px) {
+          .site-header { align-items: flex-start; flex-direction: column; gap: 12px; }
+          .site-header nav { width: 100%; gap: 16px; }
           .work-carousel-stage { min-height: 650px; }
           .work-slide { width: min(760px, 82vw); min-height: 570px; padding: 24px; }
           .work-slide.prev { transform: translateX(-72%) scale(.78); }
           .work-slide.next { transform: translateX(72%) scale(.78); }
           .carousel-arrow.left { left: 4px; }
           .carousel-arrow.right { right: 4px; }
-          .modal-info-grid { grid-template-columns: 1fr; gap: 28px; }
+          .products-heading, .articles-heading { align-items: flex-start; flex-direction: column; }
+          .article-card { grid-template-columns: 54px 120px 1fr 28px; gap: 16px; }
         }
 
         @media (max-width: 700px) {
@@ -252,37 +292,33 @@ export default function Home() {
           .work-carousel-stage { min-height: 620px; }
           .work-slide { width: calc(100% - 18px); min-height: 550px; border-width: 3px; border-radius: 22px; box-shadow: 10px 10px 0 #0a0a0a; padding: 20px; }
           .work-slide.prev, .work-slide.next { opacity: 0; transform: scale(.92); }
-          .work-slide-top { align-items: flex-start; }
-          .work-meta { gap: 7px; font-size: 11px; }
-          .work-year { font-size: 14px; }
-          .work-slide h3 { font-size: clamp(34px, 11vw, 50px); }
-          .work-thumb { border-width: 2px; border-radius: 12px; }
           .work-slide-description { font-size: 14px; }
           .work-slide-footer { align-items: flex-start; flex-direction: column; gap: 8px; }
           .carousel-arrow { top: auto; bottom: -3px; width: 46px; height: 46px; font-size: 22px; transform: none; }
-          .carousel-arrow:hover { transform: scale(1.06); }
           .carousel-arrow.left { left: 18px; }
           .carousel-arrow.right { right: 18px; }
-          .work-modal-backdrop { padding: 12px; }
-          .work-modal { width: 100%; max-height: 94vh; padding: 22px; border-width: 3px; border-radius: 20px; box-shadow: 8px 8px 0 rgba(0,0,0,.85); }
-          .modal-close { width: 42px; height: 42px; font-size: 20px; }
-          .modal-year { width: 100%; margin-left: 0; }
-          .modal-lead { font-size: 14px; }
-          .modal-info-grid { padding: 38px 0; }
-          .modal-facts div { grid-template-columns: 82px 1fr; }
-          .modal-gallery-heading { align-items: flex-start; flex-direction: column; }
-          .modal-gallery-grid { grid-template-columns: 1fr; }
-          .modal-gallery-item:first-child { grid-column: auto; }
-          .skills-showcase { padding: 82px 0 90px; }
-          .skill-groups { margin-top: 38px; gap: 50px; }
-          .skill-logo-row { gap: 22px 28px; }
+          .products-section, .articles-section { padding: 88px 0; }
+          .products-grid { grid-template-columns: 1fr; gap: 22px; }
+          .article-card { grid-template-columns: 40px 1fr 26px; }
+          .article-meta { grid-column: 2; }
+          .article-main { grid-column: 2; }
+          .article-arrow { grid-column: 3; grid-row: 1 / span 2; }
+          .modal-backdrop { padding: 14px; }
+          .modal-window { max-height: calc(100vh - 28px); padding: 24px 20px; border-radius: 18px; box-shadow: 8px 8px 0 #0a0a0a; }
+          .modal-info-grid { grid-template-columns: 1fr; gap: 24px; padding: 36px 0; }
+          .modal-gallery { grid-template-columns: 1fr; }
+          .modal-gallery img:first-child { grid-column: auto; }
         }
       `}</style>
 
       <header className="site-header">
         <a className="logo" href="#top" aria-label="トップへ">NINE0511</a>
         <nav aria-label="メインナビゲーション">
-          <a href="#works">WORK</a><a href="#profile">PROFILE</a><a href="#skills">SKILLS</a><a href="#contact">CONTACT</a>
+          <a href="#works">WORK</a>
+          <a href="#profile">PROFILE</a>
+          <a href="#products">PRODUCTS</a>
+          <a href="#article">ARTICLE</a>
+          <a href="#skills">SKILL</a>
         </nav>
       </header>
 
@@ -323,65 +359,107 @@ export default function Home() {
             <button className="carousel-arrow left" type="button" onClick={previousWork} aria-label="前の作品">←</button>
             <button className="carousel-arrow right" type="button" onClick={nextWork} aria-label="次の作品">→</button>
           </div>
-          <div className="carousel-dots" aria-label="作品を選択">{works.map((work, index) => <button key={work.number} type="button" className={`carousel-dot ${index === activeWork ? "active" : ""}`} onClick={() => setActiveWork(index)} aria-label={`${work.title}を表示`} />)}</div>
+          <div className="carousel-dots" aria-label="作品を選択">
+            {works.map((work, index) => <button key={work.number} type="button" className={`carousel-dot ${index === activeWork ? "active" : ""}`} onClick={() => setActiveWork(index)} aria-label={`${work.title}を表示`} />)}
+          </div>
         </div>
       </section>
 
       <section id="profile" className="section-shell section-block profile-grid">
         <div className="section-heading sticky-heading"><p className="eyebrow">ABOUT ME</p><h2>PROFILE</h2></div>
-        <div className="profile-copy"><p className="lead">情報科学を学びながら、ゲーム制作・Web開発・チーム開発に取り組んでいます。</p><p>企画だけ、実装だけに閉じず、ユーザーがどう感じるかまで考えて形にすることを大切にしています。特にゲームではレベルデザインやUI、システム設計に関心があります。</p><dl className="profile-facts"><div><dt>FIELD</dt><dd>Game Design / Web / UI・UX</dd></div><div><dt>BASED IN</dt><dd>Hiroshima, Japan</dd></div><div><dt>FOCUS</dt><dd>Planning × Implementation</dd></div></dl></div>
+        <div className="profile-copy">
+          <p className="lead">情報科学を学びながら、ゲーム制作・Web開発・チーム開発に取り組んでいます。</p>
+          <p>企画だけ、実装だけに閉じず、ユーザーがどう感じるかまで考えて形にすることを大切にしています。特にゲームではレベルデザインやUI、システム設計に関心があります。</p>
+          <dl className="profile-facts"><div><dt>FIELD</dt><dd>Game Design / Web / UI・UX</dd></div><div><dt>BASED IN</dt><dd>Hiroshima, Japan</dd></div><div><dt>FOCUS</dt><dd>Planning × Implementation</dd></div></dl>
+        </div>
+      </section>
+
+      <section id="products" className="products-section">
+        <div className="section-shell">
+          <div className="products-heading">
+            <div><p className="eyebrow">ALL PROJECTS</p><h2>PRODUCTS</h2></div>
+            <p className="section-description">これまでの制作物を一覧で見られるセクションです。WORKでは代表作を、PRODUCTSでは全体像を素早く確認できます。</p>
+          </div>
+          <div className="products-grid">
+            {works.map((work, index) => (
+              <article className="product-card" key={work.number}>
+                <div className="product-image-wrap">
+                  <img src={work.image} alt={`${work.title} のサムネイル`} />
+                  <span className="product-tech">{work.type}</span>
+                </div>
+                <div className="product-body">
+                  <h3>{work.title}</h3>
+                  <p>{work.subtitle}</p>
+                  <div className="product-bottom">
+                    <div className="product-meta">制作：{work.year}<br />{work.team}</div>
+                    <button className="product-button" type="button" onClick={() => setSelectedWork(index)}>VIEW MORE →</button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="article" className="articles-section">
+        <div className="section-shell">
+          <div className="articles-heading">
+            <div><p className="eyebrow">WRITING / NOTES</p><h2>ARTICLE</h2></div>
+            <p className="section-description">制作過程や考えたこと、技術・ゲームデザインについての記事を掲載するためのセクションです。</p>
+          </div>
+          <div className="article-list">
+            {articles.map((article) => (
+              <article className="article-card" key={article.number}>
+                <div className="article-number">{article.number}</div>
+                <div className="article-meta">{article.date}<br />{article.category}</div>
+                <div className="article-main"><h3>{article.title}</h3><p>{article.description}</p></div>
+                <div className="article-arrow">↗</div>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section id="skills" className="skills-showcase">
-        <div className="section-shell skills-inner"><h2 className="skills-title">スキルセット</h2><div className="skill-groups">{skillGroups.map((group) => <section className="skill-group" key={group.title}><h3>{group.title}</h3><div className="skill-logo-row">{group.skills.map((skill) => <div className="skill-logo-item" key={skill.name} title={skill.name} aria-label={skill.name}><img src={skill.icon} alt="" loading="lazy" /><span>{skill.name}</span></div>)}</div></section>)}</div></div>
+        <div className="section-shell skills-inner">
+          <h2 className="skills-title">スキルセット</h2>
+          <div className="skill-groups">
+            {skillGroups.map((group) => (
+              <section className="skill-group" key={group.title}>
+                <h3>{group.title}</h3>
+                <div className="skill-logo-row">
+                  {group.skills.map((skill) => <div className="skill-logo-item" key={skill.name} title={skill.name} aria-label={skill.name}><img src={skill.icon} alt="" loading="lazy" /><span>{skill.name}</span></div>)}
+                </div>
+              </section>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section id="contact" className="contact-section"><div className="section-shell contact-inner"><p className="eyebrow">GET IN TOUCH</p><h2>LET&apos;S MAKE<br />SOMETHING GOOD.</h2><div className="contact-links"><a href="https://github.com/nine0511" target="_blank" rel="noreferrer">GitHub ↗</a></div><footer><span>© 2026 nine0511</span><a href="#top">BACK TO TOP ↑</a></footer></div></section>
 
       {modalWork && (
-        <div className="work-modal-backdrop" role="presentation" onMouseDown={closeModal}>
-          <section className="work-modal" role="dialog" aria-modal="true" aria-labelledby="work-modal-title" onMouseDown={(event) => event.stopPropagation()}>
+        <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) closeModal(); }}>
+          <section className="modal-window" role="dialog" aria-modal="true" aria-label={`${modalWork.title} の詳細`}>
             <button className="modal-close" type="button" onClick={closeModal} aria-label="詳細を閉じる">×</button>
-            <div className="modal-meta">
-              <span className="modal-number">{modalWork.number} //</span>
-              <span className="modal-type">{modalWork.type}</span>
-              <span className="modal-status">● {modalWork.status}</span>
-              <span className="modal-year">{modalWork.year}</span>
-            </div>
-            <h2 id="work-modal-title">{modalWork.title}</h2>
+            <div className="modal-meta"><span>{modalWork.number} //</span><span className="work-pill">{modalWork.type}</span><span className="work-status">● {modalWork.status}</span><span>{modalWork.year}</span></div>
+            <h2 className="modal-title">{modalWork.title}</h2>
             <p className="modal-lead">{modalWork.subtitle}</p>
-            <img className="modal-hero" src={modalWork.image} alt={`${modalWork.title} メインビジュアル`} />
-
+            <img className="modal-main-image" src={modalWork.image} alt={`${modalWork.title} メインビジュアル`} />
             <div className="modal-info-grid">
-              <div><p className="modal-label">ABOUT THIS PROJECT</p><h3>PROJECT<br />OVERVIEW</h3></div>
-              <div>
-                <p className="modal-description">{modalWork.description}</p>
+              <div><p className="eyebrow">PROJECT DETAIL</p><h3>作品詳細</h3></div>
+              <div className="modal-copy">
+                <p>{modalWork.description}</p>
                 <dl className="modal-facts">
                   <div><dt>ROLE</dt><dd>{modalWork.role}</dd></div>
                   <div><dt>TEAM</dt><dd>{modalWork.team}</dd></div>
                   <div><dt>TOOLS</dt><dd><ul className="modal-tools">{modalWork.tools.map((tool) => <li key={tool}>{tool}</li>)}</ul></dd></div>
                 </dl>
+                <p style={{marginTop: 30}}>{modalWork.challenge}</p>
+                <ul className="modal-highlights">{modalWork.highlights.map((item) => <li key={item}>{item}</li>)}</ul>
               </div>
             </div>
-
-            <div className="modal-challenge">
-              <p className="modal-label">DESIGN PROCESS</p>
-              <h3>工夫したこと</h3>
-              <p>{modalWork.challenge}</p>
-              <ul className="modal-highlights">{modalWork.highlights.map((item) => <li key={item}>{item}</li>)}</ul>
-            </div>
-
-            <div className="modal-gallery">
-              <div className="modal-gallery-heading"><h3>GALLERY</h3><span>SCREENSHOTS / PHOTOS</span></div>
-              <div className="modal-gallery-grid">
-                {modalWork.gallery.map((image, index) => (
-                  <figure className="modal-gallery-item" key={image}>
-                    <img src={image} alt={`${modalWork.title} デモ画像 ${index + 1}`} />
-                    <figcaption>0{index + 1} / DEMO IMAGE — 実際の画像へ差し替え予定</figcaption>
-                  </figure>
-                ))}
-              </div>
-            </div>
+            <div className="modal-gallery">{modalWork.gallery.map((image, index) => <img key={image} src={image} alt={`${modalWork.title} ギャラリー ${index + 1}`} />)}</div>
           </section>
         </div>
       )}
