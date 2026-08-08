@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #f4f1ea;
-  --text: #161616;
-  --muted: #6f6b64;
-  --line: #c8c2b7;
-  --accent: #ff5c35;
-  --dark: #141414;
+  --bg: #ffffff;
+  --text: #0a0a0a;
+  --muted: #707070;
+  --line: #d7d7d7;
+  --accent: #0a0a0a;
+  --dark: #0a0a0a;
   --max: 1200px;
 }
 
@@ -43,9 +43,9 @@ a {
   align-items: center;
   justify-content: space-between;
   padding: 20px max(24px, calc((100vw - var(--max)) / 2));
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(22, 22, 22, 0.12);
+  border-bottom: 1px solid rgba(10, 10, 10, 0.12);
 }
 
 .logo {
@@ -72,7 +72,7 @@ nav a:hover,
 .scroll-link:hover,
 .contact-links a:hover,
 footer a:hover {
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
 .hero {
@@ -121,7 +121,7 @@ footer a:hover {
 .hero-bottom p {
   max-width: 620px;
   margin: 0;
-  color: #393632;
+  color: #333333;
   font-size: clamp(15px, 1.7vw, 20px);
   line-height: 1.8;
 }
@@ -162,7 +162,7 @@ footer a:hover {
 .work-card:hover {
   padding-left: 16px;
   padding-right: 16px;
-  background: rgba(255, 255, 255, 0.35);
+  background: #f6f6f6;
 }
 
 .work-number,
@@ -186,7 +186,7 @@ footer a:hover {
 .work-description {
   max-width: 680px;
   margin: 18px 0 0;
-  color: #514d47;
+  color: #4a4a4a;
   line-height: 1.8;
 }
 
@@ -235,7 +235,7 @@ footer a:hover {
 }
 
 .profile-copy > p:not(.lead) {
-  color: #514d47;
+  color: #4a4a4a;
   line-height: 2;
 }
 
@@ -273,7 +273,7 @@ footer a:hover {
 .skills-intro {
   max-width: 380px;
   margin: 0 0 8px;
-  color: #514d47;
+  color: #4a4a4a;
   font-size: 15px;
   line-height: 1.8;
 }
@@ -290,7 +290,7 @@ footer a:hover {
   flex-direction: column;
   justify-content: space-between;
   padding: 24px;
-  background: rgba(255, 255, 255, 0.38);
+  background: #fafafa;
   border: 1px solid var(--line);
   border-radius: 18px;
   transition:
@@ -302,9 +302,9 @@ footer a:hover {
 
 .skill-card:hover {
   transform: translateY(-5px);
-  border-color: var(--accent);
-  background: rgba(255, 255, 255, 0.72);
-  box-shadow: 0 14px 34px rgba(22, 22, 22, 0.08);
+  border-color: #0a0a0a;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
 }
 
 .skill-icon {
@@ -352,9 +352,25 @@ footer a:hover {
   text-align: right;
 }
 
+/* Monochrome treatment for the current skills showcase. */
+.skills-showcase {
+  background: #f4f4f4 !important;
+  color: #0a0a0a;
+}
+
+.skill-logo-item img {
+  filter: grayscale(1) brightness(0) !important;
+  opacity: 0.88;
+  transition: opacity 0.18s ease;
+}
+
+.skill-logo-item:hover img {
+  opacity: 1;
+}
+
 .contact-section {
   background: var(--dark);
-  color: #f7f2e9;
+  color: #ffffff;
 }
 
 .contact-inner {
@@ -363,7 +379,7 @@ footer a:hover {
 }
 
 .contact-inner .eyebrow {
-  color: #9e9a93;
+  color: #a8a8a8;
 }
 
 .contact-inner h2 {
@@ -385,8 +401,8 @@ footer {
   gap: 24px;
   margin-top: 120px;
   padding-top: 22px;
-  border-top: 1px solid #454545;
-  color: #a8a39b;
+  border-top: 1px solid #3b3b3b;
+  color: #a8a8a8;
   font-size: 11px;
   letter-spacing: 0.08em;
 }
