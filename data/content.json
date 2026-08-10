@@ -31,9 +31,9 @@
         "ヒアリングを通して課題との接続を強化"
       ],
       "gallery": [
-        "https://placehold.co/1200x760/ffffff/111111?text=SMART+DELIVERY+01",
         "https://placehold.co/1200x760/f3f3f3/111111?text=SMART+DELIVERY+02",
-        "https://placehold.co/1200x760/eeeeee/111111?text=SMART+DELIVERY+03"
+        "https://placehold.co/1200x760/eeeeee/111111?text=SMART+DELIVERY+03",
+        "/uploads/1786376248946-2-913f07e856.png"
       ],
       "plannerPoint": "地域課題を機能に落とし込みつつ、開発時間の使い方まで設計したこと。",
       "problem": "再配達によるドライバー負担を減らしながら、受取人側にも無理のない調整方法を作る必要がありました。",
