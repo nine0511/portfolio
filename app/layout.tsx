@@ -3,6 +3,7 @@ import "./globals.css";
 import "./portfolio-overrides.css";
 import "./accent.css";
 import "./showcase.css";
+import "./achievements.css";
 import "./geometric-background.css";
 import "./background-overrides.css";
 import GeometricBackground from "./components/GeometricBackground";
