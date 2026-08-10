@@ -56,13 +56,13 @@
       "status": "UNITY",
       "year": "2025",
       "subtitle": "『何でも入れ替える』を軸にしたゲーム作品。",
-      "description": "オブジェクト同士を入れ替えるルールを中心に、プレイヤーが状況を読み替えながら進むゲームとして企画・制作しました。",
+      "description": "オブジェクト同士を入れ替えるルールを中心に、プレイヤーが状況を読み替えながら進むゲームとして企画・制作しました。\nUnity1Week お題「かえす」 318作品\n2024年8月11日(日) 20時 〜 2024年8月18日(日) 20時開催\n「評価の高かったゲーム一覧」に選出",
       "tags": [
         "Unity",
         "C#",
         "Game Design"
       ],
-      "image": "",
+      "image": "/uploads/1786375124958-FlipilF-34ac2555bf.png",
       "url": "",
       "role": "企画 / ゲームデザイン / 実装",
       "team": "個人制作",
@@ -87,53 +87,6 @@
       "decision": "説明を増やすより、ステージ構成と視覚フィードバックを通してルールを理解できる設計を優先しました。",
       "result": "同じ操作でも状況によって異なる使い方を考えられる構成を目指しました。",
       "contribution": "企画、ゲームデザイン、実装を担当。",
-      "proposalPdf": "",
-      "specPdf": "",
-      "presentationPdf": "",
-      "playUrl": "",
-      "videoUrl": "",
-      "repoUrl": ""
-    },
-    {
-      "id": "heroic-cards",
-      "number": "03",
-      "title": "中華統一 ～英雄札譚～",
-      "type": "PLANNING",
-      "status": "GAME",
-      "year": "2026",
-      "subtitle": "デッキ構築ローグライク × 中国史のゲーム企画。",
-      "description": "英雄や戦術をカードとして組み合わせながら中国統一を目指す企画です。リスクとリターンの選択や周回性を重視して設計しました。",
-      "tags": [
-        "Planning",
-        "Level Design",
-        "Scenario"
-      ],
-      "image": "",
-      "url": "",
-      "role": "企画 / システム設計 / レベルデザイン / シナリオ",
-      "team": "企画作品",
-      "tools": [
-        "Game Planning",
-        "Level Design",
-        "Scenario"
-      ],
-      "challenge": "歴史題材を単なる世界観として使うのではなく、武将の個性や勢力関係がゲームの選択そのものに影響する構造を目指しました。",
-      "highlights": [
-        "デッキ構築と勢力争いを結び付けたシステム",
-        "安全策と高リターンの選択を常に提示",
-        "周回ごとに異なるイベントが生まれる構成"
-      ],
-      "gallery": [
-        "https://placehold.co/1200x760/ffffff/111111?text=HEROIC+CARDS+01",
-        "https://placehold.co/1200x760/f3f3f3/111111?text=HEROIC+CARDS+02",
-        "https://placehold.co/1200x760/eeeeee/111111?text=HEROIC+CARDS+03"
-      ],
-      "plannerPoint": "歴史上の関係性を、プレイヤーのリスクとリターンの選択へ変換すること。",
-      "problem": "中国史を題材にしても、固有名詞だけが違う一般的なカードゲームになる危険がありました。",
-      "intent": "武将・勢力・イベントの関係が、デッキ構築や進行ルートの判断に直接影響するゲームを狙いました。",
-      "decision": "世界観説明ではなく、勢力争いや人物特性そのものをゲームルールへ組み込む方針にしました。",
-      "result": "歴史題材とローグライクの選択構造を結び付け、周回ごとに異なる判断が生まれる企画にしました。",
-      "contribution": "企画、システム設計、レベルデザイン、シナリオを担当。",
       "proposalPdf": "",
       "specPdf": "",
       "presentationPdf": "",
