@@ -1,8 +1,43 @@
 {
   "works": [
     {
-      "id": "smart-delivery",
+      "id": "work-1786376400023",
       "number": "01",
+      "title": "NEEARLY CASTLE",
+      "type": "GAME",
+      "status": "Unity / Unity1Week /",
+      "year": "2026",
+      "subtitle": "Unity1Week提出作品",
+      "description": "Unity1Weekお題「しろ」にて提出したゲーム\n近ければ近いほど、早ければ早いほど\n得をするシューティングゲームです。\n時代はニアパ×タイパ×コスパ\n目指せ最強",
+      "tags": [
+        "Unity1Week、Unity、"
+      ],
+      "image": "",
+      "url": "https://unityroom.com/games/nearlycastle",
+      "role": "ゲームデザイン、コード、バランス調整",
+      "team": "",
+      "tools": [
+        "Unity、C#、CodeX、"
+      ],
+      "challenge": "",
+      "highlights": [],
+      "gallery": [],
+      "plannerPoint": "",
+      "problem": "",
+      "intent": "",
+      "decision": "",
+      "result": "",
+      "contribution": "",
+      "proposalPdf": "",
+      "specPdf": "",
+      "presentationPdf": "",
+      "playUrl": "",
+      "videoUrl": "",
+      "repoUrl": ""
+    },
+    {
+      "id": "smart-delivery",
+      "number": "02",
       "title": "スマート配達",
       "type": "WEB / 物流",
       "status": "AWARD /AWS",
@@ -50,7 +85,7 @@
     },
     {
       "id": "flipilf",
-      "number": "02",
+      "number": "03",
       "title": "FlipilF",
       "type": "GAME",
       "status": "UNITY",
