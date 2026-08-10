@@ -208,16 +208,15 @@
     {
       "id": "development-note",
       "number": "01",
-      "date": "2026.08",
-      "category": "DEVELOPMENT",
-      "title": "開発で考えたことをまとめる記事",
+      "date": "2026.01",
+      "category": "ゲーム開発 / 大学祭 / 受けるゲームの作り方",
+      "title": "大学祭で受けるゲームの作り方",
       "description": "制作の中で判断したこと、試したこと、うまくいかなかったことなどを記録するための記事スペースです。",
-      "url": "",
-      "image": "",
+      "url": "https://hu-gsd.com/diary/%e5%a4%a7%e5%ad%a6%e7%a5%ad%e3%81%a7%e5%8f%97%e3%81%91%e3%82%8b%e3%82%b2%e3%83%bc%e3%83%a0%e3%81%ae%e4%bd%9c%e3%82%8a%e6%96%b9/",
+      "image": "/uploads/1786377834493-asset-13fab757fb.png",
       "readTime": "6 MIN READ",
       "tags": [
-        "Team Development",
-        "Process"
+        "大学祭、ゲーム制作、"
       ]
     },
     {
