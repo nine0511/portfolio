@@ -19,7 +19,6 @@ const galleryImage = (title: string, label: string, variant: number) => demoImag
 
 type Work = (typeof contentData.works)[number] & { image: string; gallery: string[] };
 type Product = (typeof contentData.products)[number] & { image: string };
-
 type PdfPreview = { url: string; label: string } | null;
 
 const skillGroups = [
@@ -55,6 +54,7 @@ export default function Home() {
     image: product.image || demoImage(product.title.toUpperCase(), product.type, (index % 3) + 1),
   })), []);
 
+  const achievements = contentData.achievements;
   const articles = contentData.articles;
   const [activeWork, setActiveWork] = useState(0);
   const [selectedWork, setSelectedWork] = useState<number | null>(null);
@@ -85,7 +85,7 @@ export default function Home() {
   return <main>
     <header className="site-header">
       <a className="logo" href="#works">NINE0511</a>
-      <nav aria-label="メインナビゲーション"><a href="#works">WORK</a><a href="#profile">PROFILE</a><a href="#products">PRODUCTS</a><a href="#article">ARTICLE</a><a href="#skills">SKILL</a></nav>
+      <nav aria-label="メインナビゲーション"><a href="#works">WORK</a><a href="#profile">PROFILE</a><a href="#achieve">ACHIEVE</a><a href="#products">PRODUCTS</a><a href="#article">ARTICLE</a><a href="#skills">SKILL</a></nav>
     </header>
 
     <section id="works" className="section-shell section-block">
@@ -110,6 +110,27 @@ export default function Home() {
       <div className="profile-copy"><p className="lead">情報科学を学びながら、ゲーム制作・Web開発・チーム開発に取り組んでいます。</p><p>企画だけ、実装だけに閉じず、ユーザーがどう感じるかまで考えて形にすることを大切にしています。特にゲームではレベルデザインやUI、システム設計に関心があります。</p>
         <dl className="profile-facts"><div><dt>FIELD</dt><dd>Game Design / Web / UI・UX</dd></div><div><dt>BASED IN</dt><dd>Hiroshima, Japan</dd></div><div><dt>FOCUS</dt><dd>Planning × Implementation</dd></div></dl>
         <div className="profile-hobby"><p className="eyebrow">HOBBY</p><div className="profile-hobby-tags"><span>ゲーム制作</span><span>創作</span><span>TRPG</span></div><p>ゲームはジャンルを問わず基本なんでも好きです。特に、ルールそのものをハックする遊びや、選択にスリルを感じられるゲームが好きです。</p></div>
+      </div>
+    </section>
+
+    <section id="achieve" className="achievement-section">
+      <div className="section-shell">
+        <div className="achievement-heading"><div><p className="eyebrow">MILESTONES / RESULTS</p><h2>ACHIEVE</h2></div><p className="section-description">受賞・コンテスト・チームや組織で生み出した成果をまとめています。</p></div>
+        <div className="achievement-list">
+          {achievements.map((achievement, index) => {
+            const body = <>
+              <div className="achievement-year">{achievement.year}</div>
+              <div className="achievement-main">
+                <div className="achievement-badges"><span className="achievement-category">{achievement.category}</span>{achievement.highlight && <span className="achievement-highlight">{achievement.highlight}</span>}</div>
+                <h3>{achievement.title}</h3>
+                <p>{achievement.description}</p>
+                {achievement.organization && <div className="achievement-organization">{achievement.organization}</div>}
+              </div>
+              <div className="achievement-number">{String(index + 1).padStart(2, "0")}{achievement.url ? " ↗" : ""}</div>
+            </>;
+            return achievement.url ? <a className="achievement-item" key={achievement.id} href={achievement.url} target="_blank" rel="noreferrer">{body}</a> : <article className="achievement-item" key={achievement.id}>{body}</article>;
+          })}
+        </div>
       </div>
     </section>
 
