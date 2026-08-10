@@ -6,20 +6,26 @@ body,
   background-color: transparent !important;
 }
 
-/* Page 3: PRODUCTS */
-.products-section {
-  background: transparent !important;
-  background-color: transparent !important;
+/* PRODUCTS is intentionally hidden for the current portfolio version.
+   Data and implementation are kept so it can be restored quickly. */
+#products,
+.products-section,
+.site-header nav a[href="#products"] {
+  display: none !important;
 }
 
-/* Page 4: ARTICLE */
+/* Admin tabs are ordered WORK / ACHIEVE / PRODUCTS / ARTICLE. */
+.admin-tabs > button:nth-child(3) {
+  display: none !important;
+}
+
+/* ARTICLE keeps the animated geometric background visible. */
 .articles-section {
   background: transparent !important;
   background-color: transparent !important;
 }
 
-/* Keep cards readable while allowing the moving background to show between them. */
-.product-card,
+/* Keep article cards readable while allowing the moving background to show between them. */
 .article-card {
   background-color: rgba(255, 255, 255, 0.94) !important;
 }
