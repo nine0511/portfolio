@@ -17,7 +17,6 @@
       "tools": ["AWS", "TypeScript", "HTML/CSS", "GitHub"],
       "challenge": "限られた開発期間の中で、プロダクトのコア機能を早い段階で完成させ、プレゼンや検証に時間を回せる進め方を意識しました。",
       "highlights": ["実装スピードを上げる開発フローを整備", "コア機能を早期に完成させ、発表準備の時間を確保", "ヒアリングを通して課題との接続を強化"],
-      "gallery": ["https://placehold.co/1200x760/ffffff/111111?text=SMART+DELIVERY+01", "https://placehold.co/1200x760/f3f3f3/111111?text=SMART+DELIVERY+02", "https://placehold.co/1200x760/eeeeee/111111?text=SMART+DELIVERY+03"],
       "plannerPoint": "地域課題を機能に落とし込みつつ、開発時間の使い方まで設計したこと。",
       "problem": "再配達によるドライバー負担を減らしながら、受取人側にも無理のない調整方法を作る必要がありました。",
       "intent": "配達側・受取側のどちらか一方に負担を寄せず、柔軟な予定調整によって不在そのものを減らすことを狙いました。",
@@ -30,7 +29,11 @@
       "playUrl": "",
       "videoUrl": "",
       "repoUrl": "https://github.com/nine0511",
-      "gallery": ["https://placehold.co/1200x760/ffffff/111111?text=SMART+DELIVERY+01", "https://placehold.co/1200x760/f3f3f3/111111?text=SMART+DELIVERY+02", "https://placehold.co/1200x760/eeeeee/111111?text=SMART+DELIVERY+03"]
+      "gallery": [
+        "https://placehold.co/1200x760/ffffff/111111?text=SMART+DELIVERY+01",
+        "https://placehold.co/1200x760/f3f3f3/111111?text=SMART+DELIVERY+02",
+        "https://placehold.co/1200x760/eeeeee/111111?text=SMART+DELIVERY+03"
+      ]
     },
     {
       "id": "flipilf",
@@ -61,7 +64,11 @@
       "playUrl": "",
       "videoUrl": "",
       "repoUrl": "",
-      "gallery": ["https://placehold.co/1200x760/ffffff/111111?text=FLIPILF+01", "https://placehold.co/1200x760/f3f3f3/111111?text=FLIPILF+02", "https://placehold.co/1200x760/eeeeee/111111?text=FLIPILF+03"]
+      "gallery": [
+        "https://placehold.co/1200x760/ffffff/111111?text=FLIPILF+01",
+        "https://placehold.co/1200x760/f3f3f3/111111?text=FLIPILF+02",
+        "https://placehold.co/1200x760/eeeeee/111111?text=FLIPILF+03"
+      ]
     },
     {
       "id": "heroic-cards",
@@ -92,7 +99,43 @@
       "playUrl": "",
       "videoUrl": "",
       "repoUrl": "",
-      "gallery": ["https://placehold.co/1200x760/ffffff/111111?text=HEROIC+CARDS+01", "https://placehold.co/1200x760/f3f3f3/111111?text=HEROIC+CARDS+02", "https://placehold.co/1200x760/eeeeee/111111?text=HEROIC+CARDS+03"]
+      "gallery": [
+        "https://placehold.co/1200x760/ffffff/111111?text=HEROIC+CARDS+01",
+        "https://placehold.co/1200x760/f3f3f3/111111?text=HEROIC+CARDS+02",
+        "https://placehold.co/1200x760/eeeeee/111111?text=HEROIC+CARDS+03"
+      ]
+    }
+  ],
+  "achievements": [
+    {
+      "id": "aws-ai-contest-2026",
+      "year": "2026",
+      "category": "AWARD",
+      "title": "AWS 地域創生・社会課題解決 AIコンテスト 最優秀賞",
+      "description": "3人チームで『スマート配達』を開発。実装、東広島市へのヒアリング、LP制作を担当し、最優秀賞を受賞しました。",
+      "organization": "AWS / 地域創生・社会課題解決 AIコンテスト",
+      "highlight": "最優秀賞",
+      "url": ""
+    },
+    {
+      "id": "scenario-contest",
+      "year": "2025",
+      "category": "AWARD",
+      "title": "サイバーアドベンチャー シナリオコンテスト 優勝",
+      "description": "ゲーム・物語制作に関するシナリオコンテストで優勝しました。",
+      "organization": "サイバーアドベンチャー",
+      "highlight": "優勝",
+      "url": ""
+    },
+    {
+      "id": "game-club-growth",
+      "year": "2024–2025",
+      "category": "LEADERSHIP",
+      "title": "ゲーム制作同好会 副会長 / 新入会員数 約3倍",
+      "description": "副会長としてHP更新、広報X、大学祭展示、インタビュー連載などを担当。情報発信を継続し、新入会員数を前年の約3倍まで伸ばしました。",
+      "organization": "ゲーム制作同好会",
+      "highlight": "新入会員 約3倍",
+      "url": ""
     }
   ],
   "products": [
