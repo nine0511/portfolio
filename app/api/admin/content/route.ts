@@ -65,6 +65,7 @@ function stringList(value: unknown, maxItems = 20) {
 
 function sanitizeContent(input: any) {
   const works = Array.isArray(input?.works) ? input.works.slice(0, 40) : [];
+  const achievements = Array.isArray(input?.achievements) ? input.achievements.slice(0, 60) : [];
   const products = Array.isArray(input?.products) ? input.products.slice(0, 80) : [];
   const articles = Array.isArray(input?.articles) ? input.articles.slice(0, 100) : [];
 
@@ -99,6 +100,16 @@ function sanitizeContent(input: any) {
       playUrl: sanitizeUrl(item.playUrl),
       videoUrl: sanitizeUrl(item.videoUrl),
       repoUrl: sanitizeUrl(item.repoUrl),
+    })),
+    achievements: achievements.map((item: any, index: number) => ({
+      id: text(item.id, 80) || `achievement-${Date.now()}-${index}`,
+      year: text(item.year, 40),
+      category: text(item.category, 80),
+      title: text(item.title, 240),
+      description: text(item.description, 4000),
+      organization: text(item.organization, 300),
+      highlight: text(item.highlight, 120),
+      url: sanitizeUrl(item.url),
     })),
     products: products.map((item: any, index: number) => ({
       id: text(item.id, 80) || `product-${Date.now()}-${index}`,
