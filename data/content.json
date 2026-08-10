@@ -132,6 +132,16 @@
   ],
   "achievements": [
     {
+      "id": "achievement-1786376875154",
+      "year": "2026",
+      "category": "AWARD",
+      "title": "Unity1Week",
+      "description": "UnityRoomで行われる一週間でのゲームジャムコンテスト「Unity1Week」お題「しろ」\nにて、「評価の高かったゲーム一覧」に掲載されました。",
+      "organization": "UnityRoom",
+      "highlight": "評価の高かったゲーム一覧に掲載",
+      "url": "https://unityroom.com/games/nearlycastle"
+    },
+    {
       "id": "aws-ai-contest-2026",
       "year": "2026",
       "category": "AWARD",
