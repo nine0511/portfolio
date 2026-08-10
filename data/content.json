@@ -142,7 +142,38 @@
       "repoUrl": ""
     }
   ],
-  "achievements": [],
+  "achievements": [
+    {
+      "id": "aws-ai-contest-2026",
+      "year": "2026",
+      "category": "AWARD",
+      "title": "地域創生・社会課題解決 AIコンテスト",
+      "description": "3人チームで再配達削減を目的とした『スマート配達』を開発。実装、自治体ヒアリング、LP制作を担当しました。",
+      "organization": "AWS",
+      "highlight": "最優秀賞",
+      "url": ""
+    },
+    {
+      "id": "scenario-contest",
+      "year": "2026",
+      "category": "CONTEST",
+      "title": "シナリオコンテスト",
+      "description": "ゲームシナリオの企画・構成を競うコンテストで優勝しました。",
+      "organization": "サイバーアドベンチャー",
+      "highlight": "優勝",
+      "url": ""
+    },
+    {
+      "id": "game-circle-leadership",
+      "year": "2024–2025",
+      "category": "LEADERSHIP",
+      "title": "ゲーム制作同好会 副会長",
+      "description": "広報施策やWebサイト更新、大学祭展示運営などを担当し、新入会員数を前年の約3倍まで伸ばしました。",
+      "organization": "広島大学 ゲーム制作同好会",
+      "highlight": "新入会員 約3倍",
+      "url": ""
+    }
+  ],
   "products": [
     {
       "id": "smart-delivery-product",
