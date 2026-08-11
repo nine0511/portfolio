@@ -206,8 +206,22 @@
   ],
   "articles": [
     {
-      "id": "development-note",
+      "id": "article-1786429004974",
       "number": "01",
+      "date": "2024~2026",
+      "category": "INTERVIEW",
+      "title": "副会長が訊く！シリーズ",
+      "description": "副会長である自分が、自サークルの活動紹介を目的に、会員へのインタビューを行いました。\n全5回、継続中",
+      "url": "https://hu-gsd.com/diary/interview5/",
+      "image": "/uploads/1786429232047-1-cde71e9f19.png",
+      "readTime": "15 MIN",
+      "tags": [
+        "INTERVIEW"
+      ]
+    },
+    {
+      "id": "development-note",
+      "number": "02",
       "date": "2026.01",
       "category": "ゲーム開発 / 大学祭 / 受けるゲームの作り方",
       "title": "大学祭で受けるゲームの作り方",
@@ -221,7 +235,7 @@
     },
     {
       "id": "game-design-note",
-      "number": "02",
+      "number": "03",
       "date": "2026.08",
       "category": "GAME DESIGN",
       "title": "ゲームデザイン・レベルデザインのメモ",
@@ -236,7 +250,7 @@
     },
     {
       "id": "web-ui-note",
-      "number": "03",
+      "number": "04",
       "date": "2026.08",
       "category": "TECH",
       "title": "Web・UI/UXについての制作記録",
