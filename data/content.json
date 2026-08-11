@@ -206,8 +206,22 @@
   ],
   "articles": [
     {
-      "id": "article-1786429004974",
+      "id": "development-note",
       "number": "01",
+      "date": "2026.01",
+      "category": "ゲーム開発 / 大学祭 / 受けるゲームの作り方",
+      "title": "大学祭で受けるゲームの作り方",
+      "description": "4年間での大学祭の経験をもとに、大学祭で多くの人に楽しんでプレイしてもらう方法をまとめたものです。",
+      "url": "https://hu-gsd.com/diary/%e5%a4%a7%e5%ad%a6%e7%a5%ad%e3%81%a7%e5%8f%97%e3%81%91%e3%82%8b%e3%82%b2%e3%83%bc%e3%83%a0%e3%81%ae%e4%bd%9c%e3%82%8a%e6%96%b9/",
+      "image": "/uploads/1786377834493-asset-13fab757fb.png",
+      "readTime": "6 MIN READ",
+      "tags": [
+        "大学祭、ゲーム制作、"
+      ]
+    },
+    {
+      "id": "article-1786429004974",
+      "number": "02",
       "date": "2024~2026",
       "category": "INTERVIEW",
       "title": "副会長が訊く！シリーズ",
@@ -220,47 +234,17 @@
       ]
     },
     {
-      "id": "development-note",
-      "number": "02",
-      "date": "2026.01",
-      "category": "ゲーム開発 / 大学祭 / 受けるゲームの作り方",
-      "title": "大学祭で受けるゲームの作り方",
-      "description": "制作の中で判断したこと、試したこと、うまくいかなかったことなどを記録するための記事スペースです。",
-      "url": "https://hu-gsd.com/diary/%e5%a4%a7%e5%ad%a6%e7%a5%ad%e3%81%a7%e5%8f%97%e3%81%91%e3%82%8b%e3%82%b2%e3%83%bc%e3%83%a0%e3%81%ae%e4%bd%9c%e3%82%8a%e6%96%b9/",
-      "image": "/uploads/1786377834493-asset-13fab757fb.png",
-      "readTime": "6 MIN READ",
-      "tags": [
-        "大学祭、ゲーム制作、"
-      ]
-    },
-    {
-      "id": "game-design-note",
+      "id": "article-1786429562398",
       "number": "03",
-      "date": "2026.08",
-      "category": "GAME DESIGN",
-      "title": "ゲームデザイン・レベルデザインのメモ",
-      "description": "遊びやすさ、導線、リスクとリターンなど、ゲーム制作で意識していることを整理して紹介します。",
-      "url": "",
-      "image": "",
-      "readTime": "8 MIN READ",
-      "tags": [
-        "Level Design",
-        "Game Design"
-      ]
-    },
-    {
-      "id": "web-ui-note",
-      "number": "04",
-      "date": "2026.08",
-      "category": "TECH",
-      "title": "Web・UI/UXについての制作記録",
-      "description": "Web制作やUI設計で工夫した点を、画面や図を交えながら紹介するための枠です。",
-      "url": "",
-      "image": "",
+      "date": "2022~2026",
+      "category": " COLUMN",
+      "title": "そこのお前シリーズ",
+      "description": "サークルの活動で感じたことなどをまとめたものです。30Daysチャレンジや、技術系の内容もあります。",
+      "url": "https://hu-gsd.com/diary/30days/",
+      "image": "/uploads/1786429672093-30DaysLastPhoto-edited-6d482ed82f.png",
       "readTime": "5 MIN READ",
       "tags": [
-        "UI/UX",
-        "Web"
+        "COLUMN、雑記"
       ]
     }
   ]
