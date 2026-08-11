@@ -14,8 +14,8 @@ body,
   display: none !important;
 }
 
-/* Admin tabs are ordered WORK / ACHIEVE / PRODUCTS / ARTICLE. */
-.admin-tabs > button:nth-child(3) {
+/* Hide only the PRODUCTS admin tab, regardless of tab order. */
+.admin-tabs > button[data-section="products"] {
   display: none !important;
 }
 
