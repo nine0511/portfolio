@@ -1,4 +1,17 @@
 {
+  "profile": {
+    "lead": "情報科学を学びながら、ゲーム制作・Web開発・チーム開発に取り組んでいます。",
+    "description": "企画だけ、実装だけに閉じず、ユーザーがどう感じるかまで考えて形にすることを大切にしています。特にゲームではレベルデザインやUI、システム設計に関心があります。",
+    "field": "Game Design / Web / UI・UX",
+    "basedIn": "Hiroshima, Japan",
+    "focus": "Planning × Tutorial",
+    "hobbyTags": [
+      "ゲーム制作",
+      "創作",
+      "TRPG"
+    ],
+    "hobbyDescription": "ゲームはジャンルを問わず基本なんでも好きです。特に、ルールそのものをハックする遊びや、選択にスリルを感じられるゲームが好きです。"
+  },
   "works": [
     {
       "id": "work-1786376400023",
