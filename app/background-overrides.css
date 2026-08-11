@@ -25,11 +25,62 @@ body,
   background-color: transparent !important;
 }
 
-/* Keep article cards readable while allowing the moving background to show between them. */
+/* ARTICLE: single-column, wide and slightly slimmer cards. */
+.article-grid {
+  grid-template-columns: 1fr !important;
+  gap: 14px !important;
+}
+
 .article-card {
+  grid-template-columns: 230px minmax(0, 1fr) !important;
+  min-height: 156px !important;
+  border-radius: 14px !important;
   background-color: rgba(255, 255, 255, 0.94) !important;
+}
+
+.article-content {
+  padding: 16px 20px !important;
+}
+
+.article-content h3 {
+  margin: 8px 0 5px !important;
+  font-size: clamp(20px, 2vw, 28px) !important;
+  line-height: 1.22 !important;
+}
+
+.article-content p {
+  font-size: 12px !important;
+  line-height: 1.6 !important;
+}
+
+.article-tags {
+  margin-top: 10px !important;
+  padding-top: 0 !important;
+}
+
+.article-footerline {
+  margin-top: 8px !important;
 }
 
 .article-card:hover {
   background-color: rgba(237, 244, 239, 0.96) !important;
+}
+
+@media (max-width: 700px) {
+  .article-card {
+    grid-template-columns: 105px minmax(0, 1fr) !important;
+    min-height: 145px !important;
+  }
+
+  .article-content {
+    padding: 13px 14px !important;
+  }
+
+  .article-content h3 {
+    font-size: 19px !important;
+  }
+
+  .article-tags {
+    gap: 4px !important;
+  }
 }
