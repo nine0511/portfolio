@@ -21,6 +21,26 @@ type Work = (typeof contentData.works)[number] & { image: string; gallery: strin
 type Product = (typeof contentData.products)[number] & { image: string };
 type PdfPreview = { url: string; label: string } | null;
 
+type ProfileContent = {
+  lead: string;
+  description: string;
+  field: string;
+  basedIn: string;
+  focus: string;
+  hobbyTags: string[];
+  hobbyDescription: string;
+};
+
+const defaultProfile: ProfileContent = {
+  lead: "情報科学を学びながら、ゲーム制作・Web開発・チーム開発に取り組んでいます。",
+  description: "企画だけ、実装だけに閉じず、ユーザーがどう感じるかまで考えて形にすることを大切にしています。特にゲームではレベルデザインやUI、システム設計に関心があります。",
+  field: "Game Design / Web / UI・UX",
+  basedIn: "Hiroshima, Japan",
+  focus: "Planning × Implementation",
+  hobbyTags: ["ゲーム制作", "創作", "TRPG"],
+  hobbyDescription: "ゲームはジャンルを問わず基本なんでも好きです。特に、ルールそのものをハックする遊びや、選択にスリルを感じられるゲームが好きです。",
+};
+
 const skillGroups = [
   { title: "制作で頻繁に使用", skills: [
     { name: "C#", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" },
@@ -54,6 +74,12 @@ export default function Home() {
     image: product.image || demoImage(product.title.toUpperCase(), product.type, (index % 3) + 1),
   })), []);
 
+  const storedProfile = (contentData as typeof contentData & { profile?: ProfileContent }).profile;
+  const profile: ProfileContent = {
+    ...defaultProfile,
+    ...(storedProfile ?? {}),
+    hobbyTags: Array.isArray(storedProfile?.hobbyTags) ? storedProfile.hobbyTags : defaultProfile.hobbyTags,
+  };
   const achievements = contentData.achievements;
   const articles = contentData.articles;
   const [activeWork, setActiveWork] = useState(0);
@@ -107,9 +133,9 @@ export default function Home() {
 
     <section id="profile" className="section-shell section-block profile-grid">
       <div className="section-heading sticky-heading"><p className="eyebrow">ABOUT ME</p><h2>PROFILE</h2></div>
-      <div className="profile-copy"><p className="lead">情報科学を学びながら、ゲーム制作・Web開発・チーム開発に取り組んでいます。</p><p>企画だけ、実装だけに閉じず、ユーザーがどう感じるかまで考えて形にすることを大切にしています。特にゲームではレベルデザインやUI、システム設計に関心があります。</p>
-        <dl className="profile-facts"><div><dt>FIELD</dt><dd>Game Design / Web / UI・UX</dd></div><div><dt>BASED IN</dt><dd>Hiroshima, Japan</dd></div><div><dt>FOCUS</dt><dd>Planning × Implementation</dd></div></dl>
-        <div className="profile-hobby"><p className="eyebrow">HOBBY</p><div className="profile-hobby-tags"><span>ゲーム制作</span><span>創作</span><span>TRPG</span></div><p>ゲームはジャンルを問わず基本なんでも好きです。特に、ルールそのものをハックする遊びや、選択にスリルを感じられるゲームが好きです。</p></div>
+      <div className="profile-copy"><p className="lead">{profile.lead}</p><p>{profile.description}</p>
+        <dl className="profile-facts"><div><dt>FIELD</dt><dd>{profile.field}</dd></div><div><dt>BASED IN</dt><dd>{profile.basedIn}</dd></div><div><dt>FOCUS</dt><dd>{profile.focus}</dd></div></dl>
+        <div className="profile-hobby"><p className="eyebrow">HOBBY</p><div className="profile-hobby-tags">{profile.hobbyTags.map((tag) => <span key={tag}>{tag}</span>)}</div><p>{profile.hobbyDescription}</p></div>
       </div>
     </section>
 
