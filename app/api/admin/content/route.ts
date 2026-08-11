@@ -181,6 +181,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       ok: true,
       content: remote?.content ?? fallbackContent,
+      revision: remote?.sha ?? "",
       canSave: Boolean(githubConfig().token),
     });
   } catch (error) {
@@ -206,10 +207,22 @@ export async function PUT(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const content = sanitizeContent(body.content);
+    const expectedRevision = typeof body.revision === "string" ? body.revision : "";
     const current = await fetchGithubContent();
     if (!current) throw new Error("現在のコンテンツを取得できませんでした。");
 
+    if (!expectedRevision || expectedRevision !== current.sha) {
+      return NextResponse.json(
+        {
+          ok: false,
+          conflict: true,
+          error: "別の編集が先に保存されています。古い編集画面からの上書きを防止しました。EDIT画面を閉じて開き直し、最新内容を読み込んでから編集してください。",
+        },
+        { status: 409 },
+      );
+    }
+
+    const content = sanitizeContent(body.content);
     const encoded = Buffer.from(`${JSON.stringify(content, null, 2)}\n`, "utf8").toString("base64");
     const response = await fetch(
       `https://api.github.com/repos/${owner}/${repo}/contents/${CONTENT_PATH}`,
@@ -234,9 +247,11 @@ export async function PUT(request: NextRequest) {
       throw new Error(`GitHubへの保存に失敗しました (${response.status}) ${detail.slice(0, 180)}`);
     }
 
+    const saved = await response.json();
     return NextResponse.json({
       ok: true,
       repository,
+      revision: saved?.content?.sha ?? "",
       message: "保存しました。Vercelの再デプロイ後に公開サイトへ反映されます。",
     });
   } catch (error) {
