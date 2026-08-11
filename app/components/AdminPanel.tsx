@@ -10,6 +10,9 @@ type ProfileContent = {
   field: string;
   basedIn: string;
   focus: string;
+  researchTitle: string;
+  researchDescription: string;
+  researchTags: string[];
   hobbyTags: string[];
   hobbyDescription: string;
 };
@@ -27,6 +30,9 @@ const defaultProfile: ProfileContent = {
   field: "Game Design / Web / UI・UX",
   basedIn: "Hiroshima, Japan",
   focus: "Planning × Implementation",
+  researchTitle: "閲覧行動ログと認知負荷理論を用いたセキュリティ教育教材の改善",
+  researchDescription: "約3,000人規模のセキュリティ教育を対象に、Web教材のスライド滞在時間・再訪や戻り・用語辞書参照・タブ離脱などの閲覧行動ログを取得し、理解度やアンケートと照合しています。読み飛ばしやつまずきの候補を捉え、学習者にとって不必要な認知負荷を抑えるUI/UX改善につなげる研究に取り組んでいます。",
+  researchTags: ["Security Education", "UI/UX", "Cognitive Load", "Learning Analytics"],
   hobbyTags: ["ゲーム制作", "創作", "TRPG"],
   hobbyDescription: "ゲームはジャンルを問わず基本なんでも好きです。特に、ルールそのものをハックする遊びや、選択にスリルを感じられるゲームが好きです。",
 };
@@ -101,6 +107,7 @@ function normalizeContent(content: Partial<SiteContent>): SiteContent {
   const profile: ProfileContent = {
     ...defaultProfile,
     ...incomingProfile,
+    researchTags: Array.isArray(incomingProfile.researchTags) ? incomingProfile.researchTags : defaultProfile.researchTags,
     hobbyTags: Array.isArray(incomingProfile.hobbyTags) ? incomingProfile.hobbyTags : defaultProfile.hobbyTags,
   };
   return {
@@ -333,6 +340,11 @@ export default function AdminPanel() {
     {renderProfileInput("メイン紹介文", "lead", { multiline: true })}
     {renderProfileInput("自己紹介", "description", { multiline: true })}
     <div className="admin-grid">{renderProfileInput("FIELD", "field")}{renderProfileInput("BASED IN", "basedIn")}{renderProfileInput("FOCUS", "focus")}{renderProfileInput("趣味タグ（1行1項目）", "hobbyTags", { list: true })}</div>
+    <details className="admin-detail" open><summary>RESEARCH / 研究</summary>
+      {renderProfileInput("研究テーマ", "researchTitle")}
+      {renderProfileInput("研究概要", "researchDescription", { multiline: true })}
+      {renderProfileInput("研究キーワード（1行1項目）", "researchTags", { list: true })}
+    </details>
     {renderProfileInput("HOBBY 説明", "hobbyDescription", { multiline: true })}
   </div>;
 
@@ -359,7 +371,7 @@ export default function AdminPanel() {
       {!authenticated ? <div className="admin-login"><button className="admin-close" onClick={() => setOpen(false)}>×</button><p className="admin-kicker">PORTFOLIO ADMIN</p><h2>編集する</h2><p>管理パスワードを入力してください。</p><input type="password" value={password} autoFocus onChange={(e) => setPassword(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") login(); }} /><button className="admin-primary" onClick={login} disabled={busy || !password}>{busy ? "確認中..." : "LOGIN"}</button>{message && <p className="admin-message">{message}</p>}</div> : <>
         <header className="admin-header"><div><p className="admin-kicker">PORTFOLIO ADMIN</p><h2>CONTENT EDITOR</h2></div><div className="admin-header-actions"><button onClick={logout}>LOGOUT</button><button className="admin-close" onClick={() => setOpen(false)}>×</button></div></header>
         <div className="admin-tabs">{(Object.keys(sectionLabels) as AdminSection[]).map((section) => <button key={section} data-section={section} className={activeSection === section ? "active" : ""} onClick={() => setActiveSection(section)}>{sectionLabels[section]}{section !== "profile" && <span>{content[section].length}</span>}</button>)}</div>
-        <div className="admin-toolbar"><p>{activeSection === "profile" ? "公開中のPROFILE内容を直接編集できます。保存するとVercel再デプロイ後に反映されます。" : "追加項目は一番上に作成されます。既存項目もこの画面で直接編集できます。"}</p>{activeSection !== "profile" && <button onClick={addItem}>＋ 項目を追加</button>}</div>
+        <div className="admin-toolbar"><p>{activeSection === "profile" ? "公開中のPROFILE内容と研究内容を直接編集できます。保存するとVercel再デプロイ後に反映されます。" : "追加項目は一番上に作成されます。既存項目もこの画面で直接編集できます。"}</p>{activeSection !== "profile" && <button onClick={addItem}>＋ 項目を追加</button>}</div>
         <div className="admin-items">{activeSection === "profile" && renderProfile()}{activeSection === "works" && content.works.map(renderWork)}{activeSection === "achievements" && content.achievements.map(renderAchievement)}{activeSection === "products" && content.products.map(renderProduct)}{activeSection === "articles" && content.articles.map(renderArticle)}</div>
         <footer className="admin-savebar"><div>{!canSave && <span className="admin-warning">GitHub保存用トークンが未設定です。</span>}{message && <span className="admin-message">{message}</span>}</div><button className="admin-primary" onClick={save} disabled={busy || Boolean(uploading) || !canSave}>{busy ? "保存中..." : "SAVE & DEPLOY"}</button></footer>
       </>}
