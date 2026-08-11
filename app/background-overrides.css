@@ -19,6 +19,54 @@ body,
   display: none !important;
 }
 
+/* PROFILE / RESEARCH */
+.profile-research {
+  margin-top: 38px;
+  padding: 24px 26px 22px;
+  border: 1px solid rgba(49, 95, 72, 0.2);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 15px 15px 0;
+  background: rgba(237, 244, 239, 0.78);
+  backdrop-filter: blur(5px);
+}
+
+.profile-research .eyebrow {
+  margin-bottom: 10px;
+  color: var(--accent);
+}
+
+.profile-research h3 {
+  margin: 0;
+  font-size: clamp(20px, 2.2vw, 28px);
+  line-height: 1.45;
+  letter-spacing: -0.03em;
+}
+
+.profile-research > p:not(.eyebrow) {
+  margin: 13px 0 0;
+  color: #454545;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.profile-research-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 17px;
+}
+
+.profile-research-tags span {
+  padding: 6px 9px;
+  border: 1px solid #aebfb3;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--accent-dark);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
 /* ARTICLE keeps the animated geometric background visible. */
 .articles-section {
   background: transparent !important;
@@ -67,6 +115,10 @@ body,
 }
 
 @media (max-width: 700px) {
+  .profile-research {
+    padding: 20px 18px;
+  }
+
   .article-card {
     grid-template-columns: 105px minmax(0, 1fr) !important;
     min-height: 145px !important;
