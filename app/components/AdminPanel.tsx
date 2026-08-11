@@ -129,6 +129,7 @@ export default function AdminPanel() {
   const [uploading, setUploading] = useState<string | null>(null);
   const [message, setMessage] = useState("");
   const [canSave, setCanSave] = useState(false);
+  const [revision, setRevision] = useState("");
 
   const login = async () => {
     setBusy(true);
@@ -145,6 +146,7 @@ export default function AdminPanel() {
       const body = await response.json();
       if (!response.ok) throw new Error(body.error || "コンテンツを取得できませんでした。");
       setContent(normalizeContent(body.content));
+      setRevision(typeof body.revision === "string" ? body.revision : "");
       setCanSave(Boolean(body.canSave));
       setAuthenticated(true);
       setPassword("");
@@ -159,6 +161,7 @@ export default function AdminPanel() {
     await fetch("/api/admin/auth", { method: "DELETE" });
     setAuthenticated(false);
     setContent(emptyContent);
+    setRevision("");
     setOpen(false);
     setMessage("");
   };
@@ -213,10 +216,11 @@ export default function AdminPanel() {
       const response = await fetch("/api/admin/content", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: normalized }),
+        body: JSON.stringify({ content: normalized, revision }),
       });
       const body = await response.json();
       if (!response.ok) throw new Error(body.error || "保存に失敗しました。");
+      if (typeof body.revision === "string" && body.revision) setRevision(body.revision);
       setMessage(body.message || "保存しました。");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "保存に失敗しました。");
