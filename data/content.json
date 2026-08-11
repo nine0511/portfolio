@@ -22,8 +22,43 @@
   },
   "works": [
     {
-      "id": "work-1786376400023",
+      "id": "work-1786455996641",
       "number": "01",
+      "title": "MagicFromIdea",
+      "type": "GAME",
+      "status": "Unity / C107",
+      "year": "2025",
+      "subtitle": "C107で配布したアクションコマンドRPG。",
+      "description": "妖精のバディと一緒に冒険に出かけましょう\nバディは時間を止めたり、瞬間移動したり風を起こせたりします。",
+      "tags": [
+        "Unity、C107、チーム制作、"
+      ],
+      "image": "",
+      "url": "",
+      "role": "プログラム、UI、マップデザイン",
+      "team": "8人チーム",
+      "tools": [
+        "Unity、C#"
+      ],
+      "challenge": "",
+      "highlights": [],
+      "gallery": [],
+      "plannerPoint": "",
+      "problem": "",
+      "intent": "",
+      "decision": "",
+      "result": "",
+      "contribution": "",
+      "proposalPdf": "",
+      "specPdf": "",
+      "presentationPdf": "",
+      "playUrl": "",
+      "videoUrl": "",
+      "repoUrl": ""
+    },
+    {
+      "id": "work-1786376400023",
+      "number": "02",
       "title": "NEEARLY CASTLE",
       "type": "GAME",
       "status": "Unity / Unity1Week /",
@@ -58,7 +93,7 @@
     },
     {
       "id": "smart-delivery",
-      "number": "02",
+      "number": "03",
       "title": "スマート配達",
       "type": "WEB / 物流",
       "status": "AWARD /AWS",
@@ -106,7 +141,7 @@
     },
     {
       "id": "flipilf",
-      "number": "03",
+      "number": "04",
       "title": "FlipilF",
       "type": "GAME",
       "status": "UNITY",
