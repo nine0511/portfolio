@@ -5,6 +5,14 @@
     "field": "Game Design / Web / UI・UX",
     "basedIn": "Hiroshima, Japan",
     "focus": "Planning × Tutorial",
+    "researchTitle": "認知負荷×セキュリティ教育",
+    "researchDescription": "認知負荷理論をもとに、所属する大学で実際に行われているセキュリティ教育を改善する研究を行っています。",
+    "researchTags": [
+      "Security Education",
+      "UI/UX",
+      "Cognitive Load",
+      "Learning Analytics"
+    ],
     "hobbyTags": [
       "ゲーム制作",
       "創作",
