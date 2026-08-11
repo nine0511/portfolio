@@ -68,8 +68,18 @@ function sanitizeContent(input: any) {
   const achievements = Array.isArray(input?.achievements) ? input.achievements.slice(0, 60) : [];
   const products = Array.isArray(input?.products) ? input.products.slice(0, 80) : [];
   const articles = Array.isArray(input?.articles) ? input.articles.slice(0, 100) : [];
+  const profile = input?.profile && typeof input.profile === "object" ? input.profile : {};
 
   return {
+    profile: {
+      lead: text(profile.lead, 1200),
+      description: text(profile.description, 4000),
+      field: text(profile.field, 300),
+      basedIn: text(profile.basedIn, 300),
+      focus: text(profile.focus, 300),
+      hobbyTags: stringList(profile.hobbyTags, 12),
+      hobbyDescription: text(profile.hobbyDescription, 4000),
+    },
     works: works.map((item: any, index: number) => ({
       id: text(item.id, 80) || `work-${Date.now()}-${index}`,
       number: text(item.number, 8) || String(index + 1).padStart(2, "0"),
