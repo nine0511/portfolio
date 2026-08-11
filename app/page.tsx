@@ -27,6 +27,9 @@ type ProfileContent = {
   field: string;
   basedIn: string;
   focus: string;
+  researchTitle: string;
+  researchDescription: string;
+  researchTags: string[];
   hobbyTags: string[];
   hobbyDescription: string;
 };
@@ -37,6 +40,9 @@ const defaultProfile: ProfileContent = {
   field: "Game Design / Web / UI・UX",
   basedIn: "Hiroshima, Japan",
   focus: "Planning × Implementation",
+  researchTitle: "閲覧行動ログと認知負荷理論を用いたセキュリティ教育教材の改善",
+  researchDescription: "約3,000人規模のセキュリティ教育を対象に、Web教材のスライド滞在時間・再訪や戻り・用語辞書参照・タブ離脱などの閲覧行動ログを取得し、理解度やアンケートと照合しています。読み飛ばしやつまずきの候補を捉え、学習者にとって不必要な認知負荷を抑えるUI/UX改善につなげる研究に取り組んでいます。",
+  researchTags: ["Security Education", "UI/UX", "Cognitive Load", "Learning Analytics"],
   hobbyTags: ["ゲーム制作", "創作", "TRPG"],
   hobbyDescription: "ゲームはジャンルを問わず基本なんでも好きです。特に、ルールそのものをハックする遊びや、選択にスリルを感じられるゲームが好きです。",
 };
@@ -74,10 +80,11 @@ export default function Home() {
     image: product.image || demoImage(product.title.toUpperCase(), product.type, (index % 3) + 1),
   })), []);
 
-  const storedProfile = (contentData as typeof contentData & { profile?: ProfileContent }).profile;
+  const storedProfile = (contentData as typeof contentData & { profile?: Partial<ProfileContent> }).profile;
   const profile: ProfileContent = {
     ...defaultProfile,
     ...(storedProfile ?? {}),
+    researchTags: Array.isArray(storedProfile?.researchTags) ? storedProfile.researchTags : defaultProfile.researchTags,
     hobbyTags: Array.isArray(storedProfile?.hobbyTags) ? storedProfile.hobbyTags : defaultProfile.hobbyTags,
   };
   const achievements = contentData.achievements;
@@ -135,6 +142,12 @@ export default function Home() {
       <div className="section-heading sticky-heading"><p className="eyebrow">ABOUT ME</p><h2>PROFILE</h2></div>
       <div className="profile-copy"><p className="lead">{profile.lead}</p><p>{profile.description}</p>
         <dl className="profile-facts"><div><dt>FIELD</dt><dd>{profile.field}</dd></div><div><dt>BASED IN</dt><dd>{profile.basedIn}</dd></div><div><dt>FOCUS</dt><dd>{profile.focus}</dd></div></dl>
+        <div className="profile-research">
+          <p className="eyebrow">RESEARCH</p>
+          <h3>{profile.researchTitle}</h3>
+          <p>{profile.researchDescription}</p>
+          <div className="profile-research-tags">{profile.researchTags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+        </div>
         <div className="profile-hobby"><p className="eyebrow">HOBBY</p><div className="profile-hobby-tags">{profile.hobbyTags.map((tag) => <span key={tag}>{tag}</span>)}</div><p>{profile.hobbyDescription}</p></div>
       </div>
     </section>
