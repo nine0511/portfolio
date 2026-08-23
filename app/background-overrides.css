@@ -19,10 +19,76 @@ body,
   display: none !important;
 }
 
-/* PROFILE / RESEARCH */
+/* Compact the overall rhythm without making the layout feel cramped. */
+.section-block {
+  padding: 104px 0 !important;
+}
+
+#works.section-block {
+  padding-top: 46px !important;
+  padding-bottom: 92px !important;
+}
+
+.section-heading {
+  margin-bottom: 38px !important;
+}
+
+.eyebrow {
+  margin-bottom: 15px !important;
+}
+
+.site-header nav {
+  gap: 24px;
+}
+
+/* WORK */
+#works .section-heading {
+  margin-bottom: 26px !important;
+}
+
+.work-carousel-wrap {
+  padding-bottom: 40px !important;
+}
+
+.work-carousel-stage {
+  min-height: 590px !important;
+}
+
+/* PROFILE */
+.profile-grid {
+  gap: 60px !important;
+}
+
+.sticky-heading,
+.profile-copy {
+  padding-top: 28px !important;
+}
+
+.profile-copy .lead {
+  margin-bottom: 24px !important;
+}
+
+.profile-copy > p:not(.lead) {
+  line-height: 1.85 !important;
+}
+
+.profile-facts {
+  margin-top: 40px !important;
+}
+
+.profile-facts div {
+  padding: 14px 0 !important;
+}
+
+/* Remove the old duplicated pseudo HOBBY block. The real editable HOBBY block is used now. */
+.profile-copy::after {
+  content: none !important;
+  display: none !important;
+}
+
 .profile-research {
-  margin-top: 38px;
-  padding: 24px 26px 22px;
+  margin-top: 28px;
+  padding: 21px 23px 19px;
   border: 1px solid rgba(49, 95, 72, 0.2);
   border-left: 4px solid var(--accent);
   border-radius: 0 15px 15px 0;
@@ -31,33 +97,33 @@ body,
 }
 
 .profile-research .eyebrow {
-  margin-bottom: 10px;
+  margin-bottom: 8px !important;
   color: var(--accent);
 }
 
 .profile-research h3 {
   margin: 0;
   font-size: clamp(20px, 2.2vw, 28px);
-  line-height: 1.45;
+  line-height: 1.4;
   letter-spacing: -0.03em;
 }
 
 .profile-research > p:not(.eyebrow) {
-  margin: 13px 0 0;
+  margin: 10px 0 0;
   color: #454545;
   font-size: 13px;
-  line-height: 1.9;
+  line-height: 1.75;
 }
 
 .profile-research-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 17px;
+  gap: 6px;
+  margin-top: 13px;
 }
 
 .profile-research-tags span {
-  padding: 6px 9px;
+  padding: 5px 8px;
   border: 1px solid #aebfb3;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.8);
@@ -67,65 +133,161 @@ body,
   letter-spacing: 0.03em;
 }
 
+.profile-hobby {
+  margin-top: 28px !important;
+}
+
+.profile-hobby .eyebrow {
+  margin-bottom: 10px !important;
+}
+
+.profile-hobby-tags {
+  gap: 6px !important;
+  margin-bottom: 12px !important;
+}
+
+/* ACHIEVE */
+.achievement-section {
+  padding: 94px 0 !important;
+}
+
+.achievement-heading {
+  margin-bottom: 34px !important;
+}
+
+.achievement-item {
+  gap: 22px !important;
+  padding: 24px 0 26px !important;
+}
+
+.achievement-badges {
+  margin-bottom: 9px !important;
+}
+
+.achievement-main > p {
+  margin-top: 10px !important;
+  line-height: 1.72 !important;
+}
+
+.achievement-organization {
+  margin-top: 10px !important;
+}
+
 /* ARTICLE keeps the animated geometric background visible. */
 .articles-section {
+  padding: 94px 0 !important;
   background: transparent !important;
   background-color: transparent !important;
+}
+
+.articles-heading {
+  margin-bottom: 28px !important;
 }
 
 /* ARTICLE: single-column, wide and slightly slimmer cards. */
 .article-grid {
   grid-template-columns: 1fr !important;
-  gap: 14px !important;
+  gap: 11px !important;
 }
 
 .article-card {
   grid-template-columns: 230px minmax(0, 1fr) !important;
-  min-height: 156px !important;
+  min-height: 150px !important;
   border-radius: 14px !important;
   background-color: rgba(255, 255, 255, 0.94) !important;
 }
 
 .article-content {
-  padding: 16px 20px !important;
+  padding: 14px 18px !important;
 }
 
 .article-content h3 {
-  margin: 8px 0 5px !important;
+  margin: 7px 0 4px !important;
   font-size: clamp(20px, 2vw, 28px) !important;
   line-height: 1.22 !important;
 }
 
 .article-content p {
   font-size: 12px !important;
-  line-height: 1.6 !important;
+  line-height: 1.55 !important;
 }
 
 .article-tags {
-  margin-top: 10px !important;
+  margin-top: 8px !important;
   padding-top: 0 !important;
 }
 
 .article-footerline {
-  margin-top: 8px !important;
+  margin-top: 6px !important;
 }
 
 .article-card:hover {
   background-color: rgba(237, 244, 239, 0.96) !important;
 }
 
+/* SKILL */
+.skills-showcase {
+  padding: 88px 0 94px !important;
+}
+
+.skill-groups {
+  margin-top: 38px !important;
+  gap: 42px !important;
+}
+
+.skill-group h3 {
+  margin-bottom: 18px !important;
+}
+
+.skill-logo-row {
+  gap: clamp(22px, 3vw, 34px) !important;
+}
+
+@media (max-width: 800px) {
+  .section-block {
+    padding: 76px 0 !important;
+  }
+
+  #works.section-block {
+    padding-top: 38px !important;
+    padding-bottom: 70px !important;
+  }
+
+  .profile-grid {
+    gap: 0 !important;
+  }
+
+  .achievement-section,
+  .articles-section {
+    padding: 72px 0 !important;
+  }
+
+  .skills-showcase {
+    padding: 72px 0 76px !important;
+  }
+}
+
 @media (max-width: 700px) {
   .profile-research {
-    padding: 20px 18px;
+    margin-top: 24px;
+    padding: 18px 16px;
+  }
+
+  .profile-hobby {
+    margin-top: 24px !important;
+  }
+
+  .work-carousel-stage {
+    min-height: 540px !important;
   }
 
   .article-card {
     grid-template-columns: 105px minmax(0, 1fr) !important;
-    min-height: 145px !important;
+    min-height: 138px !important;
   }
 
   .article-content {
-    padding: 13px 14px !important;
+    padding: 12px 13px !important;
   }
 
   .article-content h3 {
