@@ -41,17 +41,90 @@ body,
   gap: 24px;
 }
 
+/* Large headings: one step smaller to improve density. */
+.section-heading h2 {
+  font-size: clamp(54px, 7.7vw, 100px) !important;
+}
+
+.achievement-heading h2,
+.articles-heading h2 {
+  font-size: clamp(52px, 7vw, 94px) !important;
+}
+
+.skills-title {
+  font-size: clamp(32px, 3.4vw, 44px) !important;
+}
+
 /* WORK */
 #works .section-heading {
-  margin-bottom: 26px !important;
+  margin-bottom: 24px !important;
 }
 
 .work-carousel-wrap {
-  padding-bottom: 40px !important;
+  padding-bottom: 36px !important;
 }
 
 .work-carousel-stage {
-  min-height: 590px !important;
+  min-height: 548px !important;
+}
+
+.work-slide {
+  width: min(680px, 61vw) !important;
+  min-height: 495px !important;
+  padding: 21px 23px 19px !important;
+  border-radius: 21px !important;
+}
+
+.work-slide.active {
+  box-shadow: 12px 12px 0 var(--accent-dark) !important;
+}
+
+.work-slide h3 {
+  font-size: clamp(31px, 3.9vw, 50px) !important;
+}
+
+.work-slide-subtitle {
+  margin-bottom: 10px !important;
+  font-size: 13px !important;
+}
+
+.work-slide-description {
+  margin: 11px 0 9px !important;
+  font-size: 14px !important;
+  line-height: 1.62 !important;
+}
+
+.work-slide-footer {
+  padding-top: 8px !important;
+}
+
+.work-meta {
+  gap: 7px !important;
+  font-size: 10px !important;
+}
+
+.work-index,
+.work-year {
+  font-size: 12px !important;
+}
+
+.work-pill,
+.work-status {
+  padding: 4px 7px !important;
+}
+
+.work-hashtags {
+  font-size: 10px !important;
+}
+
+.view-more {
+  font-size: 12px !important;
+}
+
+.carousel-arrow {
+  width: 46px !important;
+  height: 46px !important;
+  font-size: 21px !important;
 }
 
 /* PROFILE */
@@ -243,6 +316,18 @@ body,
   gap: clamp(22px, 3vw, 34px) !important;
 }
 
+@media (max-width: 900px) {
+  .work-carousel-stage {
+    min-height: 520px !important;
+  }
+
+  .work-slide {
+    width: min(620px, 75vw) !important;
+    min-height: 470px !important;
+    padding: 20px !important;
+  }
+}
+
 @media (max-width: 800px) {
   .section-block {
     padding: 76px 0 !important;
@@ -268,6 +353,15 @@ body,
 }
 
 @media (max-width: 700px) {
+  .section-heading h2 {
+    font-size: clamp(48px, 13vw, 72px) !important;
+  }
+
+  .achievement-heading h2,
+  .articles-heading h2 {
+    font-size: clamp(46px, 12vw, 68px) !important;
+  }
+
   .profile-research {
     margin-top: 24px;
     padding: 18px 16px;
@@ -278,7 +372,21 @@ body,
   }
 
   .work-carousel-stage {
-    min-height: 540px !important;
+    min-height: 495px !important;
+  }
+
+  .work-slide {
+    width: calc(100% - 44px) !important;
+    min-height: 455px !important;
+    padding: 17px !important;
+  }
+
+  .work-slide h3 {
+    font-size: clamp(28px, 8vw, 39px) !important;
+  }
+
+  .work-slide.active {
+    box-shadow: 7px 7px 0 var(--accent-dark) !important;
   }
 
   .article-card {
