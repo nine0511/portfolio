@@ -277,8 +277,22 @@
   ],
   "articles": [
     {
-      "id": "development-note",
+      "id": "article-1787459966231",
       "number": "01",
+      "date": "2026.08",
+      "category": "GAME DESIGN",
+      "title": "Unity1Weekで「評価の高いゲーム一覧」に入ったよ～そこのお前シリーズ外伝～",
+      "description": "『NEEARLY CASTLE』の制作を通して、シンプルなルールから駆け引きを生み出すゲームデザインや、1週間という制約の中での仕様判断・バランス調整を振り返った記事です。",
+      "url": "https://hu-gsd.com/diary/unity1weekneearly-castle/",
+      "image": "/uploads/1787460159221-image-1024x622-fb13d54331.png",
+      "readTime": "5 MIN READ",
+      "tags": [
+        "Unity1Week / Unity / ゲーム制作 / 個人開発 / ゲームデザイン / シューティングゲーム / レベルデザイン / NEEARLY CASTLE"
+      ]
+    },
+    {
+      "id": "development-note",
+      "number": "02",
       "date": "2026.01",
       "category": "ゲーム開発 / 大学祭 / 受けるゲームの作り方",
       "title": "大学祭で受けるゲームの作り方",
@@ -292,7 +306,7 @@
     },
     {
       "id": "article-1786429004974",
-      "number": "02",
+      "number": "03",
       "date": "2024~2026",
       "category": "INTERVIEW",
       "title": "副会長が訊く！シリーズ",
@@ -306,7 +320,7 @@
     },
     {
       "id": "article-1786429562398",
-      "number": "03",
+      "number": "04",
       "date": "2022~2026",
       "category": " COLUMN",
       "title": "そこのお前シリーズ",
